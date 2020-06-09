@@ -1,6 +1,6 @@
 import Email from "../infra/core/ValueObjects/email";
 
-class User {
+class UserDomain {
 	constructor(username: string, name: string, email: string) {
 		this.username = username;
 		this.name = name;
@@ -16,4 +16,4 @@ class User {
 	public getUsername = () => this.username;
 }
 
-export default User;
+export default UserDomain;
