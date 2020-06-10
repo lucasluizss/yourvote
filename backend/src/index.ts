@@ -1,6 +1,9 @@
+
+import 'reflect-metadata';
 import cors from 'cors';
 import express from 'express';
 import routes from './routes';
+import './infra/container';
 
 class App {
 	public readonly app: express.Application;

@@ -1,4 +1,4 @@
-import Email from "../infra/core/ValueObjects/email";
+import Email from "../infra/core/valueObjects/email";
 
 class UserDomain {
 	constructor(username: string, name: string, email: string) {
