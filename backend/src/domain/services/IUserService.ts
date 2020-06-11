@@ -1,4 +1,4 @@
-import UserDomain from "../../domain/user.domain";
+import UserDomain from '../user.domain';
 
 interface IUserService {
 	create(user: UserDomain): UserDomain;

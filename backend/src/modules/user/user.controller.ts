@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { container } from 'tsyringe';
-import UserService from "../services/user.service";
-import UserDomain from "../domain/user.domain";
-import Result from "../infra/core/factories/result.factory";
+import UserDomain from '../../domain/user.domain';
+import UserService from './user.service';
+import Result from '../../infra/core/factories/result.factory';
 
 export default class UserController {
 

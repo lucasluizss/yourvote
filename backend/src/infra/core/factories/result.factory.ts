@@ -32,8 +32,8 @@ export default class Result implements IResult {
 		return result;
 	}
 
-	static Fail(data = {}, message = ''): IResult {
-		const result = new Result(false, data, message);
+	static Fail(message = ''): IResult {
+		const result = new Result(false, {}, message);
 
 		if (!result.message) {
 			delete result.message;

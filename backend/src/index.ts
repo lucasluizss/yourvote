@@ -1,3 +1,4 @@
+import { errorHandler } from './infra/core/middlewares/ErrorHandler';
 
 import 'reflect-metadata';
 import cors from 'cors';
@@ -10,13 +11,19 @@ class App {
 
 	constructor() {
 		this.app = express();
+		this.configureRoutes();
 		this.configureMiddlewares();
+	}
+
+	private configureRoutes() {
+		// TODO: Mudar rotas para versão 1 posteriormente
 		this.app.use('/', routes);
 	}
 
 	private configureMiddlewares() {
 		this.app.use(cors());
 		this.app.use(express.json());
+		this.app.use(errorHandler);
 	}
 }
 

@@ -1,10 +1,10 @@
 import { injectable, inject } from 'tsyringe';
 
-import UserDomain from "../domain/user.domain";
-import IUserService from "../infra/services/user.service";
+import UserDomain from '../../domain/user.domain';
+import IUserService from '../../domain/services/IUserService';
 
-import UserRepository from '../database/user.repository';
-import IUserRepository from '../infra/repositories/user.repository';
+import UserRepository from './user.repository';
+import IUserRepository from '../../domain/repositories/IUserRepository';
 
 @injectable()
 export default class UserService implements IUserService {
