@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Voting app",
   "main": "index.js",
   "scripts": {
     "start": "npx ts-node server.ts",
