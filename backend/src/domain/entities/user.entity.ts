@@ -1,3 +1,4 @@
+import { ERole } from './../enums/Roles.enum';
 import { EStatus } from './../enums/Status.enum';
 import { Entity } from './entity';
 import { Document } from 'mongoose';
@@ -9,6 +10,7 @@ export interface IUserEntity extends Document {
   password: string;
 	phone: string;
   status: EStatus;
+  role: ERole;
 }
 
 export default class UserEntity extends Entity<IUserEntity> {
@@ -35,6 +37,10 @@ export default class UserEntity extends Entity<IUserEntity> {
 
   get status(): EStatus {
     return this.props.status;
+  }
+
+  get role(): ERole {
+    return this.props.role;
   }
 
 	private constructor(props: IUserEntity, id?: number) {

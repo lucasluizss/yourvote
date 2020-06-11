@@ -12,17 +12,15 @@ export default class AccountService implements IAccountService {
 
 	constructor(@inject(UserRepository.name) private readonly userRepository: IUserRepository) { }
 
-	async authenticate(email: string, password: string, ipAddress: any): Promise<Result> {
+	async authenticate(email: string, password: string, ipAddress: any): Promise<string> {
 		const account = await this.userRepository.getByEmail(email);
 
-		const encriptedPassword = '';
-
-    if (!account || !bcrypt.compareSync(account.password, encriptedPassword)) {
+    if (!account || !bcrypt.compareSync(password, account.password)) {
         Result.Fail('Email or password is incorrect');
     }
 
-    const jwtToken = sign(account.id);
+		const jwtToken = sign(account.id);
 
-		return Result.Success(jwtToken);
+		return jwtToken;
 	}
 }
