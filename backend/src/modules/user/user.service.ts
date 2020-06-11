@@ -6,12 +6,15 @@ import IUserService from '../../domain/services/IUserService';
 
 import UserRepository from './user.repository';
 import IUserRepository from '../../domain/repositories/IUserRepository';
-import { EStatus } from '../../domain/enums/Status.enum';
 
 @injectable()
 export default class UserService implements IUserService {
 
 	constructor(@inject(UserRepository.name) private readonly _userRepository: IUserRepository) { }
+
+	async list(): Promise<IUserEntity[]> {
+		return await this._userRepository.list();
+	}
 
 	async getById(id: string): Promise<IUserEntity> {
 		const user = await this._userRepository.getById(id);

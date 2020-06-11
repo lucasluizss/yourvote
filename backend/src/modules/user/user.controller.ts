@@ -7,7 +7,11 @@ import Result from '../../infra/core/factories/result.factory';
 class UserController {
 
 	async index(request: Request, response: Response) {
-		throw new Error('Not implemented...');
+		const _userService = container.resolve(UserService);
+
+		const list = await _userService.list();
+
+		return response.json(Result.Success(list))
 	}
 
 	async show(request: Request, response: Response) {

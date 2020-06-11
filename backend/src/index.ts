@@ -1,10 +1,11 @@
-import { errorHandler } from './infra/core/middlewares/ErrorHandler';
-
-import 'reflect-metadata';
+import './database';
 import cors from 'cors';
+import 'reflect-metadata';
+import './infra/container';
 import express from 'express';
 import routes from './routes';
-import './infra/container';
+import bodyParser from 'body-parser';
+import { errorHandler } from './infra/core/middlewares/ErrorHandler';
 
 class App {
 	public readonly app: express.Application;
@@ -22,6 +23,8 @@ class App {
 	}
 
 	private configureMiddlewares() {
+		this.app.use(bodyParser.urlencoded({ extended: true }));
+		this.app.use(bodyParser.json());
 		this.app.use(cors());
 		this.app.use(express.json());
 	}

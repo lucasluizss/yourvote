@@ -7,6 +7,14 @@ const connectionOptions = {
 	useFindAndModify: false
 };
 
-mongoose.connect(String(process.env.MONGODB_URI), connectionOptions);
+const connectionString = process.env.MONGODB_URI || 'mongodb://localhost/YourVote';
 
 mongoose.Promise = global.Promise;
+
+mongoose.connect(connectionString, connectionOptions).then(() => {
+	console.log('💾 Successfully connected to MongoDB!');
+}).catch(error => {
+	console.error('❌ Connection failure: ', error);
+});
+
+export default mongoose;

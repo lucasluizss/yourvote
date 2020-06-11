@@ -4,6 +4,10 @@ import UserContext from '../../database/models/user.model';
 import { Document } from 'mongoose';
 export default class UserRepository implements IUserRepository {
 
+	async list(): Promise<IUserEntity[]> {
+		return await UserContext.find();
+	}
+
 	async getById(id: string): Promise<IUserEntity> {
 		return await UserContext.findById(id) as IUserEntity;
 	}
