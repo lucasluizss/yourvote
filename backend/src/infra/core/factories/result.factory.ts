@@ -1,12 +1,12 @@
 interface IResult {
 	successed: boolean;
 	failed: boolean;
-	message: string;
+	message?: string;
 }
 
 export default class Result implements IResult {
 
-	constructor(successed: boolean, data: any, message: string) {
+	constructor(successed: boolean, data?: any, message?: string) {
 		this.successed = successed;
 		this.failed = !successed;
 		this.message = message;
@@ -15,10 +15,10 @@ export default class Result implements IResult {
 
 	successed: boolean;
 	failed: boolean;
-	message: string;
-	data: any;
+	message?: string | undefined;
+	data?: any;
 
-	static Success(data = {}, message = ''): IResult {
+	static Success(data?: any, message?: string): IResult {
 		const result = new Result(true, data, message);
 
 		if (!result.message) {
@@ -32,7 +32,7 @@ export default class Result implements IResult {
 		return result;
 	}
 
-	static Fail(message = ''): IResult {
+	static Fail(message?: string): IResult {
 		const result = new Result(false, {}, message);
 
 		if (!result.message) {

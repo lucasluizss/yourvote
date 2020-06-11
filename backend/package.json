@@ -13,9 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "celebrate": "^12.1.1",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
+    "joi-phone-number": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.18",
     "nodemailer": "^6.4.8",

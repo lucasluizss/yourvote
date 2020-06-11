@@ -1,5 +1,5 @@
 import IUserRepository from '../../domain/repositories/IUserRepository';
-import UserDomain from '../../domain/user.domain';
+import UserDomain from '../../domain/entities/user.entity';
 
 export default class UserRepository implements IUserRepository {
 	private users: any[];

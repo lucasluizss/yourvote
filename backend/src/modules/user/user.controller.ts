@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from 'tsyringe';
-import UserDomain from '../../domain/user.domain';
+import UserDomain from '../../domain/entities/user.entity';
 import UserService from './user.service';
 import Result from '../../infra/core/factories/result.factory';
 

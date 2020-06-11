@@ -1,4 +1,4 @@
-import UserDomain from '../user.domain';
+import UserDomain from '../entities/user.entity';
 
 interface IUserService {
 	create(user: UserDomain): UserDomain;

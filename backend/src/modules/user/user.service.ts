@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
-import UserDomain from '../../domain/user.domain';
+import UserDomain from '../../domain/entities/user.entity';
 import IUserService from '../../domain/services/IUserService';
 
 import UserRepository from './user.repository';
