@@ -1,40 +1,47 @@
-import { Request, Response } from "express";
+import UserEntity, { IUserEntity } from './../../domain/entities/user.entity';
+import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import UserDomain from '../../domain/entities/user.entity';
 import UserService from './user.service';
 import Result from '../../infra/core/factories/result.factory';
 
 class UserController {
 
-	index(request: Request, response: Response) {
+	async index(request: Request, response: Response) {
 		throw new Error('Not implemented...');
 	}
 
-	show(request: Request, response: Response) {
+	async show(request: Request, response: Response) {
+		try {
+			const { id } = request.params;
+
+			const _userService = container.resolve(UserService);
+
+			const user = await _userService.getById(id);
+
+			return response.json(Result.Success(user));
+		} catch(error) {
+			return response.json(Result.Fail(error));
+		}
+	}
+
+	async create(request: Request, response: Response) {
+		try {
+			const userEntity = request.body as IUserEntity;
+			const _userService = container.resolve(UserService);
+
+			const user = await _userService.save(userEntity);
+
+			return response.json(Result.Success(user));
+		} catch(error) {
+			return response.json(Result.Fail(error.message));
+		}
+	}
+
+	async update(request: Request, response: Response) {
 		throw new Error('Not implemented...');
 	}
 
-	create(request: Request, response: Response) {
-		const {
-			username,
-			name,
-			email
-		} = request.body;
-
-		const userDomain = new UserDomain(username, name, email);
-
-		const _userService = container.resolve(UserService);
-
-		const user = _userService.create(userDomain);
-
-		response.json(Result.Success(user));
-	}
-
-	update(request: Request, response: Response) {
-		throw new Error('Not implemented...');
-	}
-
-	delete(request: Request, response: Response) {
+	async delete(request: Request, response: Response) {
 		throw new Error('Not implemented...');
 	}
 }

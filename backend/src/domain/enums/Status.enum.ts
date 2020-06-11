@@ -1,4 +1,4 @@
 export enum EStatus {
-	Active,
-	Inactive
+	Inactive,
+	Active
 }

@@ -25,6 +25,10 @@ export default class UserEntity extends Entity<IUserEntity> {
     return this.props.email;
   }
 
+  get password(): string {
+    return this.props.password;
+  }
+
   get phone(): string {
     return this.props.phone;
   }
@@ -51,7 +55,15 @@ export default class UserEntity extends Entity<IUserEntity> {
 
 	public inactive(): void {
     this.props.status = EStatus.Inactive;
-	}
+  }
+
+  public setEncriptedPassword(pwd: string) {
+    this.props.password = pwd;
+  }
+
+  public getProps(): IUserEntity {
+    return this.props;
+  }
 
 	public static create (props: IUserEntity, id?: number) : UserEntity {
     return new UserEntity(props);

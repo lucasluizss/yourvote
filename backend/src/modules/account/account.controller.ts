@@ -10,7 +10,7 @@ class AuthController {
 
 		const authService = container.resolve(AuthService);
 
-		const { jwtToken } = await authService.authenticate(email, password, ipAddress);
+		const jwtToken = await authService.authenticate(email, password, ipAddress);
 
     return response.json(Result.Success({ token: jwtToken }));
 	}

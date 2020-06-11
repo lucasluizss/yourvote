@@ -1,9 +1,7 @@
 import express from 'express';
-import UserController from './user.controller';
+import userController from './user.controller';
 
 const routes = express.Router();
-
-const userController = new UserController();
 
 routes.get('/', userController.index);
 routes.get('/:id', userController.show);

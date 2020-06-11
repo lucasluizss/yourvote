@@ -11,8 +11,9 @@ class App {
 
 	constructor() {
 		this.app = express();
-		this.configureRoutes();
 		this.configureMiddlewares();
+		this.configureRoutes();
+		this.handleErrors();
 	}
 
 	private configureRoutes() {
@@ -23,6 +24,9 @@ class App {
 	private configureMiddlewares() {
 		this.app.use(cors());
 		this.app.use(express.json());
+	}
+
+	private handleErrors() {
 		this.app.use(errorHandler);
 	}
 }
