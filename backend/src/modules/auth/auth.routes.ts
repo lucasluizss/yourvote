@@ -1,10 +1,8 @@
 import express from 'express';
-import AuthController from './auth.controller';
+import authController from './auth.controller';
 
 const routes = express.Router();
 
-const authController = new AuthController()
-
-routes.post('/login', authController.login);
+routes.post('/authenticate', authController.authenticate);
 
 export default routes;

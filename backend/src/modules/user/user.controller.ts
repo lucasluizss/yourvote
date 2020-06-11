@@ -4,7 +4,7 @@ import UserDomain from '../../domain/user.domain';
 import UserService from './user.service';
 import Result from '../../infra/core/factories/result.factory';
 
-export default class UserController {
+class UserController {
 
 	index(request: Request, response: Response) {
 		throw new Error('Not implemented...');
@@ -38,3 +38,5 @@ export default class UserController {
 		throw new Error('Not implemented...');
 	}
 }
+
+export default new UserController();
