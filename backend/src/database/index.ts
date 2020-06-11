@@ -8,3 +8,5 @@ const connectionOptions = {
 };
 
 mongoose.connect(String(process.env.MONGODB_URI), connectionOptions);
+
+mongoose.Promise = global.Promise;

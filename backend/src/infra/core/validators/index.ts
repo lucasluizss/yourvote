@@ -11,11 +11,3 @@ export const UserValidator = celebrate({
 }, {
 	abortEarly: false
 });
-
-export const ItemValidator = celebrate({
-	body: Joi.object().keys({
-		title: Joi.string().required()
-	})
-}, {
-	abortEarly: false
-});

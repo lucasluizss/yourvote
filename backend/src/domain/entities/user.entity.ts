@@ -1,41 +1,59 @@
 import { EStatus } from './../enums/Status.enum';
 import { Entity } from './entity';
+import { Document } from 'mongoose';
 
-interface IUserEntity {
+export interface IUserEntity extends Document {
   username: string;
   name: string;
-	email: string;
+  email: string;
+  password: string;
 	phone: string;
   status: EStatus;
 }
 
 export default class UserEntity extends Entity<IUserEntity> {
 
-	get username (): string {
+	get username(): string {
     return this.props.username;
   }
 
-	get name (): string {
+	get name(): string {
     return this.props.name;
   }
 
-  get email (): string {
+  get email(): string {
     return this.props.email;
   }
 
-  get phone (): string {
+  get phone(): string {
     return this.props.phone;
+  }
+
+  get status(): EStatus {
+    return this.props.status;
   }
 
 	private constructor(props: IUserEntity, id?: number) {
 		super(props);
 	}
 
-	public isActive (): boolean {
+	public isActive(): boolean {
     return this.props.status === EStatus.Active;
 	}
 
-	public static createUser (props: IUserEntity, id?: number) : UserEntity {
+	public isInactive(): boolean {
+    return this.props.status === EStatus.Inactive;
+	}
+
+	public active(): void {
+    this.props.status = EStatus.Active;
+	}
+
+	public inactive(): void {
+    this.props.status = EStatus.Inactive;
+	}
+
+	public static create (props: IUserEntity, id?: number) : UserEntity {
     return new UserEntity(props);
   }
 }

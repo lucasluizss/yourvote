@@ -1,5 +1,5 @@
 import { container } from 'tsyringe';
-import AuthService from './auth.service';
+import AuthService from './account.service';
 import { Request, Response } from "express";
 import Result from '../../infra/core/factories/result.factory';
 
