@@ -1,18 +1,22 @@
+import { generateJtwToken } from './../../infra/core/security/index';
 import UserEntity, { IUserEntity } from './../../domain/entities/user.entity';
 import { injectable, inject } from 'tsyringe';
 import bcrypt from 'bcryptjs';
-
 import IUserService from '../../domain/services/IUserService';
-
 import UserRepository from './user.repository';
 import IUserRepository from '../../domain/repositories/IUserRepository';
 import { ERole } from '../../domain/enums/Roles.enum';
 import environment from '../../environment/environment';
+import IEmailService, { EmailService } from '../../infra/shared/EmailService';
+import { new_user_template } from '../../infra/shared/templates/email.template';
 
 @injectable()
 export default class UserService implements IUserService {
 
-	constructor(@inject(UserRepository.name) private readonly _userRepository: IUserRepository) { }
+	constructor(
+		@inject(UserRepository.name) private readonly _userRepository: IUserRepository,
+		@inject(EmailService.name) private readonly _emailService: IEmailService
+	) { }
 
 	async list(): Promise<IUserEntity[]> {
 		return await this._userRepository.list();
@@ -38,41 +42,39 @@ export default class UserService implements IUserService {
 		const userEntity = UserEntity.create(user);
 
 		userEntity.setEncriptedPassword(bcrypt.hashSync(user.password, 10));
-		userEntity.inactive();
 
 		if (environment.Admins.includes(userEntity.email)) {
 			userEntity.setRole(ERole.Admin);
+			userEntity.active();
 		} else {
 			userEntity.setRole(ERole.User);
+			userEntity.inactive();
 		}
 
-		await this._userRepository.save(userEntity.getProps());
+		user = await this._userRepository.save(userEntity.getProps());
+
+		const tokenEmail = generateJtwToken(user._id, '30m');
+
+		this._emailService.send(user.email,
+			`${user.name}, bem vindo ao YourVote`,
+			new_user_template(user.name, tokenEmail)
+		);
 
 		return user;
 	}
 
 	async update(user: IUserEntity): Promise<IUserEntity> {
-		await this._userRepository.update(user);
+		const userEntity = UserEntity.create(user, user.id);
 
-		delete user.password;
+		if (userEntity.password) {
+			userEntity.setEncriptedPassword(bcrypt.hashSync(user.password, 10));
+		}
 
-		return user;
+		return await this._userRepository.update(userEntity.getProps());
 	}
 
 	async delete(id: string): Promise<boolean> {
 		await this._userRepository.delete(id);
-		return true;
-	}
-
-	async makeAdmin(id: string): Promise<boolean> {
-		const user = await this._userRepository.getById(id);
-
-		const userEntity = UserEntity.create(user);
-
-		userEntity.setRole(ERole.Admin);
-
-		await this._userRepository.update(userEntity.getProps());
-
 		return true;
 	}
 }

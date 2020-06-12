@@ -1,25 +1,51 @@
+import { verifyJwtToken } from './../../infra/core/security/index';
 import bcrypt from 'bcryptjs';
 import { injectable, inject } from 'tsyringe';
-import { sign } from '../../infra/core/security';
+import { generateJtwToken } from '../../infra/core/security';
 import { IAccountService } from '../../domain/services/IAccountService';
-import Result from '../../infra/core/factories/result.factory';
 import UserRepository from '../user/user.repository';
 import IUserRepository from '../../domain/repositories/IUserRepository';
+import UserEntity from '../../domain/entities/user.entity';
+import { ERole } from '../../domain/enums/Roles.enum';
 
 @injectable()
 export default class AccountService implements IAccountService {
 
-	constructor(@inject(UserRepository.name) private readonly userRepository: IUserRepository) { }
+	constructor(@inject(UserRepository.name) private readonly _userRepository: IUserRepository) { }
 
 	async authenticate(email: string, password: string, ipAddress: any): Promise<string> {
-		const account = await this.userRepository.getByEmail(email);
+		const user = await this._userRepository.getByEmail(email);
 
-    if (!account || !bcrypt.compareSync(password, account.password)) {
-        Result.Fail('Email or password is incorrect');
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+        throw new Error('Email or password is incorrect');
 		}
 
-		const jwtToken = sign(account._id);
+		return generateJtwToken(user._id);
+	}
 
-		return jwtToken;
+	async confirmEmail(token: string): Promise<boolean> {
+		const userId = await verifyJwtToken(token);
+
+		const user = await this._userRepository.getById(userId);
+
+		const userEntity = UserEntity.create(user, user.id);
+
+		userEntity.confirmEmail();
+
+		await this._userRepository.update(userEntity.getProps());
+
+		return true;
+	}
+
+	async makeAdmin(id: string): Promise<boolean> {
+		const user = await this._userRepository.getById(id);
+
+		const userEntity = UserEntity.create(user, id);
+
+		userEntity.setRole(ERole.Admin);
+
+		await this._userRepository.update(userEntity.getProps());
+
+		return true;
 	}
 }

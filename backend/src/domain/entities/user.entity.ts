@@ -7,6 +7,7 @@ export interface IUserEntity extends Document {
   username: string;
   name: string;
   email: string;
+  emailConfirmed: boolean;
   password: string;
 	phone: string;
   status: EStatus;
@@ -43,17 +44,15 @@ export default class UserEntity extends Entity<IUserEntity> {
     return this.props.role;
   }
 
-	private constructor(props: IUserEntity, id?: number) {
-		super(props);
-	}
+	private constructor(props: IUserEntity, id?: string) {
+		super(props, id);
+  }
 
-	public isActive(): boolean {
-    return this.props.status === EStatus.Active;
-	}
+  public getProps = () : IUserEntity => this.props;
 
-	public isInactive(): boolean {
-    return this.props.status === EStatus.Inactive;
-	}
+	public isActive = () : boolean => this.props.status === EStatus.Active;
+
+	public isInactive = () : boolean => this.props.status === EStatus.Inactive;
 
 	public active(): void {
     this.props.status = EStatus.Active;
@@ -71,11 +70,11 @@ export default class UserEntity extends Entity<IUserEntity> {
     this.props.role = role;
   }
 
-  public getProps(): IUserEntity {
-    return this.props;
+  public confirmEmail(): void {
+    this.props.emailConfirmed = true;
   }
 
-	public static create (props: IUserEntity, id?: number) : UserEntity {
-    return new UserEntity(props);
+	public static create (props: IUserEntity, id?: string) : UserEntity {
+    return new UserEntity(props, id);
   }
 }

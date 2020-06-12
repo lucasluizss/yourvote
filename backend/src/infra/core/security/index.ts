@@ -10,10 +10,22 @@ export const generateToken = (ipAddress: string) => {
 	};
 };
 
-export const sign = (id: string) => {
-	const secoundsOfDay = 86400;
-
+export const generateJtwToken = (id: string, expireMinutes?: string) => {
 	return jwt.sign({ id: id }, environment.SECRET as string, {
-		expiresIn: secoundsOfDay
+		expiresIn: expireMinutes || '1d'
+	});
+}
+
+export const verifyJwtToken = (token: string): Promise<string> => {
+	const secret = environment.SECRET as string;
+
+	return new Promise((resolve, reject) => {
+		jwt.verify(token, secret, (error, decoded: any) => {
+			if (error) {
+				reject('Invalid token');
+			}
+
+			resolve(decoded.id);
+		});
 	});
 }

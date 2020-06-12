@@ -1,13 +1,22 @@
 import nodemailer, { TransportOptions } from 'nodemailer';
 import environment from '../../environment/environment';
 
-class EmailService {
-	async send(to: string, subject: string, html: any, from = process.env.emailFrom) {
-
-		const transporter = nodemailer.createTransport(environment.smtpOptions as TransportOptions);
-
-    await transporter.sendMail({ from, to, subject, html });
-	}
+export default interface IEmailService {
+	send(to: string, subject: string, html: any): Promise<void>;
 }
 
-export default new EmailService();
+export class EmailService implements IEmailService {
+	async send(to: string, subject: string, html: any): Promise<void> {
+
+		const transporter = nodemailer.createTransport(environment.SmtpOptions as TransportOptions);
+
+    const info = await transporter.sendMail({
+			from: environment.EmailFrom,
+			to,
+			subject,
+			html
+		});
+
+		console.log('📨 Message sent: ', info);
+	}
+}

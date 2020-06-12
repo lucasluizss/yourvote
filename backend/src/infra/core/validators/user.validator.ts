@@ -19,10 +19,10 @@ export const UpdateUserValidator = celebrate({
 		name: Joi.string().required(),
 		email: Joi.string().required().email(),
 		password: Joi.string().required(),
-		phone: Joi.string().required(),
+		phone: Joi.string().required()
 	}),
 	[Segments.HEADERS]: Joi.object({
-    token: Joi.string().required()
+    authorization: Joi.string().required()
   }).unknown(),
 }, {
 	abortEarly: false

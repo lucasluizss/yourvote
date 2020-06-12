@@ -21,6 +21,10 @@ const UserSchema: Schema = new mongoose.Schema({
 		unique: true,
 		lowercase: true
 	},
+	emailConfirmed: {
+		type: Boolean,
+		default: false
+	},
 	phone: {
 		type: String,
 		required: true,
@@ -33,11 +37,13 @@ const UserSchema: Schema = new mongoose.Schema({
 	},
 	status: {
 		type: EStatus,
-		required: true
+		required: true,
+		default: EStatus.Inactive
 	},
 	role: {
 		type: ERole,
-		required: true
+		required: true,
+		default: ERole.User
 	}
 });
 
