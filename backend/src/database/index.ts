@@ -12,7 +12,7 @@ const connectionString = process.env.MONGODB_URI || 'mongodb://localhost/YourVot
 mongoose.Promise = global.Promise;
 
 mongoose.connect(connectionString, connectionOptions).then(() => {
-	console.log('💾 Successfully connected to MongoDB!');
+	console.log('✅ Successfully connected to MongoDB!');
 }).catch(error => {
 	console.error('❌ Connection failure: ', error);
 });

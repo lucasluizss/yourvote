@@ -5,13 +5,14 @@ import './infra/container';
 import express from 'express';
 import routes from './routes';
 import bodyParser from 'body-parser';
-import { errorHandler } from './infra/core/middlewares/ErrorHandler';
+import { errors } from 'celebrate';
 
 class App {
 	public readonly app: express.Application;
 
 	constructor() {
 		this.app = express();
+
 		this.configureMiddlewares();
 		this.configureRoutes();
 		this.handleErrors();
@@ -30,7 +31,7 @@ class App {
 	}
 
 	private handleErrors() {
-		this.app.use(errorHandler);
+		this.app.use(errors());
 	}
 }
 

@@ -7,6 +7,7 @@ interface IUserService {
 	save(user: IUserEntity): Promise<IUserEntity>;
 	update(user: IUserEntity): Promise<IUserEntity>;
 	delete(id: string): Promise<boolean>;
+	makeAdmin(id: string): Promise<boolean>;
 }
 
 export default IUserService;

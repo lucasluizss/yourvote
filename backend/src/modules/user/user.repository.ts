@@ -1,7 +1,6 @@
 import UserEntity, { IUserEntity } from './../../domain/entities/user.entity';
 import IUserRepository from '../../domain/repositories/IUserRepository';
 import UserContext from '../../database/models/user.model';
-import { Document } from 'mongoose';
 export default class UserRepository implements IUserRepository {
 
 	async list(): Promise<IUserEntity[]> {

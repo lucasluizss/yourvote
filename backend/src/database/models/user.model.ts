@@ -1,3 +1,4 @@
+import { ERole } from './../../domain/enums/Roles.enum';
 import { IUserEntity } from './../../domain/entities/user.entity';
 import { EStatus } from './../../domain/enums/Status.enum';
 
@@ -32,6 +33,10 @@ const UserSchema: Schema = new mongoose.Schema({
 	},
 	status: {
 		type: EStatus,
+		required: true
+	},
+	role: {
+		type: ERole,
 		required: true
 	}
 });

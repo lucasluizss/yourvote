@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import environment from '../../../environment/environment';
 
 export const generateToken = (ipAddress: string) => {
 	return {
@@ -10,14 +11,9 @@ export const generateToken = (ipAddress: string) => {
 };
 
 export const sign = (id: string) => {
-	return jwt.sign(
-		{
-			sub: id,
-			id: id
-		},
-		String(process.env.SECRET),
-		{
-			expiresIn: '15m'
-		}
-	);
+	const secoundsOfDay = 86400;
+
+	return jwt.sign({ id: id }, environment.SECRET as string, {
+		expiresIn: secoundsOfDay
+	});
 }

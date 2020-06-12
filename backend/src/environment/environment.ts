@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export default {
 	smtpOptions: {
 		host: process.env.HOST_MAIL,
@@ -6,5 +9,10 @@ export default {
 				user: process.env.USER_MAIL,
 				pass: process.env.PWD_MAIL
 		}
-	}
+	},
+	SECRET: process.env.SECRET,
+	Admins: process.env.ADMINS?.split(',') || [
+		'lucasluizss@live.com',
+		'williammsouza@live.com'
+	]
 };

@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs';
-
 import { injectable, inject } from 'tsyringe';
 import { sign } from '../../infra/core/security';
 import { IAccountService } from '../../domain/services/IAccountService';
@@ -17,9 +16,9 @@ export default class AccountService implements IAccountService {
 
     if (!account || !bcrypt.compareSync(password, account.password)) {
         Result.Fail('Email or password is incorrect');
-    }
+		}
 
-		const jwtToken = sign(account.id);
+		const jwtToken = sign(account._id);
 
 		return jwtToken;
 	}

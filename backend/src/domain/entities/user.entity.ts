@@ -67,6 +67,10 @@ export default class UserEntity extends Entity<IUserEntity> {
     this.props.password = pwd;
   }
 
+  public setRole(role: ERole): void {
+    this.props.role = role;
+  }
+
   public getProps(): IUserEntity {
     return this.props;
   }

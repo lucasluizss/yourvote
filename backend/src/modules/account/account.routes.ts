@@ -1,4 +1,4 @@
-import { LoginValidator } from './../../infra/core/validators/index';
+import { LoginValidator } from '../../infra/core/validators/account.validator';
 import express from 'express';
 import authController from './account.controller';
 
