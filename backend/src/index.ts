@@ -4,8 +4,9 @@ import 'reflect-metadata';
 import './infra/container';
 import express from 'express';
 import routes from './routes';
-import bodyParser from 'body-parser';
 import { errors } from 'celebrate';
+import bodyParser from 'body-parser';
+import swagger from './infra/shared/swagger';
 
 class App {
 	public readonly app: express.Application;
@@ -13,14 +14,18 @@ class App {
 	constructor() {
 		this.app = express();
 
+		this.loadSwagger();
 		this.configureMiddlewares();
 		this.configureRoutes();
 		this.handleErrors();
 	}
 
+	private loadSwagger() {
+		this.app.use('/docs', swagger);
+	}
+
 	private configureRoutes() {
-		// TODO: Mudar rotas para versão 1 posteriormente
-		this.app.use('/', routes);
+		this.app.use('/v1/', routes);
 	}
 
 	private configureMiddlewares() {

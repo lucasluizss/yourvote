@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-		"experimentalDecorators": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Basic Options */
