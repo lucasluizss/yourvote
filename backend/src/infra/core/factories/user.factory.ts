@@ -1,4 +1,6 @@
+import { EStatus } from './../../../domain/enums/Status.enum';
 import { IUserEntity } from './../../../domain/entities/user.entity';
+import { ERole } from '../../../domain/enums/Roles.enum';
 
 export default class UserFactory {
 	static create(user: IUserEntity): any {
@@ -8,8 +10,8 @@ export default class UserFactory {
 			name: user.name,
 			email: user.email,
 			phone: user.phone,
-			status: user.status,
-			role: user.role
+			status: EStatus[user.status],
+			role: ERole[user.role]
 		}
 	}
 }

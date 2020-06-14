@@ -7,11 +7,13 @@ import environment from '../../../environment/environment';
 
 export const authorize = (roles: ERole[] = []) => {
 	const secret = environment.SECRET as string;
+	console.log(secret)
 
 	return [
 		expressJwt({ secret }),
 
 		async (request: Request, response: Response, next: NextFunction) => {
+			console.log('lucas: ', request.headers)
 			let token = request.headers.authorization;
 			token = token?.includes('Bearer ') ? token.split(' ')[1] : token;
 
