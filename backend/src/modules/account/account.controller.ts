@@ -49,6 +49,38 @@ class AuthController {
 			return response.json(Result.Fail(error.message));
 		}
 	}
+
+	async forgotPassword(request: Request, response: Response) {
+		const { email } = request.params;
+
+		try {
+			const accountService = container.resolve(AccountService);
+
+			await accountService.forgotPassword(email);
+
+			return response.json(Result.Success())
+		} catch(error) {
+			return response.json(Result.Fail(error.message));
+		}
+	}
+
+	async resetPassword(request: Request, response: Response) {
+		const { email, password, newpassword } = request.body;
+
+		try {
+			const accountService = container.resolve(AccountService);
+
+			if (password !== newpassword) {
+				return response.json(Result.Fail('Senhas não compatíveis'));
+			}
+
+			await accountService.resetPassword(email, password);
+
+			return response.json(Result.Success());
+		} catch(error) {
+			return response.json(Result.Fail(error.message));
+		}
+	}
 }
 
 export default new AuthController();

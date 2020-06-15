@@ -1,3 +1,5 @@
+import { forgot_password } from './../../infra/shared/templates/email.template';
+import IEmailService, { EmailService } from './../../infra/shared/EmailService';
 import { verifyJwtToken } from './../../infra/core/security/index';
 import bcrypt from 'bcryptjs';
 import { injectable, inject } from 'tsyringe';
@@ -11,7 +13,10 @@ import { ERole } from '../../domain/enums/Roles.enum';
 @injectable()
 export default class AccountService implements IAccountService {
 
-	constructor(@inject(UserRepository.name) private readonly _userRepository: IUserRepository) { }
+	constructor(
+		@inject(UserRepository.name) private readonly _userRepository: IUserRepository,
+		@inject(EmailService.name) private readonly _emailService: IEmailService
+	) { }
 
 	async authenticate(email: string, password: string, ipAddress: any): Promise<string> {
 		const user = await this._userRepository.getByEmail(email);
@@ -43,6 +48,30 @@ export default class AccountService implements IAccountService {
 		const userEntity = UserEntity.create(user, id);
 
 		userEntity.setRole(ERole.Admin);
+
+		await this._userRepository.update(userEntity.getProps());
+
+		return true;
+	}
+
+	async forgotPassword(email: string): Promise<void> {
+		const user = await this._userRepository.getByEmail(email);
+
+		if (user) {
+			const tokenEmail = generateJtwToken(user._id, '15m');
+
+			this._emailService.send(email, 'Nova Senha', forgot_password(user.name, tokenEmail));
+		} else {
+			throw new Error('User is not registered in the system.')
+		}
+	}
+
+	async resetPassword(email: string, password: string): Promise<boolean> {
+		const user = await this._userRepository.getByEmail(email);
+
+		const userEntity = UserEntity.create(user);
+
+		userEntity.setEncriptedPassword(bcrypt.hashSync(password, 10));
 
 		await this._userRepository.update(userEntity.getProps());
 

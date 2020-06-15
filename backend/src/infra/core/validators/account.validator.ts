@@ -9,3 +9,13 @@ export const LoginValidator = celebrate({
 }, {
 	abortEarly: false
 });
+
+export const ResetPasswordValidator = celebrate({
+	[Segments.BODY]: Joi.object().keys({
+		email: Joi.string().required().email(),
+		password: Joi.string().required(),
+		newpassword: Joi.string().required(),
+	})
+}, {
+	abortEarly: false
+});
