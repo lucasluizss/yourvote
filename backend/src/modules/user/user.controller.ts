@@ -2,7 +2,7 @@ import { container } from 'tsyringe';
 import UserService from './user.service';
 import { Request, Response } from 'express';
 import Result from '../../infra/core/factories/result.factory';
-import UserEntity, { IUserEntity } from './../../domain/entities/user.entity';
+import { IUserEntity } from './../../domain/entities/user.entity';
 import UserFactory from '../../infra/core/factories/user.factory';
 
 class UserController {

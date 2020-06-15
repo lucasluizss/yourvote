@@ -9,6 +9,7 @@ import UserRepository from '../user/user.repository';
 import IUserRepository from '../../domain/repositories/IUserRepository';
 import UserEntity from '../../domain/entities/user.entity';
 import { ERole } from '../../domain/enums/Roles.enum';
+import { EStatus } from '../../domain/enums/Status.enum';
 
 @injectable()
 export default class AccountService implements IAccountService {
@@ -22,7 +23,9 @@ export default class AccountService implements IAccountService {
 		const user = await this._userRepository.getByEmail(email);
 
     if (!user || !bcrypt.compareSync(password, user.password)) {
-        throw new Error('Email or password is incorrect');
+      throw new Error('Email or password is incorrect');
+		} else if (user.status === EStatus.Inactive) {
+			throw new Error('You need active your account first, please contact your admin.');
 		}
 
 		return generateJtwToken(user._id);
