@@ -20,6 +20,21 @@ class AuthController {
 		}
 	}
 
+	async activeUser(request: Request, response: Response) {
+		const { id } = request.params;
+
+		try {
+			const accountService = container.resolve(AccountService);
+
+			await accountService.activeUser(id);
+
+			return response.json(Result.Success());
+
+		} catch(error) {
+			return response.json(Result.Fail(error.message));
+		}
+	}
+
 	async comfirmEmail(request: Request, response: Response) {
 		const { token } = request.params;
 

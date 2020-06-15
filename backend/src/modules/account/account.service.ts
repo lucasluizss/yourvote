@@ -42,6 +42,20 @@ export default class AccountService implements IAccountService {
 		return true;
 	}
 
+	async activeUser(id: string): Promise<boolean> {
+		const userId = await verifyJwtToken(id);
+
+		const user = await this._userRepository.getById(userId);
+
+		const userEntity = UserEntity.create(user, user.id);
+
+		userEntity.active();
+
+		await this._userRepository.update(userEntity.getProps());
+
+		return true;
+	}
+
 	async makeAdmin(id: string): Promise<boolean> {
 		const user = await this._userRepository.getById(id);
 

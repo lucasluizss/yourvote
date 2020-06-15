@@ -16,6 +16,7 @@ export const forgot_password = (user: string, token: string) => `
 		<h1>Nova senha.</h1>
 		<p>${user}, você solicitou uma nova senha, clique no link abaixo para criar uma nova senha:</p>
 		<p><a href="/auth/reset-password/${token}">Clique aqui</a></p>
+		<p>Este link expira em 10 minutos</p>
 	</body>
 </html>
 `;
