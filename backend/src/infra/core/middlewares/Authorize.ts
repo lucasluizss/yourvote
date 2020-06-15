@@ -4,6 +4,7 @@ import expressJwt from 'express-jwt';
 import jwt from 'jsonwebtoken';
 import UserContext from '../../../database/models/user.model';
 import environment from '../../../environment/environment';
+import { EStatus } from '../../../domain/enums/Status.enum';
 
 export const authorize = (roles: ERole[] = []) => {
 	const secret = environment.SECRET as string;
@@ -29,6 +30,8 @@ export const authorize = (roles: ERole[] = []) => {
 
 				if (!account || (roles.length && !roles.includes(account.role))) {
 					return response.status(401).json({ message: 'Unauthorized' });
+				} else if (account.status === EStatus.Inactive) {
+					return response.status(401).json({ message: 'User must be actived, please contact your admin.' });
 				}
 
 				return next();
