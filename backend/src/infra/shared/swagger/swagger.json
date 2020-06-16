@@ -20,7 +20,7 @@
     }
   ],
   "paths": {
-    "/auth/authenticate": {
+    "/account/authenticate": {
       "post": {
         "summary": "Authenticate account credentials and return a JWT token and a cookie with a refresh token",
         "tags": [
@@ -129,7 +129,7 @@
         }
       }
     },
-    "/auth/active-user": {
+    "/account/active-user": {
       "post": {
         "summary": "Active account",
         "tags": [
@@ -238,7 +238,7 @@
         }
       }
     },
-    "/auth/confirm/{token}": {
+    "/account/confirm/{token}": {
       "get": {
         "summary": "Confirm user's mail",
         "tags": [
@@ -335,7 +335,7 @@
         }
       }
     },
-    "/auth/make-admin/{userId}": {
+    "/account/make-admin/{userId}": {
       "post": {
         "summary": "Revoke a refresh token",
         "tags": [
@@ -388,143 +388,7 @@
         }
       }
     },
-    "/user": {
-      "get": {
-        "summary": "Get a list of all accounts",
-        "tags": [
-          "User"
-        ],
-        "description": "Restricted to admin users.",
-        "operationId": "getAllAccounts",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "An array of all accounts",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "example": "5eb12e197e06a76ccdefc121"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "Mr"
-                      },
-                      "firstName": {
-                        "type": "string",
-                        "example": "chuck"
-                      },
-                      "lastName": {
-                        "type": "string",
-                        "example": "Watmore"
-                      },
-                      "email": {
-                        "type": "string",
-                        "example": "chuck@example.com"
-                      },
-                      "role": {
-                        "type": "string",
-                        "example": "Admin"
-                      },
-                      "created": {
-                        "type": "string",
-                        "example": "2020-05-05T09:12:57.848Z"
-                      },
-                      "updated": {
-                        "type": "string",
-                        "example": "2020-05-08T03:11:21.553Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/UnauthorizedError"
-          }
-        }
-      },
-      "post": {
-        "summary": "Register a new user account and send a verification email",
-        "tags": [
-          "User"
-        ],
-        "description": "The first account registered in the system is assigned the `Admin` role, other accounts are assigned the `User` role.",
-        "operationId": "register",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "example": "bartowski"
-                  },
-                  "name": {
-                    "type": "string",
-                    "example": "Charles Bartowski"
-                  },
-                  "email": {
-                    "type": "string",
-                    "example": "chuck@example.com"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "123456"
-                  },
-                  "phone": {
-                    "type": "string",
-                    "example": "11992993998"
-                  },
-                  "acceptTerms": {
-                    "type": "boolean"
-                  }
-                },
-                "required": [
-                  "username",
-                  "name",
-                  "email",
-                  "password",
-                  "phone",
-                  "acceptTerms"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The registration request was successful and a verification email has been sent to the specified email address",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Registration successful, please check your email for verification instructions"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/forgot-password": {
+    "/account/forgot-password": {
       "post": {
         "summary": "Submit email address to reset the password on an account",
         "tags": [
@@ -570,7 +434,7 @@
         }
       }
     },
-    "/auth/reset-password": {
+    "/account/reset-password": {
       "post": {
         "summary": "Reset the password for an account",
         "tags": [
@@ -642,7 +506,7 @@
         }
       }
     },
-    "/user/{id}": {
+    "/users/{id}": {
       "parameters": [
         {
           "in": "path",
@@ -862,6 +726,142 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get a list of all accounts",
+        "tags": [
+          "User"
+        ],
+        "description": "Restricted to admin users.",
+        "operationId": "getAllAccounts",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of all accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "5eb12e197e06a76ccdefc121"
+                      },
+                      "title": {
+                        "type": "string",
+                        "example": "Mr"
+                      },
+                      "firstName": {
+                        "type": "string",
+                        "example": "chuck"
+                      },
+                      "lastName": {
+                        "type": "string",
+                        "example": "Watmore"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "chuck@example.com"
+                      },
+                      "role": {
+                        "type": "string",
+                        "example": "Admin"
+                      },
+                      "created": {
+                        "type": "string",
+                        "example": "2020-05-05T09:12:57.848Z"
+                      },
+                      "updated": {
+                        "type": "string",
+                        "example": "2020-05-08T03:11:21.553Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      },
+      "post": {
+        "summary": "Register a new user account and send a verification email",
+        "tags": [
+          "User"
+        ],
+        "description": "The first account registered in the system is assigned the `Admin` role, other accounts are assigned the `User` role.",
+        "operationId": "register",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "bartowski"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Charles Bartowski"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "chuck@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "11992993998"
+                  },
+                  "acceptTerms": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "username",
+                  "name",
+                  "email",
+                  "password",
+                  "phone",
+                  "acceptTerms"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The registration request was successful and a verification email has been sent to the specified email address",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Registration successful, please check your email for verification instructions"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
