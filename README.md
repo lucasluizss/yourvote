@@ -79,21 +79,9 @@ After merging your receipt request to done, you can delete a branch from yours.
 
 This project is under the Apache License. See the [LICENSE](LICENSE.md) for details.
 
-
-## :mailbox_with_mail: Get in touch!
-
-<a href="https://lucasluizss.github.io" target="_blank" >
-  <img alt="Website - Lucas Silva" src="https://img.shields.io/badge/Website--%23F8952D?style=social">
-</a>&nbsp;&nbsp;&nbsp;
-<a href="https://www.linkedin.com/in/lucasluizss/" target="_blank" >
-  <img alt="Linkedin - Lucas Silva" src="https://img.shields.io/badge/Linkedin--%23F8952D?style=social&logo=linkedin">
-</a>&nbsp;&nbsp;&nbsp;
-<a href="mailto:lucasluizss@live.com" target="_blank" >
-  <img alt="Email - Lucas Silva" src="https://img.shields.io/badge/Email--%23F8952D?style=social&logo=gmail">
-</a>
-
+## Author
 <p align="center">
-	Made with ♥ by Lucas Silva :wave: [Get in touch!](https://www.linkedin.com/in/lucasluizss/)
+	Made with ♥ by Lucas Silva
 </p>
 
 [nodejs]: https://nodejs.org/
