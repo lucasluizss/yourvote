@@ -23,7 +23,7 @@ export default class AccountService implements IAccountService {
 		@inject(EmailService.name) private readonly _emailService: IEmailService
 	) { }
 
-	async authenticate(email: string, password: string, ipAddress: any): Promise<string> {
+	async authenticate(email: string, password: string, ipAddress: any, device: string): Promise<string> {
 		const user = await this._userRepository.getByEmail(email);
 
     if (!user || !bcrypt.compareSync(password, user.password)) {
@@ -37,8 +37,8 @@ export default class AccountService implements IAccountService {
 		const accountData = {
 			userId: user._id,
 			loginDate: new Date(),
-			logoutDate: null,
 			ip: ipAddress,
+			device: device,
 			token: token
 		} as IAuthenticationHistory;
 

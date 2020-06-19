@@ -6,14 +6,29 @@ import Result from '../../infra/core/factories/result.factory';
 class AuthController {
 
 	async authenticate(request: Request, response: Response) {
-		const { email, password, ipAddress = request.ip } = request.body;
+		const { email, password, ipAddress = request.ip, device = request.host } = request.body;
 
 		try {
 			const accountService = container.resolve(AccountService);
 
-			const jwtToken = await accountService.authenticate(email, password, ipAddress);
+			const jwtToken = await accountService.authenticate(email, password, ipAddress, device);
 
 			return response.json(Result.Success({ token: jwtToken }));
+
+		} catch(error) {
+			return response.json(Result.Fail(error.message));
+		}
+	}
+
+	async logout(request: Request, response: Response) {
+		const { authorization } = request.headers;
+
+		try {
+			const accountService = container.resolve(AccountService);
+
+			await accountService.logout(String(authorization));
+
+			return response.json(Result.Success());
 
 		} catch(error) {
 			return response.json(Result.Fail(error.message));

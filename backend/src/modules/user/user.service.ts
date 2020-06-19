@@ -9,6 +9,7 @@ import { ERole } from '../../domain/enums/Roles.enum';
 import environment from '../../environment/environment';
 import IEmailService, { EmailService } from '../../infra/shared/EmailService';
 import { new_user_template } from '../../infra/shared/templates/email.template';
+import { uuid } from 'uuidv4';
 
 @injectable()
 export default class UserService implements IUserService {

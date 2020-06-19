@@ -1,3 +1,5 @@
+import { uuid } from 'uuidv4';
+
 const isEntity = (v: any): v is Entity<any> => {
   return v instanceof Entity;
 };
@@ -7,7 +9,7 @@ export abstract class Entity<T> {
   protected props: T;
 
   constructor (props: T, id?: string) {
-    this._id = id ? id : '00000000-0000-0000-0000-000000000000';
+    this._id = id ? id : uuid();
     this.props = props;
   }
 

@@ -13,6 +13,7 @@ import {
 const routes = express.Router();
 
 routes.post('/authenticate', LoginValidator, authController.authenticate);
+routes.post('/logout', authController.logout);
 routes.get('/confirm/:token', ConfirmEmailValidator, authController.comfirmEmail);
 routes.post('/active-user', authorize([ERole.Admin]), ActiveUserValidator, authController.activeUser);
 routes.post('/make-admin', authorize([ERole.Admin]), authController.makeAdmin);

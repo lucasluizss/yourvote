@@ -1,15 +1,11 @@
-import { IAuthenticationHistory } from './../../domain/entities/authentication-history.entity';
+
 import mongoose, { Schema } from 'mongoose';
+import IAuthenticationHistory from '../../domain/entities/authentication-history.entity';
 
 const AuthenticationHistorySchema: Schema = new mongoose.Schema({
-	id: {
-		type: Schema.Types.ObjectId,
-		required: true,
-		unique: true,
-		index: true
-	},
+	_id: String,
 	userId: {
-		type: Schema.Types.ObjectId,
+		type: String,
 		required: true
 	},
 	loginDate: {
@@ -18,7 +14,7 @@ const AuthenticationHistorySchema: Schema = new mongoose.Schema({
 	},
 	logoutDate: {
 		type: Date,
-		required: true
+		default: null
 	},
 	ip: {
 		type: String,
@@ -26,7 +22,7 @@ const AuthenticationHistorySchema: Schema = new mongoose.Schema({
 	},
 	device: {
 		type: String,
-		required: true
+		default: null
 	},
 	token: {
 		type: String,

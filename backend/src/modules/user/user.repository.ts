@@ -1,6 +1,7 @@
 import { IUserEntity } from './../../domain/entities/user.entity';
 import IUserRepository from '../../domain/repositories/IUserRepository';
 import UserContext from '../../database/models/user.model';
+import { uuid } from 'uuidv4';
 
 export default class UserRepository implements IUserRepository {
 
@@ -17,6 +18,7 @@ export default class UserRepository implements IUserRepository {
 	}
 
 	async save(user: IUserEntity): Promise<IUserEntity> {
+		user._id = uuid();
 		return await UserContext.create(user) as IUserEntity;
 	}
 
