@@ -1,3 +1,4 @@
+import { IAuthenticationHistory } from './../../domain/entities/authentication-history.entity';
 import { forgot_password } from './../../infra/shared/templates/email.template';
 import IEmailService, { EmailService } from './../../infra/shared/EmailService';
 import { verifyJwtToken } from './../../infra/core/security/index';
@@ -10,12 +11,15 @@ import IUserRepository from '../../domain/repositories/IUserRepository';
 import UserEntity from '../../domain/entities/user.entity';
 import { ERole } from '../../domain/enums/Roles.enum';
 import { EStatus } from '../../domain/enums/Status.enum';
+import AccouuntRepository from './account.repository';
+import IAccouuntRepository from '../../domain/repositories/IAccountRepository';
 
 @injectable()
 export default class AccountService implements IAccountService {
 
 	constructor(
 		@inject(UserRepository.name) private readonly _userRepository: IUserRepository,
+		@inject(AccouuntRepository.name) private readonly _accountRepository: IAccouuntRepository,
 		@inject(EmailService.name) private readonly _emailService: IEmailService
 	) { }
 
@@ -28,7 +32,23 @@ export default class AccountService implements IAccountService {
 			throw new Error('You need active your account first, please contact your admin.');
 		}
 
-		return generateJtwToken(user._id);
+		const token = generateJtwToken(user._id);
+
+		const accountData = {
+			userId: user._id,
+			loginDate: new Date(),
+			logoutDate: null,
+			ip: ipAddress,
+			token: token
+		} as IAuthenticationHistory;
+
+		await this._accountRepository.addAuthenticationHistory(accountData);
+
+		return token;
+	}
+
+	async logout(token: string): Promise<void> {
+		await this._accountRepository.updateLogout(token);
 	}
 
 	async confirmEmail(token: string): Promise<boolean> {

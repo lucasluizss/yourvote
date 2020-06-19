@@ -4,7 +4,12 @@ import { EStatus } from './../../domain/enums/Status.enum';
 import { IUserEntity } from './../../domain/entities/user.entity';
 
 const UserSchema: Schema = new mongoose.Schema({
-	id: String,
+	id: {
+		type: Schema.Types.ObjectId,
+		required: true,
+		unique: true,
+		index: true
+	},
 	username: {
 		type: String,
 		required: true,
@@ -37,11 +42,13 @@ const UserSchema: Schema = new mongoose.Schema({
 	status: {
 		type: EStatus,
 		required: true,
+		enum: EStatus,
 		default: EStatus.Inactive
 	},
 	role: {
 		type: ERole,
 		required: true,
+		enum: ERole,
 		default: ERole.User
 	}
 });
