@@ -1,4 +1,3 @@
-import { IAuthenticationHistory } from './../../domain/entities/authentication-history.entity';
 import { forgot_password } from './../../infra/shared/templates/email.template';
 import IEmailService, { EmailService } from './../../infra/shared/EmailService';
 import { verifyJwtToken } from './../../infra/core/security/index';
@@ -13,6 +12,7 @@ import { ERole } from '../../domain/enums/Roles.enum';
 import { EStatus } from '../../domain/enums/Status.enum';
 import AccouuntRepository from './account.repository';
 import IAccouuntRepository from '../../domain/repositories/IAccountRepository';
+import IAuthenticationHistory from '../../domain/entities/authentication-history.entity';
 
 @injectable()
 export default class AccountService implements IAccountService {
