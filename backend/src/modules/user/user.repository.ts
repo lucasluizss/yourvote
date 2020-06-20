@@ -1,7 +1,6 @@
 import { IUserEntity } from './../../domain/entities/user.entity';
 import IUserRepository from '../../domain/repositories/IUserRepository';
 import UserContext from '../../database/models/user.model';
-import { uuid } from 'uuidv4';
 
 export default class UserRepository implements IUserRepository {
 
@@ -22,7 +21,7 @@ export default class UserRepository implements IUserRepository {
 	}
 
 	async update(user: IUserEntity): Promise<IUserEntity> {
-		return await UserContext.findByIdAndUpdate(user.id, user) as IUserEntity;
+		return await UserContext.findByIdAndUpdate(user._id, user) as IUserEntity;
 	}
 
 	async delete(id: string): Promise<boolean> {

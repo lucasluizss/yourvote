@@ -81,7 +81,7 @@ class AuthController {
 	}
 
 	async forgotPassword(request: Request, response: Response) {
-		const { email } = request.params;
+		const { email } = request.body;
 
 		try {
 			const accountService = container.resolve(AccountService);
@@ -95,12 +95,12 @@ class AuthController {
 	}
 
 	async resetPassword(request: Request, response: Response) {
-		const { email, password, newpassword } = request.body;
+		const { email, password, confirmPassword } = request.body;
 
 		try {
 			const accountService = container.resolve(AccountService);
 
-			if (password !== newpassword) {
+			if (password !== confirmPassword) {
 				return response.json(Result.Fail('Senhas não compatíveis'));
 			}
 

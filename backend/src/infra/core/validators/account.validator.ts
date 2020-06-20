@@ -38,8 +38,11 @@ export const ResetPasswordValidator = celebrate({
 	[Segments.BODY]: Joi.object().keys({
 		email: Joi.string().required().email(),
 		password: Joi.string().required(),
-		newpassword: Joi.string().required(),
-	})
+		confirmPassword: Joi.string().required(),
+	}),
+	[Segments.HEADERS]: Joi.object({
+    authorization: Joi.string().required()
+  }).unknown(),
 }, {
 	abortEarly: false
 });

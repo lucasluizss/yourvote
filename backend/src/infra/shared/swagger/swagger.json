@@ -368,7 +368,7 @@
                 "properties": {
                   "token": {
                     "type": "string",
-                    "example": "51872eca5efedcf424db4cf5afd16a9d00ad25b743a034c9c221afc85d18dcd5e4ad6e3f08607550"
+                    "example": "Bearer 51872eca5efedcf424db4cf5afd16a9d00ad25b743a034c9c221afc85d18dcd5e4ad6e3f08607550"
                   }
                 }
               }
@@ -448,9 +448,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
+                  "email": {
                     "type": "string",
-                    "example": "3c7f8d9c4cb348ff95a0b74a1452aa24fc9611bb76768bb9eafeeb826ddae2935f1880bc7713318f"
+                    "example": "user@domain.com"
                   },
                   "password": {
                     "type": "string",
@@ -462,7 +462,7 @@
                   }
                 },
                 "required": [
-                  "token",
+                  "email",
                   "password",
                   "confirmPassword"
                 ]
@@ -470,6 +470,11 @@
             }
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Password reset was successful so you can now login to the account with the new password",

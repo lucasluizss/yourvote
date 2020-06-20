@@ -56,7 +56,7 @@ export default class AccountService implements IAccountService {
 
 		const user = await this._userRepository.getById(userId);
 
-		const userEntity = UserEntity.create(user, user.id);
+		const userEntity = UserEntity.create(user, user._id);
 
 		userEntity.confirmEmail();
 
@@ -70,7 +70,7 @@ export default class AccountService implements IAccountService {
 
 		const user = await this._userRepository.getById(userId);
 
-		const userEntity = UserEntity.create(user, user.id);
+		const userEntity = UserEntity.create(user, user._id);
 
 		userEntity.active();
 
@@ -106,7 +106,7 @@ export default class AccountService implements IAccountService {
 	async resetPassword(email: string, password: string): Promise<boolean> {
 		const user = await this._userRepository.getByEmail(email);
 
-		const userEntity = UserEntity.create(user);
+		const userEntity = UserEntity.create(user, user._id);
 
 		userEntity.setEncriptedPassword(bcrypt.hashSync(password, 10));
 
