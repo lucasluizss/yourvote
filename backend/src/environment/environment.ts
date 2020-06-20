@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default {
+	BaseUrl: process.env.BASE_URL || 'http://localhost:3333/v1',
 	MongoURI: process.env.MONGODB_URI,
 	SmtpOptions: {
 		host: process.env.HOST_MAIL,
