@@ -1,10 +1,12 @@
-import { ERole } from './../../../domain/enums/Roles.enum';
-import { Request, Response, NextFunction } from 'express';
-import expressJwt from 'express-jwt';
 import jwt from 'jsonwebtoken';
-import UserContext from '../../../database/models/user.model';
+import expressJwt from 'express-jwt';
+import { Request, Response, NextFunction } from 'express';
+import { ERole } from './../../../domain/enums/Roles.enum';
 import environment from '../../../environment/environment';
 import { EStatus } from '../../../domain/enums/Status.enum';
+import UserContext from '../../../database/models/user.model';
+import AuthenticationHistoryContext from '../../../database/models/authentication-history.model';
+import Result from '../factories/result.factory';
 
 export const authorize = (roles: ERole[] = []) => {
 	const secret = environment.SECRET as string;
@@ -17,7 +19,13 @@ export const authorize = (roles: ERole[] = []) => {
 			token = token?.includes('Bearer ') ? token.split(' ')[1] : token;
 
 			if (!token) {
-				return response.status(403).json({ message: 'No token provided.' });
+				return response.status(403).json(Result.Fail('No token provided.'));
+			}
+
+			const authenticationHistory = await AuthenticationHistoryContext.findOne({ token: token });
+
+			if (authenticationHistory?.logoutDate) {
+				return response.status(401).json(Result.Fail('Token expired!'));
 			}
 
 			jwt.verify(token, secret, async (error, decoded: any) => {
@@ -29,9 +37,9 @@ export const authorize = (roles: ERole[] = []) => {
 				const account = await UserContext.findById(userId);
 
 				if (!account || (roles.length && !roles.includes(account.role))) {
-					return response.status(401).json({ message: 'Unauthorized' });
+					return response.status(401).json(Result.Fail('Unauthorized!'));
 				} else if (account.status === EStatus.Inactive) {
-					return response.status(401).json({ message: 'User must be actived, please contact your admin.' });
+					return response.status(401).json(Result.Fail('User must be actived, please contact an admin.'));
 				}
 
 				return next();

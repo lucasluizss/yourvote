@@ -33,7 +33,7 @@ export default class Result implements IResult {
 	}
 
 	static Fail(message?: string): IResult {
-		const result = new Result(false, {}, message);
+		const result = new Result(false, null, message);
 
 		if (!result.message) {
 			delete result.message;
