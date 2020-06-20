@@ -2,10 +2,9 @@ import mongoose, { Schema } from 'mongoose';
 import { ERole } from './../../domain/enums/Roles.enum';
 import { EStatus } from './../../domain/enums/Status.enum';
 import { IUserEntity } from './../../domain/entities/user.entity';
-import { uuid } from 'uuidv4';
 
 const UserSchema: Schema = new mongoose.Schema({
-	_id: String,
+	id: String,
 	username: {
 		type: String,
 		required: true,

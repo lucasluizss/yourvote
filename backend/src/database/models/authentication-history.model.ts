@@ -3,7 +3,6 @@ import mongoose, { Schema } from 'mongoose';
 import IAuthenticationHistory from '../../domain/entities/authentication-history.entity';
 
 const AuthenticationHistorySchema: Schema = new mongoose.Schema({
-	_id: String,
 	userId: {
 		type: String,
 		required: true
@@ -26,7 +25,8 @@ const AuthenticationHistorySchema: Schema = new mongoose.Schema({
 	},
 	token: {
 		type: String,
-		required: true
+		required: true,
+		unique:true
 	}
 });
 

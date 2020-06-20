@@ -18,7 +18,6 @@ export default class UserRepository implements IUserRepository {
 	}
 
 	async save(user: IUserEntity): Promise<IUserEntity> {
-		user._id = uuid();
 		return await UserContext.create(user) as IUserEntity;
 	}
 
