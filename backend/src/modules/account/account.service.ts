@@ -1,16 +1,16 @@
-import { forgot_password } from './../../infra/shared/templates/email.template';
-import IEmailService, { EmailService } from './../../infra/shared/EmailService';
-import { verifyJwtToken } from './../../infra/core/security/index';
 import bcrypt from 'bcryptjs';
 import { injectable, inject } from 'tsyringe';
-import { generateJtwToken } from '../../infra/core/security';
-import { IAccountService } from '../../domain/services/IAccountService';
 import UserRepository from '../user/user.repository';
-import IUserRepository from '../../domain/repositories/IUserRepository';
-import UserEntity from '../../domain/entities/user.entity';
+import AccouuntRepository from './account.repository';
 import { ERole } from '../../domain/enums/Roles.enum';
 import { EStatus } from '../../domain/enums/Status.enum';
-import AccouuntRepository from './account.repository';
+import UserEntity from '../../domain/entities/user.entity';
+import { generateJtwToken } from '../../infra/core/security';
+import { verifyJwtToken } from './../../infra/core/security/index';
+import IUserRepository from '../../domain/repositories/IUserRepository';
+import { IAccountService } from '../../domain/services/IAccountService';
+import { forgot_password } from './../../infra/shared/templates/email.template';
+import IEmailService, { EmailService } from './../../infra/shared/EmailService';
 import IAccouuntRepository from '../../domain/repositories/IAccountRepository';
 import IAuthenticationHistory from '../../domain/entities/authentication-history.entity';
 

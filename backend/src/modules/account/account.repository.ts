@@ -1,6 +1,6 @@
-import AuthenticationHistoryContext from '../../database/models/authentication-history.model';
 import IAccountRepository from '../../domain/repositories/IAccountRepository';
 import IAuthenticationHistory from '../../domain/entities/authentication-history.entity';
+import AuthenticationHistoryContext from '../../database/models/authentication-history.model';
 
 export default class AccouuntRepository implements IAccountRepository {
 	async addAuthenticationHistory({ userId, loginDate, ip, token, device }: IAuthenticationHistory): Promise<void> {
