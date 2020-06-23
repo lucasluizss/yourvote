@@ -45,7 +45,20 @@ const UserSchema: Schema = new mongoose.Schema({
 		required: true,
 		enum: ERole,
 		default: ERole.User
+	},
+	createdAt: {
+		type: Date,
+		required: true,
+		default: new Date()
+	},
+	updatedAt: {
+		type: Date,
+		required: false,
+		default: null
 	}
+},
+{
+	timestamps: true
 });
 
 export default mongoose.model<IUserEntity>('User', UserSchema, 'Users');

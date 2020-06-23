@@ -12,6 +12,8 @@ export interface IUserEntity extends Document {
 	phone: string;
   status: EStatus;
   role: ERole;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export default class UserEntity extends Entity<IUserEntity> {
