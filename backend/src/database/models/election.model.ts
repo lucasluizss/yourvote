@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { ElectionEntity } from './../../domain/entities/election.entity';
+import { IElectionEntity } from './../../domain/entities/election.entity';
 
 const ElectionSchema: Schema = new mongoose.Schema({
 	id: String,
@@ -31,4 +31,4 @@ const ElectionSchema: Schema = new mongoose.Schema({
 	}
 });
 
-export default mongoose.model<ElectionEntity>('Election', ElectionSchema, 'Elections');
+export default mongoose.model<IElectionEntity>('Election', ElectionSchema, 'Elections');

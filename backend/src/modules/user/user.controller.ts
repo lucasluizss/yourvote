@@ -16,7 +16,7 @@ class UserController {
 			return response.json(Result.Success(list.map(UserFactory.create)));
 
 		} catch(error) {
-			return response.json(Result.Fail(error));
+			return response.json(Result.Fail(error.message));
 		}
 	}
 
@@ -31,7 +31,7 @@ class UserController {
 			return response.json(Result.Success(UserFactory.create(user)));
 
 		} catch(error) {
-			return response.json(Result.Fail(error));
+			return response.json(Result.Fail(error.message));
 		}
 	}
 
