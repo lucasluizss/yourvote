@@ -11,6 +11,14 @@ const ElectionSchema: Schema = new mongoose.Schema({
 		type: String,
 		required: false
 	},
+	startAt: {
+		type: Date,
+		required: true
+	},
+	expireAt: {
+		type: Date,
+		required: true
+	},
 	createdAt: {
 		type: Date,
 		required: true,
