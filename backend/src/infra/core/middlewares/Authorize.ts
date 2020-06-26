@@ -16,6 +16,7 @@ export const authorize = (roles: ERole[] = []) => {
 
 		async (request: Request, response: Response, next: NextFunction) => {
 			let token = request.headers.authorization;
+
 			token = token?.includes('Bearer ') ? token.split(' ')[1] : token;
 
 			if (!token) {
@@ -25,7 +26,7 @@ export const authorize = (roles: ERole[] = []) => {
 			const authenticationHistory = await AuthenticationHistoryContext.findOne({ token: token });
 
 			if (authenticationHistory?.logoutDate) {
-				return response.status(401).json(Result.Fail('Token expired!'));
+				return response.status(401).json(Result.Fail('Invalid token!'));
 			}
 
 			jwt.verify(token, secret, async (error, decoded: any) => {
@@ -43,6 +44,8 @@ export const authorize = (roles: ERole[] = []) => {
 				} else if (!account.emailConfirmed) {
 					return response.status(401).json(Result.Fail('You must confirm your email'));
 				}
+
+				request.userId = userId;
 
 				return next();
 			});
