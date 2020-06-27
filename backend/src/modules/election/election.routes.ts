@@ -9,7 +9,7 @@ const electionController = new ElectionController();
 routes.get('/', authorize([ERole.Admin]), electionController.index);
 routes.get('/:id', authorize([ERole.Admin]), electionController.show);
 routes.post('/', authorize([ERole.Admin]), electionController.create);
-routes.put('/', authorize([ERole.Admin]), electionController.update);
+routes.put('/:id', authorize([ERole.Admin]), electionController.update);
 routes.delete('/:id', authorize([ERole.Admin]), electionController.delete);
 
 export default routes;
