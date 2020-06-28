@@ -5,7 +5,7 @@ import IElectionRepository from '../../domain/repositories/IElectionRepository';
 export default class ElectionRepository implements IElectionRepository {
 
 	async getById(id: string): Promise<IElectionEntity> {
-		return await ElectionContext.findById({ id }) as IElectionEntity;
+		return await ElectionContext.findById({ _id: id }) as IElectionEntity;
 	}
 
 	async list(): Promise<IElectionEntity[]> {

@@ -56,7 +56,7 @@ export default class ElectionController {
 		try {
 			const electionService = container.resolve(ElectionService);
 
-			const election = await electionService.update({ id, title, description, startAt, expireAt } as IElectionEntity);
+			const election = await electionService.update({ _id: id, title, description, startAt, expireAt } as IElectionEntity);
 
 			return response.json(Result.Success(election));
 

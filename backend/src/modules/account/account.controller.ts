@@ -16,6 +16,7 @@ class AuthController {
 			return response.json(Result.Success({ token: jwtToken }));
 
 		} catch(error) {
+			console.log(error)
 			return response.json(Result.Fail(error.message));
 		}
 	}

@@ -6,7 +6,7 @@ import electionRoutes from '../modules/election/election.routes';
 const routes = express.Router();
 
 routes.use('/users', userRoutes);
-routes.use('/account', authRoutes);
-routes.use('/election', electionRoutes);
+routes.use('/accounts', authRoutes);
+routes.use('/elections', electionRoutes);
 
 export default routes;

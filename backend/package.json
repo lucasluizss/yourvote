@@ -4,9 +4,9 @@
   "description": "Voting app",
   "main": "server.js",
   "scripts": {
-    "dev": "ts-node-dev --transpileOnly --ignore-watch node_modules server.ts",
-    "start": "npx ts-node server.ts",
     "build": "tsc",
+    "start": "npx ts-node server.ts",
+    "dev:server": "ts-node-dev --inspect --transpileOnly --ignore-watch node_modules server.ts",
     "start:dev": "npx ts-node server.ts",
     "test": "jest --config jestconfig.json"
   },

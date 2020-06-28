@@ -12,7 +12,7 @@ export const generateToken = (ipAddress: string) => {
 
 export const generateJtwToken = (id: string, expireMinutes?: string) => {
 	return jwt.sign({ id: id }, environment.SECRET as string, {
-		subject: id,
+		subject: String(id),
 		expiresIn: expireMinutes || '1d'
 	});
 }
