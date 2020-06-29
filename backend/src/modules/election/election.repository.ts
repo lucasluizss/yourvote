@@ -9,7 +9,8 @@ export default class ElectionRepository implements IElectionRepository {
 	}
 
 	async list(): Promise<IElectionEntity[]> {
-		return await ElectionContext.find();
+		const today = new Date();
+		return await ElectionContext.find({ startAt: { $lte: today }, expireAt: { $gte: today } });
 	}
 
 	async save(election: IElectionEntity): Promise<IElectionEntity> {
