@@ -1,0 +1,51 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Voting app",
+  "main": "server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npx ts-node server.ts",
+    "dev:server": "ts-node-dev --inspect --transpileOnly --ignore-watch node_modules server.ts",
+    "start:dev": "npx ts-node server.ts",
+    "test": "jest --config jestconfig.json"
+  },
+  "keywords": [],
+  "author": "Lucas Silva",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.18",
+    "nodemailer": "^6.4.8",
+    "reflect-metadata": "^0.1.13",
+    "swagger-ui-express": "^4.1.4",
+    "uuidv4": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
+    "@types/express-jwt": "0.0.42",
+    "@types/jest": "^26.0.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongoose": "^5.7.23",
+    "@types/nodemailer": "^6.4.0",
+    "@types/supertest": "^2.0.9",
+    "@types/swagger-ui-express": "^4.1.2",
+    "celebrate": "^12.1.1",
+    "jest": "^25.2.6",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.1.0",
+    "ts-node": "^8.10.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tsyringe": "^4.3.0",
+    "typescript": "^3.9.5"
+  }
+}
