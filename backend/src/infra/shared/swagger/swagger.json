@@ -1,0 +1,1303 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "This is YourVote API server.  You can find out more about     YourVote at [http://github.com/lucasluizss/yourvote](http://swagger.i). For this sample, you can use the api key `authorization` in header to test the filters.",
+    "version": "1.0.0",
+    "title": "YourVote",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "lucasluizss@live.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333/v1",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/accounts/authenticate": {
+      "post": {
+        "summary": "Authenticate account credentials and return a JWT token and a cookie with a refresh token",
+        "tags": [
+          "Account"
+        ],
+        "description": "Accounts must be verified before authenticating.",
+        "operationId": "authenticate",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/accounts/logout": {
+      "post": {
+        "summary": "Logout account",
+        "tags": [
+          "Account"
+        ],
+        "operationId": "logout",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/accounts/active": {
+      "post": {
+        "summary": "Active account",
+        "tags": [
+          "Account"
+        ],
+        "description": "Accounts must be verified before authenticating.",
+        "operationId": "active_user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "asdasdasdasdasdasd"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/accounts/confirm/{token}": {
+      "get": {
+        "summary": "Confirm user's mail",
+        "tags": [
+          "Account"
+        ],
+        "description": "Confirmation of user email.",
+        "operationId": "refreshToken",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "description": "The `token` cookie",
+            "schema": {
+              "type": "string",
+              "example": "51872eca5efedcf424db4cf5afd16a9d00ad25b743a034c9c221afc85d18dcd5e4ad6e3f08607550"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account details, a JWT access token and a new refresh token cookie",
+            "headers": {
+              "Set-Cookie": {
+                "description": "`refreshToken`",
+                "schema": {
+                  "type": "string",
+                  "example": "refreshToken=51872eca5efedcf424db4cf5afd16a9d00ad25b743a034c9c221afc85d18dcd5e4ad6e3f08607550; Path=/; Expires=Tue, 16 Jun 2020 09:14:17 GMT; HttpOnly"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "5eb12e197e06a76ccdefc121"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "Mr"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "example": "chuck"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Watmore"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "test@example.com"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "Admin"
+                    },
+                    "created": {
+                      "type": "string",
+                      "example": "2020-05-05T09:12:57.848Z"
+                    },
+                    "isVerified": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "jwtToken": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWIxMmUxOTdlMDZhNzZjY2RlZmMxMjEiLCJpZCI6IjVlYjEyZTE5N2UwNmE3NmNjZGVmYzEyMSIsImlhdCI6MTU4ODc1ODE1N30.xR9H0STbFOpSkuGA9jHNZOJ6eS7umHHqKRhI807YT1Y"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The email or password is incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email or password is incorrect"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/make-admin/{userId}": {
+      "post": {
+        "summary": "Revoke a refresh token",
+        "tags": [
+          "Account"
+        ],
+        "description": "Admin users can revoke the tokens of any account, regular users can only revoke their own tokens.",
+        "operationId": "revokeToken",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "description": "The `userId` cookie",
+            "schema": {
+              "type": "string",
+              "example": "ca5efedcf424db4cf5afd16a9d"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "Bearer 51872eca5efedcf424db4cf5afd16a9d00ad25b743a034c9c221afc85d18dcd5e4ad6e3f08607550"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/accounts/forgot-password": {
+      "post": {
+        "summary": "Submit email address to reset the password on an account",
+        "tags": [
+          "Account"
+        ],
+        "operationId": "forgotPassword",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The request was received and an email has been sent to the specified address with password reset instructions (if the email address is associated with an account)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Please check your email for password reset instructions"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/reset-password": {
+      "post": {
+        "summary": "Reset the password for an account",
+        "tags": [
+          "Account"
+        ],
+        "operationId": "resetPassword",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@domain.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "newPass123"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "example": "newPass123"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password",
+                  "confirmPassword"
+                ]
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Password reset was successful so you can now login to the account with the new password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Password reset successful, you can now login"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Password reset failed due to an invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "Account id",
+          "required": true,
+          "example": "5eb12e197e06a76ccdefc121",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a single account by id",
+        "tags": [
+          "User"
+        ],
+        "description": "Admin users can access any account, regular users are restricted to their own account.",
+        "operationId": "getAccountById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an account",
+        "tags": [
+          "User"
+        ],
+        "description": "Admin users can update any account including role, regular users are restricted to their own account and cannot update role.",
+        "operationId": "updateAccount",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Mr"
+                  },
+                  "firstName": {
+                    "type": "string",
+                    "example": "chuck"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Watmore"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "pass123"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "example": "pass123"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "Admin",
+                      "User"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an account",
+        "tags": [
+          "User"
+        ],
+        "description": "Admin users can delete any account, regular users are restricted to their own account.",
+        "operationId": "deleteAccount",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get a list of all accounts",
+        "tags": [
+          "User"
+        ],
+        "description": "Restricted to admin users.",
+        "operationId": "getAllAccounts",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "post": {
+        "summary": "Register a new user account and send a verification email",
+        "tags": [
+          "User"
+        ],
+        "description": "The first account registered in the system is assigned the `Admin` role, other accounts are assigned the `User` role.",
+        "operationId": "register",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "bartowski"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Charles Bartowski"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "11992993998"
+                  }
+                },
+                "required": [
+                  "username",
+                  "name",
+                  "email",
+                  "password",
+                  "phone",
+                  "acceptTerms"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/elections/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "Election id",
+          "required": true,
+          "example": "5eb12e197e06a76ccdefc121",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a single election by id",
+        "tags": [
+          "Election"
+        ],
+        "description": "Admin users can access any account, regular users are restricted to their own account.",
+        "operationId": "getAccountById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an election",
+        "tags": [
+          "Election"
+        ],
+        "description": "Admin users can update any account including role, regular users are restricted to their own account and cannot update role.",
+        "operationId": "updateAccount",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "new director"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "voting for a new director in company"
+                  },
+                  "startAt": {
+                    "type": "string",
+                    "example": "2020-01-01"
+                  },
+                  "expireAt": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an election",
+        "tags": [
+          "Election"
+        ],
+        "description": "Admin users can delete any election, regular users are restricted to their own account.",
+        "operationId": "deleteAccount",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/elections": {
+      "get": {
+        "summary": "Get a list of all elections",
+        "tags": [
+          "Election"
+        ],
+        "description": "Restricted to admin users.",
+        "operationId": "getAllAccounts",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "post": {
+        "summary": "Register a new election",
+        "tags": [
+          "Election"
+        ],
+        "description": "The first account registered in the system is assigned the `Admin` role, other accounts are assigned the `User` role.",
+        "operationId": "register",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "bartowski"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Charles Bartowski"
+                  },
+                  "startAt": {
+                    "type": "date",
+                    "example": "2020-10-01"
+                  },
+                  "expireAt": {
+                    "type": "date",
+                    "example": "2020-12-01"
+                  }
+                },
+                "required": [
+                  "username",
+                  "name",
+                  "email",
+                  "password",
+                  "phone",
+                  "acceptTerms"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/candidates/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "Candidate id",
+          "required": true,
+          "example": "5eb12e197e06a76ccdefc121",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a single candidate by id",
+        "tags": [
+          "Candidate"
+        ],
+        "description": "Admin users can access any candidate, regular users are restricted to their own account.",
+        "operationId": "getAccountById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an candidate",
+        "tags": [
+          "Candidate"
+        ],
+        "description": "Admin users can update any candidate including role, regular users are restricted to their own account and cannot update role.",
+        "operationId": "updateAccount",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "example": "uuid"
+                  },
+                  "electionId": {
+                    "type": "string",
+                    "example": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an candidate",
+        "tags": [
+          "Candidate"
+        ],
+        "description": "Admin users can delete any candidate, regular users are restricted to their own account.",
+        "operationId": "deleteAccount",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/candidates": {
+      "get": {
+        "summary": "Get a list of all candidates",
+        "tags": [
+          "Candidate"
+        ],
+        "description": "Restricted to admin users.",
+        "operationId": "getAllAccounts",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "post": {
+        "summary": "Register a new candidate",
+        "tags": [
+          "Candidate"
+        ],
+        "description": "Register a new candidate",
+        "operationId": "register",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "example": "uuid"
+                  },
+                  "electionId": {
+                    "type": "string",
+                    "example": "uuid"
+                  }
+                },
+                "required": [
+                  "username",
+                  "name",
+                  "email",
+                  "password",
+                  "phone",
+                  "acceptTerms"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/votes/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "Vote id",
+          "required": true,
+          "example": "5eb12e197e06a76ccdefc121",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a single vote by id",
+        "tags": [
+          "Vote"
+        ],
+        "description": "Admin users can access any candidate, regular users are restricted to their own account.",
+        "operationId": "getAccountById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a vote",
+        "tags": [
+          "Vote"
+        ],
+        "description": "Admin users can update any vote including role, regular users are restricted to their own account and cannot update role.",
+        "operationId": "updateAccount",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "new director"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "voting for a new director in company"
+                  },
+                  "startAt": {
+                    "type": "string",
+                    "example": "2020-01-01"
+                  },
+                  "expireAt": {
+                    "type": "string",
+                    "example": "test@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a vote",
+        "tags": [
+          "Vote"
+        ],
+        "description": "Admin users can delete any vote, regular users are restricted to their own account.",
+        "operationId": "deleteAccount",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/votes/{electionId}/poll": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "electionId",
+          "description": "Get vote poll",
+          "required": true,
+          "example": "5eb12e197e06a76ccdefc121",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get vote poll",
+        "tags": [
+          "Vote"
+        ],
+        "description": "Admin users can access vote data, regular users are restricted to their own account.",
+        "operationId": "getVotePoll",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/votes": {
+      "get": {
+        "summary": "Get a list of all votes",
+        "tags": [
+          "Vote"
+        ],
+        "description": "Restricted to admin users.",
+        "operationId": "getAllVotes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "post": {
+        "summary": "Register a new vote",
+        "tags": [
+          "Vote"
+        ],
+        "description": "Register a new vote",
+        "operationId": "vote",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "example": "uuid"
+                  },
+                  "candidateId": {
+                    "type": "string",
+                    "example": "uuid"
+                  },
+                  "electionId": {
+                    "type": "string",
+                    "example": "uuid"
+                  }
+                },
+                "required": [
+                  "username",
+                  "name",
+                  "email",
+                  "password",
+                  "phone",
+                  "acceptTerms"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid, or the user does not have access to perform the action",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Not Found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Result": {
+        "description": "Result",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "successed": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "failed": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "data": {
+                  "type": "object",
+                  "example": {}
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Ok"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  backend:
+    container_name: backend
+    build: '.'
+    volumes:
+      - .:/home/node/api
+      - /home/node/api/node_modules
+    depends_on:
+      - mongo-data
+    networks:
+      - app-connect
+    ports:
+      - '3333:3333'
+
+  mongodb:
+    container_name: mongodb
+    image: 'mongo'
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data
+    ports:
+      - '27017:27017'
+    networks:
+      - app-connect
+
+volumes:
+  mongo-data:
+
+networks:
+  app-connect:
+      driver: bridge
