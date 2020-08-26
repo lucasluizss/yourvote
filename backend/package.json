@@ -5,13 +5,13 @@
   "main": "server.ts",
   "scripts": {
     "build": "tsc -p .",
-    "start": "ts-node dist/server.js",
+    "start": "node dist/server.js",
     "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules server.ts",
     "start:dev": "npx ts-node server.ts",
     "test": "jest --verbose",
     "test:watch": "jest --watch"
   },
-  "keywords": [],
+  "keywords": ["yourvote"],
   "author": "Lucas Silva",
   "license": "ISC",
   "dependencies": {
@@ -53,5 +53,8 @@
   },
   "jest": {
     "testEnvironment": "node"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
