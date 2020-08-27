@@ -8,6 +8,10 @@ export default class VoteRepository implements IVoteRepository {
 		return await VoteContext.create(vote) as IVoteEntity;
 	}
 
+	async update(vote: IVoteEntity): Promise<IVoteEntity> {
+		return await VoteContext.update({ _id: vote._id }, vote) as IVoteEntity;
+	}
+
 	async poll(electionId: string): Promise<any> {
 		return await VoteContext.aggregate([
 			{ "$match": { "electionId": electionId }},

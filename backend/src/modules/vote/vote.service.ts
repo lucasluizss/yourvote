@@ -17,6 +17,10 @@ export default class VoteService implements IVoteService {
 		return await this._voteRepository.save(vote);
 	}
 
+	async update(vote: IVoteEntity): Promise<IVoteEntity> {
+		return await this._voteRepository.update(vote);
+	}
+
 	async poll(electionId: string): Promise<VotePollDto[]> {
 		const votes = await this._voteRepository.poll(electionId);
 

@@ -21,7 +21,18 @@ export default class VoteController {
 	}
 
 	public async show(request: Request, response: Response) {
-		return response.json(Result.Fail());
+		try {
+			const voteEntity = request.body as IVoteEntity;
+
+			const _voteService = container.resolve(VoteService);
+
+			await _voteService.update(voteEntity);
+
+			return response.json(Result.Success(voteEntity));
+
+		} catch(error) {
+			return response.json(Result.Fail(error.message));
+		}
 	}
 
 	public async create(request: Request, response: Response) {
