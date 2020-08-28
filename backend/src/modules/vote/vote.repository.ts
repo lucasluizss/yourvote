@@ -12,6 +12,11 @@ export default class VoteRepository implements IVoteRepository {
 		return await VoteContext.update({ _id: vote._id }, vote) as IVoteEntity;
 	}
 
+	async delete(voteId: string): Promise<boolean> {
+		await VoteContext.findByIdAndRemove({ _id: voteId });
+		return true;
+	}
+
 	async poll(electionId: string): Promise<any> {
 		return await VoteContext.aggregate([
 			{ "$match": { "electionId": electionId }},

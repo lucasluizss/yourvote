@@ -55,10 +55,32 @@ export default class VoteController {
 	}
 
 	public async update(request: Request, response: Response) {
-		return response.json(Result.Fail());
+		try {
+			const voteEntity = request.body as IVoteEntity;
+
+			const _voteService = container.resolve(VoteService);
+
+			await _voteService.update(voteEntity);
+
+			return response.json(Result.Success(voteEntity));
+
+		} catch(error) {
+			return response.json(Result.Fail(error.message));
+		}
 	}
 
 	public async delete(request: Request, response: Response) {
-		return response.json(Result.Fail());
+		try {
+			const voteEntity = request.body as IVoteEntity;
+
+			const _voteService = container.resolve(VoteService);
+
+			await _voteService.update(voteEntity);
+
+			return response.json(Result.Success(voteEntity));
+
+		} catch(error) {
+			return response.json(Result.Fail(error.message));
+		}
 	}
 }

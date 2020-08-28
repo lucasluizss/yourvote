@@ -4,5 +4,6 @@ import IVoteEntity from './vote.entity';
 export default interface IVoteService {
 	save(vote: IVoteEntity): Promise<IVoteEntity>;
 	update(vote: IVoteEntity): Promise<IVoteEntity>;
+	delete(voteId: string): Promise<boolean>;
 	poll(electionId: string): Promise<VotePollDto[]>;
 }
