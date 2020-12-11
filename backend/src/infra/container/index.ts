@@ -1,0 +1,20 @@
+import { container } from 'tsyringe';
+
+import IEmailService, { EmailService } from './../shared/EmailService';
+import IUserRepository from '../../domain/user/IUserRepository';
+import IAccouuntRepository from '../../domain/account/IAccountRepository';
+import UserRepository from '../../modules/user/user.repository';
+import AccouuntRepository from '../../modules/account/account.repository';
+import ISessionRepository from '../../domain/session/ISessionRepository';
+import SessionRepository from '../../modules/session/session.repository';
+import VoteRepository from '../../modules/vote/vote.repository';
+import IVoteRepository from '../../domain/vote/IVoteRepository';
+import CandidateRepository from '../../modules/candidate/candidate.repository';
+import ICandidateRepository from '../../domain/candidate/ICandidateRepository';
+
+container.registerSingleton<IAccouuntRepository>(AccouuntRepository.name, AccouuntRepository);
+container.registerSingleton<ICandidateRepository>(CandidateRepository.name, CandidateRepository);
+container.registerSingleton<ISessionRepository>(SessionRepository.name, SessionRepository);
+container.registerSingleton<IUserRepository>(UserRepository.name, UserRepository);
+container.registerSingleton<IVoteRepository>(VoteRepository.name, VoteRepository);
+container.registerSingleton<IEmailService>(EmailService.name, EmailService);
