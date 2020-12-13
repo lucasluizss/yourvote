@@ -18,7 +18,27 @@ export default class GuestVoterController {
         return response.json(list);
       }
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
+    }
+  }
+
+  public async validate(request: Request, response: Response) {
+    const { accessCode } = request.body;
+
+    try {
+      const guestVoterService = container.resolve(GuestVoterService);
+
+      const accessCodeIsValid = await guestVoterService.validate(accessCode);
+
+      if (!accessCodeIsValid) {
+        return response.status(401).json(Result.Fail('Código de acesso inválido!'));
+      }
+
+      const guestVoter = await guestVoterService.getByCode(accessCode);
+
+      return response.json(Result.Success(guestVoter));
+    } catch (error) {
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
@@ -38,7 +58,7 @@ export default class GuestVoterController {
 
       return response.json(Result.Success(vote));
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
@@ -52,7 +72,7 @@ export default class GuestVoterController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 }

@@ -1421,6 +1421,41 @@
           }
         }
       }
+    },
+    "/guest-voters/guest": {
+      "post": {
+        "summary": "Verify access code",
+        "tags": [
+          "GuestVoter"
+        ],
+        "description": "Verify if access code is valid and return it information",
+        "operationId": "register",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accessCode": {
+                    "type": "string",
+                    "example": "FDSV4"
+                  }
+                },
+                "required": ["accessCode"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
     }
   },
   "components": {

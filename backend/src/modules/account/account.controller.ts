@@ -32,7 +32,7 @@ class AuthController {
         Result.Success({ token: jwtToken, user: userResponse }),
       );
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
@@ -50,9 +50,9 @@ class AuthController {
         );
       }
 
-      return response.json(Result.Fail('Nenhum token foi forncecido'));
+      return response.status(400).json(Result.Fail('Nenhum token foi forncecido'));
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
@@ -66,7 +66,7 @@ class AuthController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
@@ -80,7 +80,7 @@ class AuthController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
@@ -94,7 +94,7 @@ class AuthController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
@@ -108,7 +108,7 @@ class AuthController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
@@ -122,7 +122,7 @@ class AuthController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
@@ -133,14 +133,14 @@ class AuthController {
       const accountService = container.resolve(AccountService);
 
       if (password !== confirmPassword) {
-        return response.json(Result.Fail('Senhas não coincidem!'));
+        return response.status(400).json(Result.Fail('Senhas não coincidem!'));
       }
 
       await accountService.resetPassword(email, password);
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 }

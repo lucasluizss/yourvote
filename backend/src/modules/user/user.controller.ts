@@ -17,7 +17,7 @@ class UserController {
 			return response.json(Result.Success(list.map(UserFactory.create)));
 
 		} catch(error) {
-			return response.json(Result.Fail(error.message));
+			return response.status(400).json(Result.Fail(error.message));
 		}
 	}
 
@@ -32,7 +32,7 @@ class UserController {
 			return response.json(Result.Success(UserFactory.create(user)));
 
 		} catch(error) {
-			return response.json(Result.Fail(error.message));
+			return response.status(400).json(Result.Fail(error.message));
 		}
 	}
 
@@ -47,7 +47,7 @@ class UserController {
 			return response.status(201).json(Result.Success(UserFactory.create(user)));
 
 		} catch(error) {
-			return response.json(Result.Fail(error.message));
+			return response.status(400).json(Result.Fail(error.message));
 		}
 	}
 
@@ -62,7 +62,7 @@ class UserController {
 			return response.json(Result.Success(UserFactory.create(userEntity)));
 
 		} catch(error) {
-			return response.json(Result.Fail(error.message));
+			return response.status(400).json(Result.Fail(error.message));
 		}
 	}
 
@@ -77,7 +77,7 @@ class UserController {
 			return response.json(Result.Success());
 
 		} catch(error) {
-			return response.json(Result.Fail(error.message));
+			return response.status(400).json(Result.Fail(error.message));
 		}
 	}
 }

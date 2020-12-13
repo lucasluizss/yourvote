@@ -1,5 +1,6 @@
 import { uuid } from 'uuidv4';
 import { inject, injectable } from 'tsyringe';
+import {addDays} from 'date-fns'
 
 import IGuestVoterService from '../../domain/guest-voter/IGuestVoterService';
 import IGuestVoterEntity from '../../domain/guest-voter/guest-voter.entity';
@@ -21,6 +22,10 @@ export default class GuestVoterService implements IGuestVoterService {
     private readonly emailService: IEmailService,
   ) {}
 
+  async getByCode(accessCode: string): Promise<IGuestVoterEntity | null> {
+    return await this.guestVoterRepository.getByCode(accessCode);
+  }
+
   async list(createdBy: string): Promise<IGuestVoterEntity[]> {
     return await this.guestVoterRepository.list(createdBy);
   }
@@ -40,14 +45,7 @@ export default class GuestVoterService implements IGuestVoterService {
     }
 
     guestVoter.accessCode = await this.getValidAccessCode();
-
-    const today = new Date();
-
-    guestVoter.expireAt = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDay() + 1,
-    );
+    guestVoter.expireAt = addDays(new Date(), 1);
 
     await this.emailService.send(
       guestVoter.email,
@@ -60,6 +58,10 @@ export default class GuestVoterService implements IGuestVoterService {
     );
 
     return await this.guestVoterRepository.save(guestVoter);
+  }
+
+  async invalidateCode(accessCode: string): Promise<void> {
+    return await this.guestVoterRepository.invalidateCode(accessCode);
   }
 
   async exists(email: string): Promise<boolean> {

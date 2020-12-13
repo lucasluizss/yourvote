@@ -3,6 +3,10 @@ import IGuestVoterEntity from '../../domain/guest-voter/guest-voter.entity';
 import GuestVoterContext from '../../database/models/guest-voter.model';
 
 export default class GuestVoterRepository implements IGuestVoterRepository {
+  async getByCode(accessCode: string): Promise<IGuestVoterEntity | null> {
+    return await GuestVoterContext.findOne({ accessCode });
+  }
+  
   async list(createdBy: string): Promise<IGuestVoterEntity[]> {
     return await GuestVoterContext.find({ createdBy });
   }
@@ -18,8 +22,12 @@ export default class GuestVoterRepository implements IGuestVoterRepository {
   async validate(accessCode: string): Promise<boolean> {
     return await GuestVoterContext.exists({
       accessCode,
-      status: 0,
+      status: 1,
     });
+  }
+
+  async invalidateCode(accessCode: string): Promise<void> {
+    await GuestVoterContext.findOneAndUpdate({ accessCode }, { status: 0 });
   }
 
   async update(guestVoter: IGuestVoterEntity): Promise<IGuestVoterEntity> {

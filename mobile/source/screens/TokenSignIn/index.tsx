@@ -1,5 +1,8 @@
-import { useNavigation } from '@react-navigation/core';
+import { Alert, Platform } from 'react-native';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/core';
+
+import * as Api from '../../services/api.service';
 import Input from '../../components/Input';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
@@ -13,16 +16,25 @@ import {
 	SignUpMessageButtonText,
 	SignUpMessageButtonTextBold,
 } from './styles';
-import { KeyboardAvoidingView, Platform } from 'react-native';
 
 export default () => {
 	const colorScheme = useColorScheme();
 	const { navigate, reset } = useNavigation();
 	const [tokenField, setTokenField] = useState<string>('');
 
-	const handleSignIn = () => {
-		// TODO:: obter sessão pelo token e ir para a tela da sessão
-		reset({ routes: [{ name: 'Session' }] });
+	const handleSignIn = async () => {
+		if (!tokenField) {
+			Alert.alert('Opss!', 'Favor informar o código de acesso');
+			return;
+		}
+
+		const { data: guestResponse } = await Api.validateAccessCode(tokenField);
+
+		if (guestResponse.successed) {
+			reset({ routes: [{ name: 'Session' }] });
+		} else {
+			Alert.alert('Opss!', guestResponse.message);
+		}
 	};
 
 	return (

@@ -9,6 +9,7 @@ const sessionController = new VoteController();
 
 routes.get('/', authorize(), sessionController.index);
 routes.post('/', authorize(), sessionController.create);
+routes.post('/guest', sessionController.validate);
 routes.delete('/:id', authorize([ERole.Admin]), sessionController.delete);
 
 export default routes;

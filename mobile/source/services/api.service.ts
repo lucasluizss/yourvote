@@ -36,6 +36,10 @@ export const activeUser = async (userId?: string) => {
 	return await Api.post(`accounts/active`, body, { headers });
 };
 
+export const validateAccessCode = async (accessCode: string) => {
+	return await Api.post(`guest-voters/guest`, {accessCode});
+};
+
 export const getLoggedUser = async () => {
 	const userFromStorage = await AsyncStorage.getItem('@YourVote:user');
 

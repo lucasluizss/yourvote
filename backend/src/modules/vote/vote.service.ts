@@ -14,6 +14,12 @@ export default class VoteService implements IVoteService {
   ) {}
 
   async save(vote: IVoteEntity): Promise<IVoteEntity> {
+    const userHasNotVoted = await this.validate(vote.sessionId, vote.userId);
+
+    if (!userHasNotVoted) {
+      throw new Error('Voto já registrado!');
+    }
+
     return await this.voteRepository.save(vote);
   }
 
