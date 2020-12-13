@@ -16,7 +16,7 @@ export default class CandidateController {
 
       return response.json(Result.Success(candidate));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -28,7 +28,7 @@ export default class CandidateController {
 
       return response.json(Result.Success(candidates));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -42,7 +42,7 @@ export default class CandidateController {
 
       return response.json(Result.Success(candidates));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -65,7 +65,7 @@ export default class CandidateController {
 
       return response.json(Result.Success(candidate));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -106,7 +106,7 @@ export default class CandidateController {
 
       return response.json(Result.Success(candidate));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -120,7 +120,7 @@ export default class CandidateController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 }

@@ -843,6 +843,74 @@
         }
       }
     },
+    "/sessions/active": {
+      "post": {
+        "summary": "Active session",
+        "tags": [
+          "Session"
+        ],
+        "description": "Activate session",
+        "operationId": "activateSession",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sessionId": {
+                    "type": "string",
+                    "example": "uuid"
+                  }
+                },
+                "required": [
+                  "sessionId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/sessions/current": {
+      "get": {
+        "summary": "Get a list of all current sessions",
+        "tags": [
+          "Session"
+        ],
+        "description": "Get current sessions",
+        "operationId": "getAllExpiredSessions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
     "/sessions/expired": {
       "get": {
         "summary": "Get a list of all expired sessions",

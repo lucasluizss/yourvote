@@ -7,13 +7,18 @@ export default class SessionRepository implements ISessionRepository {
     return (await SessionContext.findById({ _id: id })) as ISessionEntity;
   }
 
-  async list(createdBy?: string): Promise<ISessionEntity[]> {
+  async list(): Promise<ISessionEntity[]> {
+    return await SessionContext.find();
+  }
+
+  async listCurrent(createdBy?: string): Promise<ISessionEntity[]> {
     const today = new Date();
     return await SessionContext.find({
       $and: [
         { startAt: { $lte: today } },
         { expireAt: { $gte: today } },
         { createdBy },
+        { status: 1 },
       ],
     });
   }
@@ -21,19 +26,29 @@ export default class SessionRepository implements ISessionRepository {
   async listExpired(createdBy?: string): Promise<ISessionEntity[]> {
     const today = new Date();
     return await SessionContext.find({
-      $and: [{ expireAt: { $lt: today } }, { createdBy }],
+      $and: [{ expireAt: { $lt: today } }, { createdBy }, { status: 1 }],
     });
   }
 
   async listFuture(createdBy?: string): Promise<ISessionEntity[]> {
     const today = new Date();
     return await SessionContext.find({
-      $and: [{ startAt: { $gt: today } }, { createdBy }],
+      $and: [{ startAt: { $gt: today } }, { createdBy }, { status: 1 }],
     });
   }
 
   async save(session: ISessionEntity): Promise<ISessionEntity> {
     return (await SessionContext.create(session)) as ISessionEntity;
+  }
+
+  async active(sessionId: string): Promise<boolean> {
+    await SessionContext.findByIdAndUpdate({ _id: sessionId }, { status: 1 });
+    return true;
+  }
+
+  async inactive(sessionId: string): Promise<boolean> {
+    await SessionContext.findByIdAndUpdate({ _id: sessionId }, { status: 0 });
+    return true;
   }
 
   async update(session: ISessionEntity): Promise<ISessionEntity> {

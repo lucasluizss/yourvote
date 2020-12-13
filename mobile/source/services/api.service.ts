@@ -65,11 +65,18 @@ export const refreshToken = async () => {
 	return await Api.post(`accounts/refresh`, { headers });
 };
 
-export const getCurrentSessions = async () => {
+export const getAllSessions = async () => {
 	const token = await AsyncStorage.getItem('@YourVote:token');
 	const headers = { Authorization: `Bearer ${token}` };
 
 	return await Api.get(`sessions`, { headers });
+};
+
+export const getCurrentSessions = async () => {
+	const token = await AsyncStorage.getItem('@YourVote:token');
+	const headers = { Authorization: `Bearer ${token}` };
+
+	return await Api.get(`sessions/current`, { headers });
 };
 
 export const getPastSessions = async () => {

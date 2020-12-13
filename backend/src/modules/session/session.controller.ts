@@ -16,20 +16,32 @@ export default class SessionController {
 
       return response.json(Result.Success(session));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
   public async index(request: Request, response: Response) {
     try {
-      const createdBy = request.userId;
       const sessionService = container.resolve(SessionService);
 
-      const sessions = await sessionService.list(createdBy);
+      const sessions = await sessionService.list();
 
       return response.json(Result.Success(sessions));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
+    }
+  }
+
+  public async indexCurrent(request: Request, response: Response) {
+    try {
+      const createdBy = request.userId;
+      const sessionService = container.resolve(SessionService);
+
+      const sessions = await sessionService.listCurrent(createdBy);
+
+      return response.json(Result.Success(sessions));
+    } catch (error) {
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -42,7 +54,7 @@ export default class SessionController {
 
       return response.json(Result.Success(sessions));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -55,7 +67,7 @@ export default class SessionController {
 
       return response.json(Result.Success(sessions));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -76,7 +88,21 @@ export default class SessionController {
 
       return response.json(Result.Success(session));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
+    }
+  }
+
+  public async active(request: Request, response: Response) {
+    const { sessionId } = request.body;
+
+    try {
+      const sessionService = container.resolve(SessionService);
+
+      await sessionService.active(sessionId);
+
+      return response.json(Result.Success());
+    } catch (error) {
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -97,7 +123,7 @@ export default class SessionController {
 
       return response.json(Result.Success(session));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -111,7 +137,7 @@ export default class SessionController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 }

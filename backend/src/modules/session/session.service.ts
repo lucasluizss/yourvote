@@ -7,38 +7,48 @@ import ISessionRepository from '../../domain/session/ISessionRepository';
 
 @injectable()
 export default class SessionService implements ISessionService {
+  constructor(
+    @inject(SessionRepository.name)
+    private readonly sessionRepository: ISessionRepository,
+  ) {}
 
-	constructor(
-		@inject(SessionRepository.name)
-		private readonly sessionRepository: ISessionRepository
-	) { }
+  async getById(id: string): Promise<ISessionEntity> {
+    return await this.sessionRepository.getById(id);
+  }
 
-	async getById(id: string): Promise<ISessionEntity> {
-		return await this.sessionRepository.getById(id);
-	}
+  async active(sessionId: string): Promise<boolean> {
+    return await this.sessionRepository.active(sessionId);
+  }
 
-	async list(createdBy?: string): Promise<ISessionEntity[]> {
-		return await this.sessionRepository.list(createdBy);
-	}
+  async inactive(sessionId: string): Promise<boolean> {
+    return await this.sessionRepository.active(sessionId);
+  }
 
-	async listExpired(createdBy?: string): Promise<ISessionEntity[]> {
-		return await this.sessionRepository.listExpired(createdBy);
-	}
+  async list(): Promise<ISessionEntity[]> {
+    return await this.sessionRepository.list();
+  }
 
-	async listFuture(createdBy?: string): Promise<ISessionEntity[]> {
-		return await this.sessionRepository.listFuture(createdBy);
-	}
+  async listCurrent(createdBy?: string): Promise<ISessionEntity[]> {
+    return await this.sessionRepository.listCurrent(createdBy);
+  }
 
-	async save(session: ISessionEntity): Promise<ISessionEntity> {
-		return await this.sessionRepository.save(session);
-	}
+  async listExpired(createdBy?: string): Promise<ISessionEntity[]> {
+    return await this.sessionRepository.listExpired(createdBy);
+  }
 
-	async update(session: ISessionEntity): Promise<ISessionEntity> {
-		return await this.sessionRepository.update(session);
-	}
+  async listFuture(createdBy?: string): Promise<ISessionEntity[]> {
+    return await this.sessionRepository.listFuture(createdBy);
+  }
 
-	async delete(id: string): Promise<boolean> {
-		return await this.sessionRepository.delete(id);
-	}
+  async save(session: ISessionEntity): Promise<ISessionEntity> {
+    return await this.sessionRepository.save(session);
+  }
 
+  async update(session: ISessionEntity): Promise<ISessionEntity> {
+    return await this.sessionRepository.update(session);
+  }
+
+  async delete(id: string): Promise<boolean> {
+    return await this.sessionRepository.delete(id);
+  }
 }

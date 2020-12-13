@@ -21,18 +21,18 @@ export const authorize = (roles: ERole[] | undefined = []) => {
 			token = token?.includes('Bearer ') ? token.split(' ')[1] : token;
 
 			if (!token) {
-				return response.status(403).json(Result.Fail('No token provided.'));
+				return response.json(Result.Fail('No token provided.'));
 			}
 
 			const authenticationHistory = await AuthenticationHistoryContext.findOne({ token: token });
 
 			if (authenticationHistory?.logoutDate) {
-				return response.status(401).json(Result.Fail('Invalid token!'));
+				return response.json(Result.Fail('Invalid token!'));
 			}
 
 			jwt.verify(token, secret, async (error, decoded: any) => {
 				if (error) {
-					return response.status(500).json({ message: 'Failed to authenticate token.' });
+					return response.json({ message: 'Failed to authenticate token.' });
 				}
 
 				const userId = decoded.id;

@@ -37,10 +37,13 @@ interface SessionProps {
 
 export default () => {
 	const colorScheme = useColorScheme();
-	const route = useRoute<Route<'Session', { sessionId: string }>>();
+	const route = useRoute<
+		Route<'Session', { sessionId: string; accessCode: string }>
+	>();
 
 	const [searchField, setSearchField] = useState<string>();
 	const [loading, setLoading] = useState(false);
+	const [guestCode, setGuestCode] = useState<string | undefined>(undefined);
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [session, setSession] = useState<SessionProps | null>(null);
 	const [candidates, setCandidates] = useState<CandidateModel[]>([]);
@@ -50,13 +53,19 @@ export default () => {
 		setLoading(true);
 
 		if (route.params) {
-			const { sessionId } = route.params;
+			const { sessionId, accessCode } = route.params;
+
+			if (accessCode) {
+				setGuestCode(accessCode);
+			}
+
 			loadSession(sessionId);
 		}
 	}, []);
 
 	const loadSession = async (sessionId?: string) => {
 		const { data: sessionsResponse } = await Api.getSessionById(sessionId);
+
 		setSession(sessionsResponse.data);
 		setLoading(false);
 		loadCandidates(sessionId);
@@ -84,7 +93,8 @@ export default () => {
 	};
 
 	const handleOpenModalClick = (candidate: CandidateModel) => {
-		setSelectedCandidate(candidate);
+		console.log('abringo modal', guestCode)
+		setSelectedCandidate({ ...candidate, guestCode });
 		setShowModal(true);
 	};
 

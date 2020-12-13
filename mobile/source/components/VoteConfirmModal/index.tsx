@@ -36,10 +36,10 @@ export default ({ sessionId, show, setShow, candidate }: Props) => {
 	const handleCloseButton = () => setShow(false);
 
 	const handleCancelButton = () => {
-		if (candidate) {
-			setShow(false);
-		} else {
+		if (candidate?.guestCode) {
 			reset({ routes: [{ name: 'TokenSignIn' }] });
+		} else {
+			setShow(false);
 		}
 	};
 
@@ -48,21 +48,27 @@ export default ({ sessionId, show, setShow, candidate }: Props) => {
 			const { data } = await Api.registerVote({
 				candidateId: candidate._id,
 				sessionId: sessionId,
+				accessCode: candidate.guestCode,
 			});
 
 			if (data.successed) {
-				Alert.alert('Sucesso!', 'Seu voto foi registrado!', [
-					{ text: 'OK', onPress: () => navigate('Root') },
-				]);
+				if (candidate.guestCode) {
+					Alert.alert('Sucesso!', 'Seu voto anônimo foi registrado!', [
+						{
+							text: 'OK',
+							onPress: () => reset({ routes: [{ name: 'SignIn' }] }),
+						},
+					]);
+				} else {
+					Alert.alert('Sucesso!', 'Seu voto foi registrado!', [
+						{ text: 'OK', onPress: () => navigate('Root') },
+					]);
+				}
 			} else {
 				Alert.alert('Opss!', data.message, [
 					{ text: 'OK', onPress: () => setShow(false) },
 				]);
 			}
-		} else {
-			Alert.alert('Sucesso!', 'Seu voto anônimo foi registrado!', [
-				{ text: 'OK', onPress: () => reset({ routes: [{ name: 'SignIn' }] }) },
-			]);
 		}
 	};
 

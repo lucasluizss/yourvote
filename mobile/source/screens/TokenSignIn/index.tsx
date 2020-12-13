@@ -16,28 +16,36 @@ import {
 	SignUpMessageButtonText,
 	SignUpMessageButtonTextBold,
 } from './styles';
+import Loading from '../../components/Loading';
 
 export default () => {
 	const colorScheme = useColorScheme();
 	const { navigate, reset } = useNavigation();
-	const [tokenField, setTokenField] = useState<string>('');
+	const [loading, setLoading] = useState<boolean>(false);
+	const [tokenField, setTokenField] = useState<string>('173E5');
 
 	const handleSignIn = async () => {
+		setLoading(true);
 		if (!tokenField) {
 			Alert.alert('Opss!', 'Favor informar o código de acesso');
 			return;
 		}
 
 		const { data: guestResponse } = await Api.validateAccessCode(tokenField);
+		setLoading(false);
 
 		if (guestResponse.successed) {
-			reset({ routes: [{ name: 'Session' }] });
+			const { sessionId } = guestResponse.data;
+
+			navigate('Session', { sessionId, accessCode: tokenField });
 		} else {
 			Alert.alert('Opss!', guestResponse.message);
 		}
 	};
 
-	return (
+	return loading ? (
+		<Loading message='Iniciando...' />
+	) : (
 		<Container
 			behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
 			backgroundColor={Colors[colorScheme].background}
@@ -50,6 +58,8 @@ export default () => {
 					onChangeText={setTokenField}
 					placeholder='Token'
 					icon='key'
+					autoCapitalize='characters'
+					maxLength={10}
 				/>
 
 				<SignInButton onPress={handleSignIn}>

@@ -18,7 +18,7 @@ export default class GuestVoterController {
         return response.json(list);
       }
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -31,14 +31,16 @@ export default class GuestVoterController {
       const accessCodeIsValid = await guestVoterService.validate(accessCode);
 
       if (!accessCodeIsValid) {
-        return response.status(401).json(Result.Fail('Código de acesso inválido!'));
+        return response.json(Result.Fail('Código de acesso inválido!'));
       }
 
       const guestVoter = await guestVoterService.getByCode(accessCode);
 
+      //TODO:: retornar token para validar outros endpoints
+
       return response.json(Result.Success(guestVoter));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -58,7 +60,7 @@ export default class GuestVoterController {
 
       return response.json(Result.Success(vote));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -72,7 +74,7 @@ export default class GuestVoterController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 }

@@ -8,7 +8,7 @@ const routes = express.Router();
 const sessionController = new VoteController();
 
 routes.get('/:sessionId/poll', authorize([ERole.Admin]), sessionController.index);
-routes.post('/', authorize(), sessionController.create);
+routes.post('/', sessionController.create);
 routes.put('/:id', authorize(), sessionController.update);
 routes.delete('/:id', authorize([ERole.Admin]), sessionController.delete);
 

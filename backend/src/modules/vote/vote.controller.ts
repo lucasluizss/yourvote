@@ -5,6 +5,7 @@ import VoteService from './vote.service';
 import IVoteEntity from '../../domain/vote/vote.entity';
 import Result from '../../infra/core/factories/result.factory';
 import GuestVoterService from '../guest-voter/guest-voter.service';
+import { empty } from 'uuidv4';
 
 export default class VoteController {
   public async index(request: Request, response: Response) {
@@ -17,14 +18,14 @@ export default class VoteController {
 
       return response.json(poll);
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
   public async create(request: Request, response: Response) {
     const { candidateId, sessionId, accessCode } = request.body;
 
-    const userId = request.userId;
+    const userId = request.userId || empty();
 
     try {
       const voteService = container.resolve(VoteService);
@@ -42,7 +43,7 @@ export default class VoteController {
 
       return response.json(Result.Success(vote));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -56,7 +57,7 @@ export default class VoteController {
 
       return response.json(Result.Success(voteEntity));
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 
@@ -70,7 +71,7 @@ export default class VoteController {
 
       return response.json(Result.Success());
     } catch (error) {
-      return response.status(400).json(Result.Fail(error.message));
+      return response.json(Result.Fail(error.message));
     }
   }
 }
