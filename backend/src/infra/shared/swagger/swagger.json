@@ -1293,6 +1293,134 @@
           }
         }
       }
+    },
+    "/guest-voters/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "description": "Guest voter id",
+          "required": true,
+          "example": "5eb12e197e06a76ccdefc121",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a single guest voter by id",
+        "tags": [
+          "GuestVoter"
+        ],
+        "description": "Users can access any guest voter restricted to their own account.",
+        "operationId": "getGuestVoterById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an guest voter",
+        "tags": [
+          "GuestVoter"
+        ],
+        "description": "Users can delete any guest voter restricted to their own account.",
+        "operationId": "deleteGuestVoter",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
+    },
+    "/guest-voters": {
+      "get": {
+        "summary": "Get a list of all guest voters",
+        "tags": [
+          "GuestVoter"
+        ],
+        "description": "Filtered by logged user",
+        "operationId": "getAllGuestVoters",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          },
+          "401": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      },
+      "post": {
+        "summary": "Register a new user account and send a verification email",
+        "tags": [
+          "GuestVoter"
+        ],
+        "description": "The first account registered in the system is assigned the `Admin` role, other accounts are assigned the `User` role.",
+        "operationId": "register",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "sample@mail.com"
+                  },
+                  "sessionId": {
+                    "type": "string",
+                    "example": "guid"
+                  }
+                },
+                "required": [
+                  "email",
+                  "sessionId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Result"
+          },
+          "400": {
+            "$ref": "#/components/responses/Result"
+          }
+        }
+      }
     }
   },
   "components": {
