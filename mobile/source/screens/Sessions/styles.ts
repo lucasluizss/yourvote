@@ -27,7 +27,8 @@ export const SessionCard = styled.TouchableOpacity`
 	flex: 1;
 	flex-direction: row;
 	padding: 15px;
-	background-color: #fff;
+	box-shadow: 4px 1px 5px #5a786e;
+	background-color: #ffffff;
 	border-radius: 10px;
 	justify-content: space-between;
 	margin-bottom: 15px;

@@ -75,12 +75,20 @@ export const getPastSessions = async () => {
 	return await Api.get(`sessions/expired`, { headers });
 };
 
+export const deleteSession = async (sessionId: string) => {
+	const token = await AsyncStorage.getItem('@YourVote:token');
+	const headers = { Authorization: `Bearer ${token}` };
+
+	return await Api.delete(`sessions/${sessionId}`, { headers });
+};
+
 export const createSession = async (session: SessionModel) => {
 	const token = await AsyncStorage.getItem('@YourVote:token');
 	const headers = { Authorization: `Bearer ${token}` };
 
 	return await Api.post(`sessions`, session, { headers });
 };
+
 
 export const getFutureSessions = async () => {
 	const token = await AsyncStorage.getItem('@YourVote:token');
@@ -94,6 +102,13 @@ export const getSessionById = async (id?: string) => {
 	const headers = { Authorization: `Bearer ${token}` };
 
 	return await Api.get(`sessions/${id}`, { headers });
+};
+
+export const createCandidate = async (sessionId: string) => {
+	const token = await AsyncStorage.getItem('@YourVote:token');
+	const headers = { Authorization: `Bearer ${token}` };
+
+	return await Api.post(`candidates`, { sessionId, code: null }, { headers });
 };
 
 export const getCandidatesBySessionId = async (id?: string) => {

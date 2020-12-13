@@ -33,8 +33,8 @@ export default class CandidateController {
   }
 
   public async indexBySession(request: Request, response: Response) {
-		const { sessionId } = request.params;
-		
+    const { sessionId } = request.params;
+
     try {
       const candidateService = container.resolve(CandidateService);
 
@@ -50,22 +50,11 @@ export default class CandidateController {
     let { userId, sessionId, code, status } = request.body;
 
     try {
-      const candidateService = container.resolve(CandidateService);
-
-      if (code) {
-        const codeIsUnavailable = await candidateService.validateCodeUnavailable(
-          code,
-          sessionId,
-        );
-
-        if (codeIsUnavailable) {
-          return response.json(
-            Result.Fail(`Código ${code} para esta sessão indisponível`),
-          );
-        }
-      } else {
-        code = candidateService.generateValidCode(sessionId);
+      if (!userId) {
+        userId = request.userId;
       }
+
+      const candidateService = container.resolve(CandidateService);
 
       const candidate = await candidateService.save({
         userId,
@@ -83,10 +72,29 @@ export default class CandidateController {
   public async update(request: Request, response: Response) {
     const { id } = request.params;
 
-    const { userId, sessionId, code, status } = request.body;
+    let { userId, sessionId, code, status } = request.body;
 
     try {
+      if (!userId) {
+        userId = request.userId;
+      }
+
       const candidateService = container.resolve(CandidateService);
+
+      if (code) {
+        const codeIsUnavailable = await candidateService.validateCodeUnavailable(
+          code,
+          sessionId,
+        );
+
+        if (codeIsUnavailable) {
+          return response.json(
+            Result.Fail(`Código ${code} para esta sessão indisponível`),
+          );
+        }
+      } else {
+        code = await candidateService.generateValidCode(sessionId);
+      }
 
       const candidate = await candidateService.update({
         id,

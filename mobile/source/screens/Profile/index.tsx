@@ -34,14 +34,8 @@ const menuOptions = [
 		accessRole: [Role.Admin],
 	},
 	{
-		title: 'Sessões',
+		title: 'Minhas Sessões',
 		icon: 'book-open',
-		linkTo: 'Sessions',
-		accessRole: [Role.Admin],
-	},
-	{
-		title: 'Candidatar-se',
-		icon: 'user-plus',
 		linkTo: 'Sessions',
 		accessRole: [Role.Admin, Role.User],
 	},

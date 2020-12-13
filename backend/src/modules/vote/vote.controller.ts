@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 import VoteService from './vote.service';
 import IVoteEntity from '../../domain/vote/vote.entity';
 import Result from '../../infra/core/factories/result.factory';
-import CandidateService from '../candidate/candidate.service';
 
 export default class VoteController {
   public async index(request: Request, response: Response) {
@@ -28,16 +27,10 @@ export default class VoteController {
 
     try {
       const voteService = container.resolve(VoteService);
-      const candidateService = container.resolve(CandidateService);
 
       const userHasNotVoted = await voteService.validate(sessionId, userId);
 
-      const candidateExistsOnSession = await candidateService.validate(
-        sessionId,
-        candidateId,
-      );
-
-      if (userHasNotVoted && candidateExistsOnSession) {
+      if (userHasNotVoted) {
         const vote = await voteService.save({
           userId,
           candidateId,

@@ -1,8 +1,7 @@
-import { useNavigation } from '@react-navigation/core';
+import { Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 import * as Api from '../../services/api.service';
 import Header from '../../components/Header';
@@ -21,24 +20,23 @@ import {
 	SessionSwitch,
 	DateView,
 	SessionDateDescription,
-	FormArea,
 	AddButton,
 	AddButtonText,
-	SessionDateArea,
 } from './styles';
 import Loading from '../../components/Loading';
 import Input from '../../components/Input';
-import { Alert } from 'react-native';
+import InputDate from '../../components/InputDate';
+import FormModal from '../../components/FormModal';
 
 export default () => {
 	const colorScheme = useColorScheme();
-	const { navigate } = useNavigation();
+	const today = new Date();
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [titleField, setTitleField] = useState('');
 	const [descriptionField, setDescriptionField] = useState('');
-	const [startAtField, setStartAtField] = useState<Date>(new Date());
-	const [expireAtField, setExpireAtField] = useState<Date>(new Date());
+	const [startAtField, setStartAtField] = useState<Date>(today);
+	const [expireAtField, setExpireAtField] = useState<Date>(today);
 	const [sessions, setSessions] = useState<SessionModel[]>([]);
 
 	useEffect(() => {
@@ -68,17 +66,8 @@ export default () => {
 		);
 	};
 
-	const onChangeStartDate = (_: any, selectedDate: Date | undefined) => {
-		const currentDate = selectedDate || new Date();
-		setStartAtField(currentDate);
-	};
-
-	const onChangeExpireDate = (_: any, selectedDate: Date | undefined) => {
-		const currentDate = selectedDate || new Date();
-		setExpireAtField(currentDate);
-	};
-
 	const handleCreateSession = async () => {
+		setLoading(true);
 		const newSession = {
 			title: titleField,
 			description: descriptionField,
@@ -89,10 +78,62 @@ export default () => {
 		const { data: sessionResponse } = await Api.createSession(newSession);
 
 		if (sessionResponse.successed) {
+			setLoading(false);
 			Alert.alert('Sessão cadastrada com sucesso!');
-			setSessions([...sessions, newSession]);
+			setSessions([...sessions, sessionResponse.data]);
+			setTitleField('');
+			setDescriptionField('');
+			setStartAtField(today);
+			setExpireAtField(today);
 			setShowForm(false);
+		} else {
+			setLoading(false);
+			Alert.alert('Opps!', sessionResponse.message);
 		}
+	};
+
+	const handleApplyUserForSession = async (sessionId: string) => {
+		setLoading(true);
+		const { data: candidateResponse } = await Api.createCandidate(sessionId);
+
+		if (candidateResponse.successed) {
+			setLoading(false);
+			Alert.alert('Candidatura submetida com sucesso!');
+		} else {
+			setLoading(false);
+			Alert.alert('Opps!', candidateResponse.message);
+		}
+	};
+
+	const handleDeleteSession = async (sessionId: string) => {
+		setLoading(true);
+		const { data: sessionResponse } = await Api.deleteSession(sessionId);
+
+		if (sessionResponse.successed) {
+			setLoading(false);
+			setSessions(sessions.filter(session => session._id !== sessionId));
+			Alert.alert('Sessão excluída com sucesso!');
+		}
+	};
+
+	const handleShowOptionsClick = (sessionId: string) => {
+		Alert.alert(
+			'Ações',
+			'O que deseja fazer com esta sessão?',
+			[
+				{
+					text: 'Candidatar-se',
+					onPress: () => handleApplyUserForSession(sessionId),
+				},
+				{
+					text: 'Cancelar',
+					onPress: () => console.log('Cancel Pressed'),
+					style: 'cancel',
+				},
+				{ text: 'Excluir', onPress: () => handleDeleteSession(sessionId) },
+			],
+			{ cancelable: false }
+		);
 	};
 
 	return loading ? (
@@ -100,64 +141,57 @@ export default () => {
 	) : (
 		<Container backgroundColor={Colors[colorScheme].background}>
 			<Header
-				title='Gerenciar Sessões'
+				title='Minhas Sessões'
 				addButtonVisible
 				actionAddButton={() => setShowForm(!showForm)}
 			/>
 
-			{showForm && (
+			<FormModal show={showForm} setShow={setShowForm}>
 				<ScrollView>
-					<FormArea>
-						<Input
-							value={titleField}
-							onChangeText={setTitleField}
-							placeholder='Título'
-							icon='book'
-							autoCapitalize='words'
-							maxLength={27}
-						/>
+					<Input
+						value={titleField}
+						onChangeText={setTitleField}
+						placeholder='Título'
+						icon='book'
+						autoCapitalize='words'
+						maxLength={27}
+					/>
 
-						<Input
-							value={descriptionField}
-							onChangeText={setDescriptionField}
-							placeholder='Descrição'
-							icon='book-open'
-							autoCapitalize='words'
-							maxLength={27}
-						/>
+					<Input
+						value={descriptionField}
+						onChangeText={setDescriptionField}
+						placeholder='Descrição'
+						icon='book-open'
+						autoCapitalize='words'
+						maxLength={27}
+					/>
 
-						<DateTimePicker
-							testID='dateTimePicker'
-							value={startAtField}
-							mode={'datetime'}
-							display='default'
-							onChange={onChangeStartDate}
-							style={{
-								marginBottom: 15,
-							}}
-						/>
+					<InputDate
+						label='Data de início'
+						value={startAtField}
+						minimumDate={today}
+						onChange={(_, date) => setStartAtField(date || today)}
+					/>
 
-						<DateTimePicker
-							testID='dateTimePicker'
-							value={expireAtField}
-							mode={'datetime'}
-							display='default'
-							onChange={onChangeExpireDate}
-							style={{
-								marginBottom: 15,
-							}}
-						/>
+					<InputDate
+						label='Data de término'
+						value={expireAtField}
+						minimumDate={today}
+						onChange={(_, date) => setExpireAtField(date || today)}
+					/>
 
-						<AddButton onPress={handleCreateSession}>
-							<AddButtonText>CADASTRAR</AddButtonText>
-						</AddButton>
-					</FormArea>
+					<AddButton onPress={handleCreateSession}>
+						<AddButtonText>CADASTRAR</AddButtonText>
+					</AddButton>
 				</ScrollView>
-			)}
+			</FormModal>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<ItemsArea>
 					{sessions.map((session, key) => (
-						<SessionCard key={key} onPress={() => {}}>
+						<SessionCard
+							key={key}
+							onPress={() => session._id && handleShowOptionsClick(session._id)}
+						>
 							<SessionDetailArea>
 								<SessionTitle>{session.title}</SessionTitle>
 								<SessionDescription>{session.description}</SessionDescription>

@@ -55,7 +55,9 @@ export default ({ sessionId, show, setShow, candidate }: Props) => {
 					{ text: 'OK', onPress: () => navigate('Root') },
 				]);
 			} else {
-				Alert.alert('Opss!!', data.message);
+				Alert.alert('Opss!', data.message, [
+					{ text: 'OK', onPress: () => setShow(false) },
+				]);
 			}
 		} else {
 			Alert.alert('Sucesso!', 'Seu voto anônimo foi registrado!', [

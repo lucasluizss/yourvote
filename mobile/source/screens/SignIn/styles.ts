@@ -9,13 +9,12 @@ interface ContainerProps {
 
 export const Container = styled.KeyboardAvoidingView<ContainerProps>`
 	background-color: ${(props) => props.backgroundColor};
-	flex: 1;
 	margin-top: ${height * 0.01}px;
 	margin-bottom: ${height * 0.01}px;
 `;
 
-export const SignInArea = styled.KeyboardAvoidingView`
-	flex: 2;
+export const SignInArea = styled.View`
+	flex: 1;
 	padding: 30px;
 	width: 100%;
 	align-items: center;
@@ -27,8 +26,8 @@ export const SignInButton = styled.TouchableOpacity`
 	height: 55px;
 	background-color: #536dfe;
 	border-radius: 30px;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
 	margin-bottom: 15px;
 `;
 

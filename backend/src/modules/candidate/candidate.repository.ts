@@ -15,8 +15,8 @@ export default class CandidateRepository implements ICandidateRepository {
     return await CandidateContext.find({ sessionId });
   }
 
-  async validate(sessionId: string, candidateId: string): Promise<boolean> {
-		return await CandidateContext.exists({ _id: candidateId, sessionId });
+  async exists(sessionId: string, userId: string): Promise<boolean> {
+		return await CandidateContext.exists({ userId, sessionId });
   }
 
   async validateCodeUnavailable(
