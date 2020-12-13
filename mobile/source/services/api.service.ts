@@ -37,7 +37,7 @@ export const activeUser = async (userId?: string) => {
 };
 
 export const validateAccessCode = async (accessCode: string) => {
-	return await Api.post(`guest-voters/guest`, {accessCode});
+	return await Api.post(`guest-voters/guest`, { accessCode });
 };
 
 export const getLoggedUser = async () => {
@@ -48,7 +48,7 @@ export const getLoggedUser = async () => {
 		return { ...parsedUser, _id: parsedUser.id } as UserModel;
 	}
 
-	return null;
+	return {} as UserModel;
 };
 
 export const getUserById = async (id: string) => {
@@ -63,6 +63,13 @@ export const refreshToken = async () => {
 	const headers = { Authorization: `Bearer ${token}` };
 
 	return await Api.post(`accounts/refresh`, { headers });
+};
+
+export const activeSession = async (sessionId?: string) => {
+	const token = await AsyncStorage.getItem('@YourVote:token');
+	const headers = { Authorization: `Bearer ${token}` };
+
+	return await Api.post(`sessions/active`, { sessionId }, { headers });
 };
 
 export const getAllSessions = async () => {
@@ -99,7 +106,6 @@ export const createSession = async (session: SessionModel) => {
 
 	return await Api.post(`sessions`, session, { headers });
 };
-
 
 export const getFutureSessions = async () => {
 	const token = await AsyncStorage.getItem('@YourVote:token');

@@ -7,7 +7,7 @@ import * as Api from '../../services/api.service';
 import Header from '../../components/Header';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
-import { Status } from '../../models/Enums';
+import { Role, Status } from '../../models/Enums';
 import SessionModel from '../../models/SessionModel';
 import {
 	Container,
@@ -41,29 +41,47 @@ export default () => {
 
 	useEffect(() => {
 		setLoading(true);
+
 		const loadSessions = async () => {
-			const { data: sessionsResponse } = await Api.getCurrentSessions();
-			setSessions(sessionsResponse.data);
+			const { role } = await Api.getLoggedUser();
+
+			if (role && role === Role.Admin) {
+				const { data: sessionsResponse } = await Api.getAllSessions();
+				setSessions(sessionsResponse.data);
+			} else {
+				const { data: sessionsResponse } = await Api.getCurrentSessions();
+				setSessions(sessionsResponse.data);
+			}
+
 			setLoading(false);
 		};
 
 		loadSessions();
 	}, []);
 
-	const toggleSwitch = (sessionId?: string) => {
-		setSessions(
-			sessions.map(session =>
-				session._id === sessionId
-					? {
-							...session,
-							status:
-								session.status === Status.Active
-									? Status.Inactive
-									: Status.Active,
-					  }
-					: session
-			)
-		);
+	const toggleSwitch = async (sessionId?: string) => {
+		setLoading(true);
+		const { data: sessionResponse } = await Api.activeSession(sessionId);
+
+		if (sessionResponse.successed) {
+			setSessions(
+				sessions.map(session =>
+					session._id === sessionId
+						? {
+								...session,
+								status:
+									session.status === Status.Active
+										? Status.Inactive
+										: Status.Active,
+						  }
+						: session
+				)
+			);
+			setLoading(false);
+		} else {
+			setLoading(false);
+			Alert.alert('Opss!', sessionResponse.message);
+		}
 	};
 
 	const handleCreateSession = async () => {
