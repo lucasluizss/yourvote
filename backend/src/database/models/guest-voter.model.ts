@@ -21,7 +21,11 @@ const VoteSchema: Schema = new mongoose.Schema({
     required: true,
     min: 0,
     max: 2,
+<<<<<<< HEAD
     default: 1,
+=======
+    default: 0,
+>>>>>>> f6f28b7975177ea911dfc790ab245405d130d8d6
   },
   userId: {
     type: String,
@@ -31,10 +35,13 @@ const VoteSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+<<<<<<< HEAD
   expireAt: {
     type: Date,
     required: true,
   },
+=======
+>>>>>>> f6f28b7975177ea911dfc790ab245405d130d8d6
   createdAt: {
     type: Date,
     required: true,
