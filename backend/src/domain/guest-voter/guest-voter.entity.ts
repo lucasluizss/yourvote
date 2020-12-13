@@ -9,10 +9,7 @@ export default interface IGuestVoterEntity extends Document {
 	status: EStatus;
 	userId?: string;
 	createdBy: string;
-<<<<<<< HEAD
 	expireAt: Date;
-=======
->>>>>>> f6f28b7975177ea911dfc790ab245405d130d8d6
 	createdAt: Date;
 	updatedAt?: Date;
 }
