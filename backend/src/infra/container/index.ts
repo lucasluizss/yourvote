@@ -11,10 +11,16 @@ import VoteRepository from '../../modules/vote/vote.repository';
 import IVoteRepository from '../../domain/vote/IVoteRepository';
 import CandidateRepository from '../../modules/candidate/candidate.repository';
 import ICandidateRepository from '../../domain/candidate/ICandidateRepository';
+import IGuestVoterRepository from '../../domain/guest-voter/IGuestVoterRepository';
+import GuestVoterRepository from '../../modules/guest-voter/guest-voter.repository';
+import IUserService from '../../domain/user/IUserService';
+import UserService from '../../modules/user/user.service';
 
 container.registerSingleton<IAccouuntRepository>(AccouuntRepository.name, AccouuntRepository);
 container.registerSingleton<ICandidateRepository>(CandidateRepository.name, CandidateRepository);
 container.registerSingleton<ISessionRepository>(SessionRepository.name, SessionRepository);
 container.registerSingleton<IUserRepository>(UserRepository.name, UserRepository);
 container.registerSingleton<IVoteRepository>(VoteRepository.name, VoteRepository);
+container.registerSingleton<IGuestVoterRepository>(GuestVoterRepository.name, GuestVoterRepository);
+container.registerSingleton<IUserService>(UserService.name, UserService);
 container.registerSingleton<IEmailService>(EmailService.name, EmailService);
