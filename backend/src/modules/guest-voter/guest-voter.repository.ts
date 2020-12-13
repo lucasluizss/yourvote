@@ -16,14 +16,10 @@ export default class GuestVoterRepository implements IGuestVoterRepository {
   }
 
   async validate(accessCode: string): Promise<boolean> {
-    return (
-      (
-        await GuestVoterContext.find({
-          accessCode,
-          status: 0,
-        })
-      ).length == 0
-    );
+    return await GuestVoterContext.exists({
+      accessCode,
+      status: 0,
+    });
   }
 
   async update(guestVoter: IGuestVoterEntity): Promise<IGuestVoterEntity> {

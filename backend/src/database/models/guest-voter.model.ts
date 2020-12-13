@@ -21,7 +21,7 @@ const VoteSchema: Schema = new mongoose.Schema({
     required: true,
     min: 0,
     max: 2,
-    default: 0,
+    default: 1,
   },
   userId: {
     type: String,
@@ -29,6 +29,10 @@ const VoteSchema: Schema = new mongoose.Schema({
   },
   createdBy: {
     type: String,
+    required: true,
+  },
+  expireAt: {
+    type: Date,
     required: true,
   },
   createdAt: {

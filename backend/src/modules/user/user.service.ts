@@ -24,19 +24,11 @@ export default class UserService implements IUserService {
 	}
 
 	async getById(id: string): Promise<IUserEntity> {
-		const user = await this._userRepository.getById(id);
-
-		delete user.password;
-
-		return user;
+		return await this._userRepository.getById(id);
 	}
 
 	async getByEmail(email: string): Promise<IUserEntity> {
-		const user = await this._userRepository.getByEmail(email);
-
-		delete user.password;
-
-		return user;
+		return await this._userRepository.getByEmail(email);
 	}
 
 	async save(user: IUserEntity): Promise<IUserEntity> {

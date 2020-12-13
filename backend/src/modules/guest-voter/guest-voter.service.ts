@@ -41,6 +41,14 @@ export default class GuestVoterService implements IGuestVoterService {
 
     guestVoter.accessCode = await this.getValidAccessCode();
 
+    const today = new Date();
+
+    guestVoter.expireAt = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDay() + 1,
+    );
+
     await this.emailService.send(
       guestVoter.email,
       'Convite para votar',
