@@ -148,3 +148,16 @@ export const getUsers = async () => {
 
 	return await Api.get(`users`, { headers });
 };
+
+export const sendInvite = async ({
+	email,
+	sessionId,
+}: {
+	email: string;
+	sessionId: string;
+}) => {
+	const token = await AsyncStorage.getItem('@YourVote:token');
+	const headers = { Authorization: `Bearer ${token}` };
+
+	return await Api.post(`guest-voters`, { email, sessionId }, { headers });
+};

@@ -57,6 +57,7 @@ export default () => {
 					}
 				})
 			);
+			Alert.alert('Sucesso!', 'Usuário ativado.');
 		} else {
 			Alert.alert('Opss!', 'Por favor tente novamente');
 		}

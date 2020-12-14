@@ -2,7 +2,7 @@ export type RootStackParamList = {
 	Root: undefined;
 	NotFound: undefined;
 	Settings: undefined;
-	Candidate: undefined;
+	Invite: undefined;
 	Session: undefined;
 	Sessions: undefined;
 	Preload: undefined;

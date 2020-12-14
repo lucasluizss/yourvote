@@ -20,9 +20,9 @@ import Loading from '../../components/Loading';
 
 export default () => {
 	const colorScheme = useColorScheme();
-	const { navigate, reset } = useNavigation();
+	const { navigate } = useNavigation();
 	const [loading, setLoading] = useState<boolean>(false);
-	const [tokenField, setTokenField] = useState<string>('173E5');
+	const [tokenField, setTokenField] = useState<string>('');
 
 	const handleSignIn = async () => {
 		setLoading(true);

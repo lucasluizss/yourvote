@@ -64,6 +64,7 @@ export default () => {
 		const { data: sessionResponse } = await Api.activeSession(sessionId);
 
 		if (sessionResponse.successed) {
+			setLoading(false);
 			setSessions(
 				sessions.map(session =>
 					session._id === sessionId
@@ -77,7 +78,7 @@ export default () => {
 						: session
 				)
 			);
-			setLoading(false);
+			Alert.alert('Sucesso!', 'Sessão ativada.');
 		} else {
 			setLoading(false);
 			Alert.alert('Opss!', sessionResponse.message);

@@ -46,6 +46,12 @@ const menuOptions = [
 		accessRole: [Role.Admin],
 	},
 	{
+		title: 'Convidar',
+		icon: 'share-2',
+		linkTo: 'Invite',
+		accessRole: [Role.Admin],
+	},
+	{
 		title: 'Configurações',
 		icon: 'settings',
 		linkTo: 'Settings',

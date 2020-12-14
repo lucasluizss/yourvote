@@ -13,7 +13,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import Settings from '../screens/Settings';
 import Session from '../screens/Session';
-import Candidate from '../screens/Candidate';
+import Invite from '../screens/Invite';
 import Sessions from '../screens/Sessions';
 import Users from '../screens/Users';
 import Preload from '../screens/Preload';
@@ -53,7 +53,7 @@ function RootNavigator() {
 			<Stack.Screen name='Settings' component={Settings} />
 			<Stack.Screen name='Session' component={Session} />
 			<Stack.Screen name='Sessions' component={Sessions} />
-			<Stack.Screen name='Candidate' component={Candidate} />
+			<Stack.Screen name='Invite' component={Invite} />
 			<Stack.Screen name='Preload' component={Preload} />
 			<Stack.Screen name='SignIn' component={SignIn} />
 			<Stack.Screen name='SignUp' component={SignUp} />
