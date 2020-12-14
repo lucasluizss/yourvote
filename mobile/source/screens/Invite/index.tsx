@@ -11,15 +11,15 @@ import {
 	AddButton,
 	AddButtonText,
 	Select,
-	Option,
 } from './styles';
 import { Alert } from 'react-native';
 import SessionModel from '../../models/SessionModel';
+import InputSelect from '../../components/InputSelect';
 
 export default () => {
 	const colorScheme = useColorScheme();
 	const [emailField, setEmailField] = useState<string>('');
-	const [sessionIdField, setSessionIdField] = useState<string>('');
+	const [sessionIdField, setSessionIdField] = useState<string>('0');
 	const [sessions, setSessions] = useState<SessionModel[]>([]);
 
 	useEffect(() => {
@@ -64,23 +64,19 @@ export default () => {
 			<Header title='Convidar Eleitor' />
 
 			<InviteArea>
-				<Select
-					mode='dropdown'
-					selectedValue={sessionIdField}
-					onValueChange={(itemValue, _) => setSessionIdField(itemValue)}
-					itemStyle={{
-						height: 55,
-						color: '#536DFE',
-						marginTop: -2,
-					}}
-				>
-					<Select.Item label='Selecione' value='' />
-					{sessions.map((item, key) => (
-						<Select.Item key={key} label={item.title} value={item._id} />
-					))}
-				</Select>
+				<InputSelect
+					icon='book'
+					label='Selecione a sessão...'
+					onValueChange={setSessionIdField}
+					value={sessionIdField}
+					items={sessions.map(session => ({
+						label: session.title,
+						value: session._id,
+					}))}
+				/>
 
 				<Input
+					icon='mail'
 					value={emailField}
 					onChangeText={setEmailField}
 					placeholder='Email do eleitor convidado'
