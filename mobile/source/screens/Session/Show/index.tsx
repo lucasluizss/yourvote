@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Route, useRoute } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import * as Api from '../../services/api.service';
+import * as Api from '../../../services/api.service';
 import LogoIcon from '../../assets/icons/undraw_team_ih79.svg';
 import UserAvatar from '../../assets/icons/undraw_male_avatar_323b.svg';
-import Colors from '../../constants/Colors';
-import useColorScheme from '../../hooks/useColorScheme';
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
 import {
 	Container,
 	CenterArea,
@@ -19,11 +19,11 @@ import {
 	CandidateName,
 	CandidateCode,
 } from './styles';
-import Input from '../../components/Input';
-import VoteConfirmModal from '../../components/VoteConfirmModal';
-import Header from '../../components/Header';
-import CandidateModel from '../../models/CandidateModel';
-import Loading from '../../components/Loading';
+import Input from '../../../components/Input';
+import VoteConfirmModal from '../../../components/VoteConfirmModal';
+import Header from '../../../components/Header';
+import CandidateModel from '../../../models/CandidateModel';
+import Loading from '../../../components/Loading';
 
 interface SessionProps {
 	_id: string;

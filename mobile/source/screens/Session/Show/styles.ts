@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Text } from '../../components/Themed';
+import { Text } from '../../../components/Themed';
 
 interface ContainerProps {
 	backgroundColor: string;

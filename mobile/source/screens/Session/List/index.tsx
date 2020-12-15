@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 
-import * as Api from '../../services/api.service';
-import Header from '../../components/Header';
-import Colors from '../../constants/Colors';
-import useColorScheme from '../../hooks/useColorScheme';
-import { Role, Status } from '../../models/Enums';
-import SessionModel from '../../models/SessionModel';
+import * as Api from '../../../services/api.service';
+import Header from '../../../components/Header';
+import Colors from '../../../constants/Colors';
+import useColorScheme from '../../../hooks/useColorScheme';
+import { Role, Status } from '../../../models/Enums';
+import SessionModel from '../../../models/SessionModel';
 import {
 	Container,
 	ItemsArea,
@@ -23,20 +23,16 @@ import {
 	AddButton,
 	AddButtonText,
 } from './styles';
-import Loading from '../../components/Loading';
-import Input from '../../components/Input';
-import InputDate from '../../components/InputDate';
-import FormModal from '../../components/FormModal';
+import Loading from '../../../components/Loading';
+import Input from '../../../components/Input';
+import InputDate from '../../../components/InputDate';
+import FormModal from '../../../components/FormModal';
+import { useNavigation } from '@react-navigation/native';
 
 export default () => {
 	const colorScheme = useColorScheme();
-	const today = new Date();
-	const [showForm, setShowForm] = useState<boolean>(false);
+	const {navigate} = useNavigation();
 	const [loading, setLoading] = useState<boolean>(false);
-	const [titleField, setTitleField] = useState('');
-	const [descriptionField, setDescriptionField] = useState('');
-	const [startAtField, setStartAtField] = useState<Date>(today);
-	const [expireAtField, setExpireAtField] = useState<Date>(today);
 	const [sessions, setSessions] = useState<SessionModel[]>([]);
 
 	useEffect(() => {
@@ -85,31 +81,6 @@ export default () => {
 		}
 	};
 
-	const handleCreateSession = async () => {
-		setLoading(true);
-		const newSession = {
-			title: titleField,
-			description: descriptionField,
-			startAt: startAtField,
-			expireAt: expireAtField,
-		};
-
-		const { data: sessionResponse } = await Api.createSession(newSession);
-
-		if (sessionResponse.successed) {
-			setLoading(false);
-			Alert.alert('Sessão cadastrada com sucesso!');
-			setSessions([...sessions, sessionResponse.data]);
-			setTitleField('');
-			setDescriptionField('');
-			setStartAtField(today);
-			setExpireAtField(today);
-			setShowForm(false);
-		} else {
-			setLoading(false);
-			Alert.alert('Opps!', sessionResponse.message);
-		}
-	};
 
 	const handleApplyUserForSession = async (sessionId: string) => {
 		setLoading(true);
@@ -162,48 +133,9 @@ export default () => {
 			<Header
 				title='Minhas Sessões'
 				addButtonVisible
-				actionAddButton={() => setShowForm(!showForm)}
+				actionAddButton={() => navigate('NewSession')}
 			/>
 
-			<FormModal show={showForm} setShow={setShowForm}>
-				<ScrollView>
-					<Input
-						value={titleField}
-						onChangeText={setTitleField}
-						placeholder='Título'
-						icon='book'
-						autoCapitalize='words'
-						maxLength={27}
-					/>
-
-					<Input
-						value={descriptionField}
-						onChangeText={setDescriptionField}
-						placeholder='Descrição'
-						icon='book-open'
-						autoCapitalize='words'
-						maxLength={27}
-					/>
-
-					<InputDate
-						label='Data de início'
-						value={startAtField}
-						minimumDate={today}
-						onChange={(_, date) => setStartAtField(date || today)}
-					/>
-
-					<InputDate
-						label='Data de término'
-						value={expireAtField}
-						minimumDate={today}
-						onChange={(_, date) => setExpireAtField(date || today)}
-					/>
-
-					<AddButton onPress={handleCreateSession}>
-						<AddButtonText>CADASTRAR</AddButtonText>
-					</AddButton>
-				</ScrollView>
-			</FormModal>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<ItemsArea>
 					{sessions.map((session, key) => (
