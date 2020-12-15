@@ -9,8 +9,7 @@ import {
 	Container,
 	InviteArea,
 	AddButton,
-	AddButtonText,
-	Select,
+	AddButtonText
 } from './styles';
 import { Alert } from 'react-native';
 import SessionModel from '../../models/SessionModel';

@@ -2,27 +2,17 @@ import React, { useState } from 'react';
 import { Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { ScrollView } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import * as Api from '../../../services/api.service';
 import Input from '../../../components/Input';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
-import SignUpLogo from '../../../assets/icons/undraw_welcome_cats_thqn.svg';
-import {
-	Container,
-	SignUpArea,
-	SignUpButton,
-	SignUpButtonText,
-	SignInMessageButton,
-	SignInMessageButtonText,
-	SignInMessageButtonTextBold,
-} from './styles';
+import { Container, AddButton, AddButtonText } from './styles';
 import Loading from '../../../components/Loading';
 import Header from '../../../components/Header';
 import InputDate from '../../../components/InputDate';
 
-export default () => {
+export default function NewSession() {
 	const colorScheme = useColorScheme();
 	const today = new Date();
 	const { navigate, reset } = useNavigation();
@@ -105,4 +95,4 @@ export default () => {
 			</ScrollView>
 		</Container>
 	);
-};
+}

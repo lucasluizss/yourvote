@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 
 interface ContainerProps {
 	backgroundColor: string;
@@ -16,6 +16,15 @@ export const InviteArea = styled.View`
 	justify-content: center;
 `;
 
+export const Select = styled(Picker)`
+	width: 100%;
+	height: 55px;
+	border-color: #536dfe;
+	border-width: 3px;
+	border-radius: 25px;
+	background-color: #fff;
+	margin-bottom: 15px;
+`;
 
 export const AddButton = styled.TouchableOpacity`
 	width: 100%;
@@ -32,14 +41,3 @@ export const AddButtonText = styled.Text`
 	color: #ffffff;
 	font-weight: bold;
 `;
-
-export const Select = styled(Picker)`
-	width: 100%;
-	height: 55px;
-	border-color: #536DFE;
-	border-width: 3px;
-	border-radius: 25px;
-	background-color: #fff;
-	margin-bottom: 15px;
-`;
-
