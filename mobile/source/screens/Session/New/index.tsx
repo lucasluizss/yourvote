@@ -68,6 +68,7 @@ export default () => {
 			setDescriptionField('');
 			setStartAtField(today);
 			setExpireAtField(today);
+			setSelectedUsersIds([]);
 
 			navigate('Sessions');
 		} else {
