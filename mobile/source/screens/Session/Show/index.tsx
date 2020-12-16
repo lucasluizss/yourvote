@@ -3,8 +3,8 @@ import { Route, useRoute } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import * as Api from '../../../services/api.service';
-import LogoIcon from '../../assets/icons/undraw_team_ih79.svg';
-import UserAvatar from '../../assets/icons/undraw_male_avatar_323b.svg';
+import LogoIcon from '../../../assets/icons/undraw_team_ih79.svg';
+import UserAvatar from '../../../assets/icons/undraw_male_avatar_323b.svg';
 import Colors from '../../../constants/Colors';
 import useColorScheme from '../../../hooks/useColorScheme';
 import {

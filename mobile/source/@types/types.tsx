@@ -5,6 +5,7 @@ export type RootStackParamList = {
 	Invite: undefined;
 	Session: undefined;
 	Sessions: undefined;
+	NewSession: undefined;
 	Preload: undefined;
 	SignIn: undefined;
 	SignUp: undefined;

@@ -8,10 +8,49 @@ interface ContainerProps {
 }
 
 export const Container = styled.KeyboardAvoidingView<ContainerProps>`
-	background-color: ${(props) => props.backgroundColor};
+	background-color: ${props => props.backgroundColor};
 	flex: 1;
-	margin-top: ${height * 0.01}px;
-	margin-bottom: ${height * 0.01}px;
+	margin-top: ${height * 0.02}px;
+	margin-bottom: ${height * 0.02}px;
+`;
+
+export const FormArea = styled.View`
+	padding: 20px;
+`;
+
+interface UserCardProps {
+	selected: boolean;
+}
+
+export const UserCard = styled.TouchableOpacity<UserCardProps>`
+	width: 160px;
+	height: 160px;
+	background-color: #f1f2ff;
+	padding: 10px;
+	flex-direction: column;
+	border-width: ${props => (props.selected ? '8px' : 0)};
+	border-color: #536dfe;
+	align-items: center;
+	margin: 0 10px 10px 0;
+	border-radius: 10px;
+`;
+
+export const UserImage = styled.Image`
+	width: 70px;
+	height: 70px;
+	border-radius: 50px;
+`;
+
+export const UserName = styled.Text`
+	font-size: 20px;
+	color: #6e6c7a;
+	margin-top: 5px;
+`;
+
+export const UserEmail = styled.Text`
+	font-size: 15px;
+	font-weight: bold;
+	color: #6e6c7a;
 `;
 
 export const AddButton = styled.TouchableOpacity`

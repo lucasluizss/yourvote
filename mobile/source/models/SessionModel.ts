@@ -7,4 +7,5 @@ export default interface SessionModel {
 	status?: Status;
 	startAt: Date;
 	expireAt: Date;
+	candidatesIds?: string[];
 }

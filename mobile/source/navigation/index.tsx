@@ -3,9 +3,9 @@ import {
 	DefaultTheme,
 	DarkTheme,
 } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { RootStackParamList } from '../@types/types';
 import BottomTabNavigator from './BottomTabNavigator';
@@ -20,6 +20,7 @@ import Preload from '../screens/Preload';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import TokenSignIn from '../screens/TokenSignIn';
+import NewSession from '../screens/Session/New';
 
 export default function Navigation({
 	colorScheme,
@@ -53,6 +54,7 @@ function RootNavigator() {
 			<Stack.Screen name='Settings' component={Settings} />
 			<Stack.Screen name='Session' component={Session} />
 			<Stack.Screen name='Sessions' component={Sessions} />
+			<Stack.Screen name='NewSession' component={NewSession} />
 			<Stack.Screen name='Invite' component={Invite} />
 			<Stack.Screen name='Preload' component={Preload} />
 			<Stack.Screen name='SignIn' component={SignIn} />
