@@ -93,7 +93,7 @@ export default class SessionController {
 
         for (let userId of candidatesIds || []) {
           const newCandidate = {
-            userId: userId,
+            userId,
             sessionId: session._id,
             status: 1
           } as ICandidateEntity;

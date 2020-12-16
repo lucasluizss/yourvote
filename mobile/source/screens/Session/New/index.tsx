@@ -42,8 +42,8 @@ export default () => {
 		setLoading(true);
 		const loadUsers = async () => {
 			const { data: usersResponse } = await Api.getUsers();
-			setUsers(usersResponse.data);
 			setUsersTemp(usersResponse.data);
+			setUsers(usersResponse.data);
 			setLoading(false);
 		};
 		loadUsers();
@@ -58,6 +58,8 @@ export default () => {
 			expireAt: expireAtField,
 			candidatesIds: selectedUsersIds,
 		};
+
+		console.log(newSession);
 
 		const { data: sessionResponse } = await Api.createSession(newSession);
 
@@ -121,7 +123,6 @@ export default () => {
 						onChangeText={setDescriptionField}
 						placeholder='Descrição'
 						icon='book-open'
-						autoCapitalize='words'
 						maxLength={27}
 					/>
 
