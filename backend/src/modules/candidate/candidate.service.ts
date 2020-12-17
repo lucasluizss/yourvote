@@ -51,7 +51,7 @@ export default class CandidateService implements ICandidateService {
   }
 
   async save(candidate: ICandidateEntity): Promise<ICandidateEntity> {
-    const candidateExists = this.exists(
+    const candidateExists = await this.exists(
       candidate.sessionId,
       candidate.userId,
     );
