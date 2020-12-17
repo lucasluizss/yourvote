@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 
 import { ISessionEntity } from '../../domain/session/session.entity';
 import Result from '../../infra/core/factories/result.factory';
-import SessionService from './session.service';
 import CandidateService from '../candidate/candidate.service';
+import SessionService from './session.service';
 import ICandidateEntity from '../../domain/candidate/candidate.entity';
 
 export default class SessionController {
@@ -94,7 +94,7 @@ export default class SessionController {
         for (let userId of candidatesIds || []) {
           const newCandidate = {
             userId,
-            sessionId: session._id,
+            sessionId: session._id.toString(),
             status: 1
           } as ICandidateEntity;
 
