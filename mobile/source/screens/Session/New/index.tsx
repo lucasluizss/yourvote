@@ -127,14 +127,14 @@ export default () => {
 					/>
 
 					<InputDate
-						label={startAtField?.toLocaleDateString() || 'Data de Início'}
+						label={`Data de Início ${startAtField?.toLocaleDateString()}`}
 						minimumDate={today}
 						onConfirm={date => setStartAtField(date)}
 						onCancel={() => setStartAtField(today)}
 					/>
 
 					<InputDate
-						label={expireAtField?.toLocaleDateString() || 'Data de término'}
+						label={`Data de término ${expireAtField?.toLocaleDateString()}`}
 						minimumDate={today}
 						onConfirm={date => setExpireAtField(date)}
 						onCancel={() => setExpireAtField(today)}
