@@ -31,8 +31,8 @@ export default () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [titleField, setTitleField] = useState('');
 	const [descriptionField, setDescriptionField] = useState('');
-	const [startAtField, setStartAtField] = useState<Date>(today);
-	const [expireAtField, setExpireAtField] = useState<Date>(today);
+	const [startAtField, setStartAtField] = useState<Date>();
+	const [expireAtField, setExpireAtField] = useState<Date>();
 	const [selectedUsersIds, setSelectedUsersIds] = useState<string[]>([]);
 	const [userFilter, setUserFilter] = useState<string>('');
 	const [users, setUsers] = useState<UserModel[]>([]);
@@ -127,17 +127,17 @@ export default () => {
 					/>
 
 					<InputDate
-						label='Data de início'
-						value={startAtField}
+						label={startAtField?.toLocaleDateString() || 'Data de Início'}
 						minimumDate={today}
-						onChange={(_, date) => setStartAtField(date || today)}
+						onConfirm={date => setStartAtField(date)}
+						onCancel={() => setStartAtField(today)}
 					/>
 
 					<InputDate
-						label='Data de término'
-						value={expireAtField}
+						label={expireAtField?.toLocaleDateString() || 'Data de término'}
 						minimumDate={today}
-						onChange={(_, date) => setExpireAtField(date || today)}
+						onConfirm={date => setExpireAtField(date)}
+						onCancel={() => setExpireAtField(today)}
 					/>
 
 					<Input
@@ -149,7 +149,10 @@ export default () => {
 						maxLength={27}
 					/>
 
-					<ScrollView horizontal style={{ marginTop: 5, marginBottom: 10, padding: 5 }}>
+					<ScrollView
+						horizontal
+						style={{ marginTop: 5, marginBottom: 10, padding: 5 }}
+					>
 						{usersTemp.map((item, key) => (
 							<UserCard
 								key={key}

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
-import DateTimePicker, {
-	BaseProps,
-} from '@react-native-community/datetimepicker';
+import DateTimePickerModal, {
+	ReactNativeModalDateTimePickerProps,
+} from 'react-native-modal-datetime-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 import { Text } from '../Themed';
 
 const InputDateArea = styled.View`
@@ -28,14 +30,13 @@ const InputDateTime = styled(DateTimePicker)`
 `;
 
 const LabelText = styled(Text)`
-	width: 100px;
 	font-size: 17px;
 	font-weight: bold;
 	margin-left: 10px;
 	margin-right: 5px;
 `;
 
-interface InputDateProps extends BaseProps {
+interface InputDateProps extends ReactNativeModalDateTimePickerProps {
 	icon?: string;
 	label: string;
 }
@@ -48,13 +49,16 @@ export default ({ icon, label, ...rest }: InputDateProps) => {
 			<InputDateButton onPress={() => setShow(!show)}>
 				<Feather name='calendar' size={20} color='#536DFE' />
 				<LabelText>{label}</LabelText>
-				<InputDateTime
-					{...rest}
-					testID='dateTimePicker'
-					mode={'date'}
-					display='default'
-				/>
 			</InputDateButton>
+			<DateTimePickerModal
+				{...rest}
+				cancelTextIOS='Fechar'
+				confirmTextIOS='Confirmar'
+				headerTextIOS={`Selecione a ${label}`}
+				isVisible={show}
+				mode={'date'}
+				onCancel={() => setShow(false)}
+			/>
 		</InputDateArea>
 	);
 };
