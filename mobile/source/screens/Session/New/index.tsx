@@ -22,6 +22,7 @@ import {
 	UserEmail,
 } from './styles';
 import UserModel from '../../../models/UserModel';
+import SessionModel from '../../../models/SessionModel';
 
 export default () => {
 	const colorScheme = useColorScheme();
@@ -51,13 +52,16 @@ export default () => {
 
 	const handleCreateSession = async () => {
 		setLoading(true);
+
+		if (!formIsValid()) return;
+
 		const newSession = {
 			title: titleField,
 			description: descriptionField,
 			startAt: startAtField,
 			expireAt: expireAtField,
 			candidatesIds: selectedUsersIds,
-		};
+		} as SessionModel;
 
 		console.log(newSession);
 
@@ -77,6 +81,35 @@ export default () => {
 			setLoading(false);
 			Alert.alert('Opps!', sessionResponse.message);
 		}
+	};
+
+	const formIsValid = () => {
+		if (titleField) {
+			Alert.alert('Favor preencher o título');
+			return false;
+		}
+
+		if (descriptionField) {
+			Alert.alert('Favor preencher a descrição');
+			return false;
+		}
+
+		if (startAtField) {
+			Alert.alert('Favor preencher a data início');
+			return false;
+		}
+
+		if (expireAtField) {
+			Alert.alert('Favor preencher a data fim');
+			return false;
+		}
+
+		if (selectedUsersIds) {
+			Alert.alert('Favor informar os candidatos');
+			return false;
+		}
+
+		return true;
 	};
 
 	const handleSelectUser = (userId: string) => {
