@@ -41,9 +41,9 @@ export const authorize = (roles: ERole[] | undefined = []) => {
 				if (!account || (roles.length && !roles.includes(account.role))) {
 					return response.status(401).json(Result.Fail('Unauthorized!'));
 				} else if (account.status === EStatus.Inactive) {
-					return response.status(401).json(Result.Fail('User must be actived, please contact an admin.'));
+					return response.status(403).json(Result.Fail('User must be actived, please contact an admin.'));
 				} else if (!account.emailConfirmed) {
-					return response.status(401).json(Result.Fail('You must confirm your email'));
+					return response.status(403).json(Result.Fail('You must confirm your email'));
 				}
 
 				request.userId = userId;
