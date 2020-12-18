@@ -149,7 +149,7 @@ export default () => {
 						maxLength={27}
 					/>
 
-					<ScrollView horizontal style={{ marginTop: 5, marginBottom: 10 }}>
+					<ScrollView horizontal style={{ marginTop: 5, marginBottom: 10, padding: 5 }}>
 						{usersTemp.map((item, key) => (
 							<UserCard
 								key={key}
@@ -159,7 +159,7 @@ export default () => {
 								{item?.avatar ? (
 									<UserImage source={{ uri: item.avatar }} />
 								) : (
-									<UserAvatar width={70} height={70} />
+									<UserAvatar width={80} height={80} />
 								)}
 								<UserName>{item.name}</UserName>
 								<UserEmail>{item.email}</UserEmail>

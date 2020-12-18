@@ -25,10 +25,11 @@ interface UserCardProps {
 export const UserCard = styled.TouchableOpacity<UserCardProps>`
 	width: 160px;
 	height: 160px;
+	box-shadow: 4px 1px 5px #5a786e;
 	background-color: #f1f2ff;
 	padding: 10px;
 	flex-direction: column;
-	border-width: ${props => (props.selected ? '8px' : 0)};
+	border-width: ${props => (props.selected ? '5px' : 0)};
 	border-color: #536dfe;
 	align-items: center;
 	margin: 0 10px 10px 0;
@@ -36,19 +37,19 @@ export const UserCard = styled.TouchableOpacity<UserCardProps>`
 `;
 
 export const UserImage = styled.Image`
-	width: 70px;
-	height: 70px;
+	width: 80px;
+	height: 80px;
 	border-radius: 50px;
 `;
 
 export const UserName = styled.Text`
-	font-size: 20px;
+	font-size: 17px;
 	color: #6e6c7a;
 	margin-top: 5px;
 `;
 
 export const UserEmail = styled.Text`
-	font-size: 15px;
+	font-size: 14px;
 	font-weight: bold;
 	color: #6e6c7a;
 `;
