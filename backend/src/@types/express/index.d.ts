@@ -1,9 +1,13 @@
-declare namespace Express {
-	export interface Request {
-		userId?: string;
-    }
+import { ERole } from '../../domain/enums/Roles.enum';
 
-    export interface Response {
-		userId?: string;
-	}
+declare namespace Express {
+  export interface Request {
+    userId?: string;
+    role: ERole;
+  }
+
+  export interface Response {
+    userId?: string;
+    role: ERole;
+  }
 }

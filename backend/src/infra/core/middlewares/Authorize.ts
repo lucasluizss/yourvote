@@ -47,6 +47,7 @@ export const authorize = (roles: ERole[] | undefined = []) => {
 				}
 
 				request.userId = userId;
+				request.role = account.role;
 
 				return next();
 			});
