@@ -19,7 +19,7 @@
       "description": "Local development server"
     },
     {
-      "url": "https://yourvot3.herokuapp.com/v1",
+      "url": "https://api-yourvote.herokuapp.com/v1",
       "description": "Production server"
     }
   ],
