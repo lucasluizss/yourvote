@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-secure',
   templateUrl: './secure.component.html'
 })
-export class SecureComponent implements OnInit {
+export class SecureLayoutComponent implements OnInit {
 
   constructor() { }
 

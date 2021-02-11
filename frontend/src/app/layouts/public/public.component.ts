@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-public',
   templateUrl: './public.component.html'
 })
-export class PublicComponent implements OnInit {
+export class PublicLayoutComponent implements OnInit {
 
   constructor() { }
 
