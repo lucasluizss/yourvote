@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import UserModel from '../models/user.model';
+import { StorageService } from './storage.service';
 
 interface SignInModel {
 	email: string;
@@ -13,22 +14,22 @@ interface SignInModel {
 	providedIn: 'root',
 })
 export class AuthService {
-	public token = new BehaviorSubject<string>(
-		window.atob(localStorage.getItem('@YourVote:token'))
+	public token = new BehaviorSubject<string | null>(
+		this.storageService.get('@YourVote:token')
 	);
 
 	public user = new BehaviorSubject<UserModel | null>(
-		JSON.parse(window.atob(localStorage.getItem('@YourVote:user')))
+		this.storageService.get('@YourVote:user')
 	);
 
-	constructor(private readonly http: HttpClient) {}
+	constructor(
+		private readonly http: HttpClient,
+		private readonly storageService: StorageService
+	) {}
 
 	setUser(data: { user: UserModel; token: string }) {
-		localStorage.setItem(
-			'@YourVote:user',
-			window.btoa(JSON.stringify(data.user))
-		);
-		localStorage.setItem('@YourVote:token', window.btoa(data.token));
+		this.storageService.set('@YourVote:user', data.user);
+		this.storageService.set('@YourVote:token', data.token);
 		this.token.next(data.token);
 		this.user.next(data.user);
 	}
@@ -39,7 +40,7 @@ export class AuthService {
 
 	async signOut() {
 		await this.http.post('/accounts/logout', {}).toPromise();
-		localStorage.clear();
+		this.storageService.clear();
 		this.user.next(null);
 		this.token.next(null);
 	}

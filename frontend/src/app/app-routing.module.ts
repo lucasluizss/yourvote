@@ -8,7 +8,7 @@ import { SecureLayoutComponent } from './layouts/secure/secure.component';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: '/dashboard',
+		redirectTo: '/sign-in',
 		pathMatch: 'full',
 	},
 	{

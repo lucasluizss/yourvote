@@ -2,7 +2,8 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../../services/auth.service';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
 	selector: 'app-sign-in',
@@ -18,7 +19,8 @@ export class SignInComponent implements OnInit {
 	constructor(
 		private readonly fb: FormBuilder,
 		private readonly router: Router,
-		private readonly authService: AuthService
+		private readonly authService: AuthService,
+		private readonly storageService: StorageService
 	) {}
 
 	ngOnInit(): void {
@@ -26,9 +28,7 @@ export class SignInComponent implements OnInit {
 			this.router.navigate(['/dashboard']);
 		}
 
-		const credentials = JSON.parse(
-			window.atob(sessionStorage.getItem('@YourVote:remember'))
-		);
+		const credentials = this.storageService.getSessionItem('@YourVote:remember');
 
 		if (credentials) {
 			this.form.patchValue({
@@ -44,13 +44,10 @@ export class SignInComponent implements OnInit {
 			const { email, password, remember } = this.form.value;
 
 			if (remember) {
-				sessionStorage.setItem(
-					'@YourVote:remember',
-					window.btoa(JSON.stringify({ email, password }))
-				);
+				this.storageService.setSessionItem('@YourVote:remember', { email, password });
 			} else {
-        localStorage.removeItem('@YourVote:remember');
-      }
+				this.storageService.removeSessionItem('@YourVote:remember');
+			}
 
 			this.authService.signIn({ email, password }).subscribe(
 				({ successed, data }) => {
