@@ -1,14 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'secure-nav',
   templateUrl: './nav.component.html'
 })
-export class SecureNavComponent implements OnInit {
+export class SecureNavComponent {
 
-  constructor() { }
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthService
+  ) { }
 
-  ngOnInit(): void {
+  async onSignOut() {
+    await this.authService.signOut();
+    this.router.navigate(['sign-in']);
   }
-
 }
