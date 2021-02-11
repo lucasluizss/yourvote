@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
 import { PublicLayoutComponent } from './public/public.component';
 import { PublicNavComponent } from './public/nav/nav.component';

@@ -6,34 +6,46 @@ import { PublicLayoutComponent } from './layouts/public/public.component';
 import { SecureLayoutComponent } from './layouts/secure/secure.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/dashboard',
-    pathMatch: 'full'
-  },
-  {
-      path: '',
-      component: PublicLayoutComponent,
-      children: [
-          { path: '', loadChildren: () => import('./views/public/views.module').then(module => module.PublicViewsModule) }
-      ]
-  },
-  {
-      path: '',
-      component: SecureLayoutComponent,
-      canActivate: [AppGuard],
-      children: [
-        { path: '', loadChildren: () => import('./views/secure/views.module').then(module => module.SecureViewsModule) }
-      ]
-  },
-  {
-      path: "**",
-      redirectTo: ""
-  }
+	{
+		path: '',
+		redirectTo: '/dashboard',
+		pathMatch: 'full',
+	},
+	{
+		path: '',
+		component: PublicLayoutComponent,
+		children: [
+			{
+				path: '',
+				loadChildren: () =>
+					import('./views/public/views.module').then(
+						module => module.PublicViewsModule
+					),
+			},
+		],
+	},
+	{
+		path: '',
+		component: SecureLayoutComponent,
+		canActivate: [AppGuard],
+		children: [
+			{
+				path: '',
+				loadChildren: () =>
+					import('./views/secure/views.module').then(
+						module => module.SecureViewsModule
+					),
+			},
+		],
+	},
+	{
+		path: '**',
+		redirectTo: '',
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
