@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { PublicLayoutComponent } from './public/public.component';
 import { PublicNavComponent } from './public/nav/nav.component';
@@ -12,18 +13,16 @@ import { SecureFooterComponent } from './secure/footer/footer.component';
 import { SecureSidebarComponent } from './secure/sidebar/sidebar.component';
 
 @NgModule({
-  declarations: [
-    PublicLayoutComponent, 
-    PublicNavComponent,
-    PublicFooterComponent,
-    PublicSidebarComponent,
-    SecureLayoutComponent,
-    SecureNavComponent,
-    SecureFooterComponent,
-    SecureSidebarComponent,
-  ],
-  imports: [
-    RouterModule,
-  ]
+	declarations: [
+		PublicLayoutComponent,
+		PublicNavComponent,
+		PublicFooterComponent,
+		PublicSidebarComponent,
+		SecureLayoutComponent,
+		SecureNavComponent,
+		SecureFooterComponent,
+		SecureSidebarComponent,
+	],
+	imports: [CommonModule, RouterModule],
 })
-export class LayoutsModule { }
+export class LayoutsModule {}

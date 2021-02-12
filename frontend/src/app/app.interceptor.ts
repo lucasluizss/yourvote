@@ -35,7 +35,6 @@ export class Interceptor implements HttpInterceptor {
 		switch (err.status) {
 			case 408:
 				console.error(`Server was disconnected unexpectedly.`);
-				// this.router.navigate(['/dashboard']);
 				break;
 			default:
 				console.log('Outro erro pô: ', err.message);
