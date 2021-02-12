@@ -3,10 +3,12 @@ import {
 	HttpInterceptor,
 	HttpRequest,
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
 import { LoaderService } from './loader.service';
 
+@Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
 	constructor(private readonly loaderService: LoaderService) {}
 
