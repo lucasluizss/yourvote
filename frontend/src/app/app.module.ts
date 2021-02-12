@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { LayoutsModule } from './layouts/layouts.module';
 import { environment } from '../environments/environment';
 import { Interceptor } from './app.interceptor';
+import { LoaderModule } from './components/loader/loader.module';
+import { LoaderInterceptor } from './components/loader/loader.interceptor';
 
 @NgModule({
 	bootstrap: [AppComponent],
@@ -18,10 +20,11 @@ import { Interceptor } from './app.interceptor';
 		NgbModule,
 		HttpClientModule,
 		LayoutsModule,
+		LoaderModule,
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
-		// { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+		{ provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
 		{ provide: 'BASE_URL', useValue: environment.baseUrl },
 	],
 })

@@ -28,7 +28,9 @@ export class SignInComponent implements OnInit {
 			this.router.navigate(['/dashboard']);
 		}
 
-		const credentials = this.storageService.getSessionItem('@YourVote:remember');
+		const credentials = this.storageService.getSessionItem(
+			'@YourVote:remember'
+		);
 
 		if (credentials) {
 			this.form.patchValue({
@@ -44,7 +46,10 @@ export class SignInComponent implements OnInit {
 			const { email, password, remember } = this.form.value;
 
 			if (remember) {
-				this.storageService.setSessionItem('@YourVote:remember', { email, password });
+				this.storageService.setSessionItem('@YourVote:remember', {
+					email,
+					password,
+				});
 			} else {
 				this.storageService.removeSessionItem('@YourVote:remember');
 			}

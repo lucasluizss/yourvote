@@ -26,6 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^8.0.4",
     "admin-lte": "^3.0.4",
     "express": "^4.17.1",
+    "ngx-loading": "^8.0.0",
     "path": "^0.12.7",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
