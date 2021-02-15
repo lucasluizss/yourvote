@@ -19,6 +19,8 @@ export class Interceptor implements HttpInterceptor {
 	) {}
 
 	intercept(request: HttpRequest<any>, next: HttpHandler) {
+		if (request.url.includes('assets')) return next.handle(request);
+		
 		const token = this.authService.token;
 
 		const requestClone = request.clone({
