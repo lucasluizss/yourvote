@@ -168,14 +168,6 @@
 				</a>
       </div>
     </li>
-		<!-- <div class="nav-item">
-			<label class="nav-link">
-        {{ 'HOME.SELECT' | translate }}
-        <select #langSelect (change)="translate.use(langSelect.value)">
-          <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
-        </select>
-      </label>
-		</div> -->
 		<li class="nav-item">
 			<a class="nav-link" title="Sign-out" (click)="onSignOut()">
 				<i class="fas fa-sign-out-alt"></i>

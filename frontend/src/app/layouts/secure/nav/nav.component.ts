@@ -11,11 +11,8 @@ import { I18nService } from 'src/app/services/i18n.service';
 })
 export class SecureNavComponent implements OnInit {
 
-  public flag: string = 'us';
-	private readonly flagDictionary = {
-		'en': 'us',
-		'pt': 'br'
-	}
+  public flag: 'us' | 'br' = 'us';
+	private readonly flagDictionary = { 'en': 'us', 'pt': 'br' };
 
   constructor(
     private readonly router: Router,
@@ -25,21 +22,19 @@ export class SecureNavComponent implements OnInit {
   ) {
     const browserLang = translate.getBrowserLang();
 		translate.setDefaultLang(browserLang);
-		const useLanguage = browserLang.match(/en|es|pt/) ? browserLang : 'en';
+		const useLanguage = browserLang.match(/en|pt/) ? browserLang : 'en';
 		this.flag = this.flagDictionary[useLanguage];
 		translate.use(useLanguage);
   }
 
-  ngOnInit() {
-    this.i18nService.localeEvent.subscribe(locale => this.translate.use(locale));
-  }
+  public ngOnInit() { this.i18nService.localeEvent.subscribe(locale => this.translate.use(locale)); }
 
-  async onSignOut() {
+  public async onSignOut() {
     await this.authService.signOut();
     this.router.navigate(['sign-in']);
   }
 
-  changeLanguage(language: string) {
+  public changeLanguage(language: string) {
 		this.flag = this.flagDictionary[language];
 		this.i18nService.changeLocale(language);
 	}

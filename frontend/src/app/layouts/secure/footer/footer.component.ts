@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'secure-footer',
@@ -6,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class SecureFooterComponent {
   public now = new Date();
+  constructor(public readonly translate: TranslateService) {}
 }

@@ -1,4 +1,10 @@
 {
+  "COMPONENT": {
+    "FOOTER": {
+      "MESSAGE": "Todos os direitos reservados.",
+      "VERSION": "Versão"
+    }
+  },
   "HOME": {
     "TITLE": "Bom dia!",
     "SELECT": "Changer la langue"

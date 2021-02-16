@@ -1,4 +1,10 @@
 {
+  "COMPONENT": {
+    "FOOTER": {
+      "MESSAGE": "All rights reserved.",
+      "VERSION": "Version"
+    }
+  },
   "HOME": {
     "TITLE": "Good afternoon",
     "SELECT": "Change language"

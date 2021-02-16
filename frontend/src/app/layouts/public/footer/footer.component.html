@@ -1,8 +1,7 @@
-<footer class="main-footer">
-  <strong
-    >Copyright &copy; 2021
-    <a href="http://github.com/lucasluizss/yourvote">YourVote</a>.</strong
-  >
-  All rights reserved.
-  <div class="float-right d-none d-sm-inline-block"><b>Version</b> 1.0.0</div>
+<footer class="bg-light text-center text-lg-start p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+  <strong>Copyright &copy; {{ now | date: 'yyyy' }}
+    <a href="http://github.com/lucasluizss/yourvote">YourVote</a>.
+  </strong>
+  {{ 'COMPONENT.FOOTER.MESSAGE' | translate }}
+  <div class="float-right d-none d-sm-inline-block"><b>{{ 'COMPONENT.FOOTER.VERSION' | translate }}</b> 1.0.0</div>
 </footer>

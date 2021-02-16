@@ -8,7 +8,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { PublicLayoutComponent } from './public/public.component';
 import { PublicNavComponent } from './public/nav/nav.component';
 import { PublicFooterComponent } from './public/footer/footer.component';
-import { PublicSidebarComponent } from './public/sidebar/sidebar.component';
 
 import { SecureLayoutComponent } from './secure/secure.component';
 import { SecureNavComponent } from './secure/nav/nav.component';
@@ -24,7 +23,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 		PublicLayoutComponent,
 		PublicNavComponent,
 		PublicFooterComponent,
-		PublicSidebarComponent,
 		SecureLayoutComponent,
 		SecureNavComponent,
 		SecureFooterComponent,
