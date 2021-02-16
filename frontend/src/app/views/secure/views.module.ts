@@ -1,32 +1,49 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClient } from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
+import { AppGuard } from 'src/app/app.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SessionsModule } from './sessions/sessions.module';
+import { SecureLayoutComponent } from 'src/app/layouts/secure/secure.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient);
+	return new TranslateHttpLoader(httpClient);
 }
 
 const ROUTES: Routes = [
-  { path: 'dashboard', component: DashboardComponent }
+	{ path: 'dashboard', component: DashboardComponent },
+	{
+		path: '',
+    canActivate: [AppGuard],
+		children: [
+			{
+				path: 'sessions',
+				loadChildren: () =>
+					import('./sessions/sessions.module').then(
+						module => module.SessionsModule
+					),
+			},
+		],
+	},
 ];
 
 @NgModule({
-  declarations: [DashboardComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(ROUTES),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ]
+	declarations: [DashboardComponent],
+	imports: [
+		CommonModule,
+		SessionsModule,
+		RouterModule.forChild(ROUTES),
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient],
+			},
+		}),
+	],
 })
-export class SecureViewsModule { }
+export class SecureViewsModule {}
