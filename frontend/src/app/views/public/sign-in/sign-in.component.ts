@@ -25,7 +25,7 @@ export class SignInComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (this.authService.user.value) {
-			this.router.navigate(['/dashboard']);
+			this.router.navigate(['/sessions']);
 		}
 
 		const credentials = this.storageService.getSessionItem(

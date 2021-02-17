@@ -3,6 +3,10 @@
     "FOOTER": {
       "MESSAGE": "All rights reserved.",
       "VERSION": "Version"
+    },
+    "SIDEBAR": {
+      "NEW": "New",
+      "SESSIONS": "Sessions"
     }
   },
   "HOME": {

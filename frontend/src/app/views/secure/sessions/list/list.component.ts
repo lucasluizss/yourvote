@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import SessionModel from '../sessions.model';
+import { SessionsService } from '../sessions.service';
 
 @Component({
   selector: 'app-list',
@@ -8,9 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  public currentList: SessionModel[];
+  public expiredList: SessionModel[];
+  public futureList: SessionModel[];
 
-  ngOnInit(): void {
+  constructor(private readonly sessionsService: SessionsService) { }
+
+  async ngOnInit() {
+    const [current, expired, future] = await Promise.all([
+      this.sessionsService.getCurrentSessions().toPromise(),
+      this.sessionsService.getExpiredessions().toPromise(),
+      this.sessionsService.getFutureSessions().toPromise(),
+    ]);
+
+    this.currentList = current.data;
+    this.expiredList = expired.data;
+    this.futureList = future.data;
   }
-
 }
