@@ -21,6 +21,8 @@ export class ForgotPasswordComponent implements OnInit {
 	ngOnInit(): void {}
 
 	onSubmit() {
+		if (this.form.invalid) return;
+		
 		this.authService.forgotPassword(this.form.value).subscribe(response => {
 			alert('You have received an url to reset your password!');
 		});

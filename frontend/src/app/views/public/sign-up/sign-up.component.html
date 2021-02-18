@@ -8,7 +8,7 @@
 			<div class="card-body register-card-body">
 				<p class="login-box-msg">Register a new membership</p>
 
-				<div>
+				<form [formGroup]="form" (ngSubmit)="onSubmit()">
 					<div class="input-group mb-3">
 						<input type="text" class="form-control" placeholder="Full name" />
 						<div class="input-group-append">
@@ -71,7 +71,7 @@
 						</div>
 						<!-- /.col -->
 					</div>
-				</div>
+				</form>
 
 				<!-- <div class="social-auth-links text-center">
 					<p>- OR -</p>

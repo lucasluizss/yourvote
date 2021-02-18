@@ -25,6 +25,8 @@ export class RecoverPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.form.invalid) return;
+    
     this.authService.resetPassword(this.form.value).subscribe(response => {
       this.router.navigate(['/sign-in']);
     });

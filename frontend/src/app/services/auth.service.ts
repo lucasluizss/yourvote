@@ -10,6 +10,14 @@ interface SignInModel {
 	password: string;
 }
 
+interface SignUpModel {
+	username: string;
+	name: string;
+	email: string;
+	password: string;
+	phone: string;
+}
+
 @Injectable({
 	providedIn: 'root',
 })
@@ -36,6 +44,10 @@ export class AuthService {
 
 	signIn(request: SignInModel): Observable<any> {
 		return this.http.post('/accounts/authenticate', request);
+	}
+
+	signUp(request: SignUpModel): Observable<any> {
+		return this.http.post('/users', request);
 	}
 
 	forgotPassword({ email }): Observable<any> {
