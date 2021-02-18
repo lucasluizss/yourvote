@@ -38,6 +38,14 @@ export class AuthService {
 		return this.http.post('/accounts/authenticate', request);
 	}
 
+	forgotPassword({ email }): Observable<any> {
+		return this.http.post('/accounts/forgot-password', { email });
+	}
+
+	resetPassword({ password, confirmedPassword }): Observable<any> {
+		return this.http.post('/accounts/reset-password', { password, confirmedPassword });
+	}
+
 	async signOut() {
 		await this.http.post('/accounts/logout', {}).toPromise();
 		this.storageService.clear();

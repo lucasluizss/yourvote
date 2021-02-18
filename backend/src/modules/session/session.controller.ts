@@ -104,7 +104,7 @@ export default class SessionController {
 
       return response.json(Result.Success(session));
     } catch (error) {
-      return response.json(Result.Fail(error.message));
+      return response.status(400).json(Result.Fail(error.message));
     }
   }
 
