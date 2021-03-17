@@ -9,8 +9,16 @@
       "SESSIONS": "Sessões"
     }
   },
-  "HOME": {
-    "TITLE": "Bom dia!",
-    "SELECT": "Changer la langue"
+  "COMMON": {
+    "TITLE": "Bom dia!"
+  },
+  "PAGE": {
+    "SIGN_IN": {
+      "MESSAGE": "Entre para inicar sua sessão",
+      "REMEMBER": "Me lembrar",
+      "FORGOT_PASSWORD": "Esqueci minha senha",
+      "REGISTER": "Registrar",
+      "BTN_SUBMIT": "Entrar"
+    }
   }
 }

@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+	return new TranslateHttpLoader(httpClient);
+}
 
 const ROUTES: Routes = [
 	{ path: 'sign-in', component: SignInComponent },
@@ -25,6 +32,17 @@ const ROUTES: Routes = [
 		ForgotPasswordComponent,
 		RecoverPasswordComponent,
 	],
-	imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(ROUTES)],
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		RouterModule.forChild(ROUTES),
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient],
+			},
+		}),
+	],
 })
 export class PublicViewsModule {}

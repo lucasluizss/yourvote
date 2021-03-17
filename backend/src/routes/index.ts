@@ -6,13 +6,22 @@ import candidateRoutes from '../modules/candidate/candidate.routes';
 import votesRoutes from '../modules/vote/vote.routes';
 import guestVotersRoutes from '../modules/guest-voter/guest-voter.routes';
 
-const routes = express.Router();
+class Routes {
+  public readonly routes: express.Router;
 
-routes.use('/users', userRoutes);
-routes.use('/accounts', authRoutes);
-routes.use('/sessions', sessionRoutes);
-routes.use('/candidates', candidateRoutes);
-routes.use('/votes', votesRoutes);
-routes.use('/guest-voters', guestVotersRoutes);
+  constructor() {
+    this.routes = express.Router();
+    this.defineRoutes();
+  }
 
-export default routes;
+  private defineRoutes(): void {
+    this.routes.use('/users', userRoutes);
+    this.routes.use('/accounts', authRoutes);
+    this.routes.use('/sessions', sessionRoutes);
+    this.routes.use('/candidates', candidateRoutes);
+    this.routes.use('/votes', votesRoutes);
+    this.routes.use('/guest-voters', guestVotersRoutes);
+  }
+}
+
+export default new Routes().routes;

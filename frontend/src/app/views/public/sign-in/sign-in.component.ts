@@ -1,7 +1,9 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
+import { I18nService } from 'src/app/services/i18n.service';
 import { AuthService } from '../../../services/auth.service';
 import { StorageService } from '../../../services/storage.service';
 
@@ -20,10 +22,16 @@ export class SignInComponent implements OnInit {
 		private readonly fb: FormBuilder,
 		private readonly router: Router,
 		private readonly authService: AuthService,
-		private readonly storageService: StorageService
+		private readonly i18nService: I18nService,
+		private readonly storageService: StorageService,
+		public readonly translate: TranslateService
 	) {}
 
 	ngOnInit(): void {
+		this.i18nService.localeEvent.subscribe(locale =>
+			this.translate.use(locale)
+		);
+
 		if (this.authService.user.value) {
 			this.router.navigate(['/sessions']);
 		}

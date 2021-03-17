@@ -5,8 +5,7 @@ import { I18nService } from 'src/app/services/i18n.service';
 
 @Component({
 	selector: 'app-dashboard',
-	templateUrl: './dashboard.component.html',
-	styles: [],
+	templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
 	constructor(

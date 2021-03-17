@@ -8,7 +8,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { AppGuard } from 'src/app/app.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SessionsModule } from './sessions/sessions.module';
-import { SecureLayoutComponent } from 'src/app/layouts/secure/secure.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
 	return new TranslateHttpLoader(httpClient);

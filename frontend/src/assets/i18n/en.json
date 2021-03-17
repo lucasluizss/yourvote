@@ -9,8 +9,16 @@
       "SESSIONS": "Sessions"
     }
   },
-  "HOME": {
-    "TITLE": "Good afternoon",
-    "SELECT": "Change language"
+  "COMMON": {
+    "TITLE": "Good Morning!"
+  },
+  "PAGE": {
+    "SIGN_IN": {
+      "MESSAGE": "Sign in to start your session",
+      "REMEMBER": "Remember Me",
+      "FORGOT_PASSWORD": "I forgot my password",
+      "REGISTER": "Register a new membership",
+      "BTN_SUBMIT": "Sign In"
+    }
   }
 }
