@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 
 import authController from './account.controller';
 import { ERole } from '../../domain/enums/Roles.enum';
@@ -11,15 +11,24 @@ import {
 	ForgotPasswordValidator
 } from '../../infra/core/validators/account.validator';
 
-const routes = express.Router();
+class AccountRouter {
+	public readonly router: Router;
 
-routes.post('/authenticate', LoginValidator, authController.authenticate);
-routes.post('/logout', authController.logout);
-routes.post('/refresh', authController.refresh);
-routes.get('/confirm/:token', ConfirmEmailValidator, authController.comfirmEmail);
-routes.post('/active', authorize([ERole.Admin]), ActiveUserValidator, authController.activeUser);
-routes.post('/make-admin', authorize([ERole.Admin]), authController.makeAdmin);
-routes.post('/forgot-password', ForgotPasswordValidator, authController.forgotPassword);
-routes.post('/reset-password', authorize(), ResetPasswordValidator, authController.resetPassword);
+	constructor() {
+		this.router = Router();
+		this.setRoutes();
+	}
 
-export default routes;
+	setRoutes() {
+		this.router.post('/authenticate', LoginValidator, authController.authenticate);
+		this.router.post('/logout', authController.logout);
+		this.router.post('/refresh', authController.refresh);
+		this.router.get('/confirm/:token', ConfirmEmailValidator, authController.comfirmEmail);
+		this.router.post('/active', authorize([ERole.Admin]), ActiveUserValidator, authController.activeUser);
+		this.router.post('/make-admin', authorize([ERole.Admin]), authController.makeAdmin);
+		this.router.post('/forgot-password', ForgotPasswordValidator, authController.forgotPassword);
+		this.router.post('/reset-password', authorize(), ResetPasswordValidator, authController.resetPassword);
+	}
+}
+
+export default new AccountRouter().router;

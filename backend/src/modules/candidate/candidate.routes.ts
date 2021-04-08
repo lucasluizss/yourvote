@@ -1,17 +1,25 @@
-import express from 'express';
+import { Router } from 'express';
 
 import { ERole } from './../../domain/enums/Roles.enum';
+import candidateController from './candidate.controller';
 import { authorize } from './../../infra/core/middlewares/Authorize';
-import CandidateController from './candidate.controller';
 
-const routes = express.Router();
-const candidateController = new CandidateController();
+class CandidateRouter {
+	public readonly router: Router;
 
-routes.get('/', authorize([ERole.Admin]), candidateController.index);
-routes.get('/session/:sessionId', candidateController.indexBySession);
-routes.get('/:id', authorize([ERole.Admin]), candidateController.show);
-routes.post('/', authorize(), candidateController.create);
-routes.put('/:id', authorize([ERole.Admin]), candidateController.update);
-routes.delete('/:id', authorize([ERole.Admin]), candidateController.delete);
+	constructor() {
+		this.router = Router();
+		this.setRoutes();
+	}
 
-export default routes;
+	setRoutes() {
+		this.router.get('/', authorize([ERole.Admin]), candidateController.index);
+		this.router.get('/session/:sessionId', candidateController.indexBySession);
+		this.router.get('/:id', authorize([ERole.Admin]), candidateController.show);
+		this.router.post('/', authorize(), candidateController.create);
+		this.router.put('/:id', authorize([ERole.Admin]), candidateController.update);
+		this.router.delete('/:id', authorize([ERole.Admin]), candidateController.delete);
+	}
+}
+
+export default new CandidateRouter().router;

@@ -1,6 +1,6 @@
-import IVoteRepository from '../../domain/vote/IVoteRepository';
 import IVoteEntity from '../../domain/vote/vote.entity';
 import VoteContext from '../../database/models/vote.model';
+import IVoteRepository from '../../domain/vote/IVoteRepository';
 
 export default class VoteRepository implements IVoteRepository {
   async save(vote: IVoteEntity): Promise<IVoteEntity> {
@@ -8,18 +8,14 @@ export default class VoteRepository implements IVoteRepository {
   }
 
   async validate(sessionId: string, userId?: string): Promise<boolean> {
-    return (
-      (
-        await VoteContext.find({
-          sessionId,
-          userId,
-        })
-      ).length == 0
-    );
+    return await VoteContext.exists({
+      sessionId,
+      userId,
+    });
   }
 
   async update(vote: IVoteEntity): Promise<IVoteEntity> {
-    return (await VoteContext.update({ _id: vote._id }, vote)) as IVoteEntity;
+    return (await VoteContext.updateOne({ _id: vote._id }, vote)) as IVoteEntity;
   }
 
   async delete(voteId: string): Promise<boolean> {

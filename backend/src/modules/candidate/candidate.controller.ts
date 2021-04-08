@@ -5,7 +5,7 @@ import Result from '../../infra/core/factories/result.factory';
 import CandidateService from './candidate.service';
 import ICandidateEntity from '../../domain/candidate/candidate.entity';
 
-export default class CandidateController {
+class CandidateController {
   public async show(request: Request, response: Response) {
     const { id } = request.params;
 
@@ -124,3 +124,5 @@ export default class CandidateController {
     }
   }
 }
+
+export default new CandidateController();
