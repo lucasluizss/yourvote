@@ -3,13 +3,11 @@ import jwt from 'jsonwebtoken';
 
 import environment from '../../../environment/environment';
 
-export const generateToken = (ipAddress: string) => {
-	return {
-		token: crypto.randomBytes(40).toString('hex'),
-		expires: new Date(Date.now() + 7*24*60*60*1000),
-		createdByIp: ipAddress
-	};
-};
+export const generateToken = (ipAddress: string) => ({
+	token: crypto.randomBytes(40).toString('hex'),
+	expires: new Date(Date.now() + 7*24*60*60*1000),
+	createdByIp: ipAddress
+});
 
 export const generateJtwToken = (id: string, expireMinutes?: string) => {
 	return jwt.sign({ id: id }, environment.SECRET as string, {

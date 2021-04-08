@@ -1,4 +1,5 @@
 import express from 'express';
+
 import userRoutes from '../modules/user/user.routes';
 import authRoutes from '../modules/account/account.routes';
 import sessionRoutes from '../modules/session/session.routes';
