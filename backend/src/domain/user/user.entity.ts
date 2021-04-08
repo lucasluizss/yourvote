@@ -1,28 +1,14 @@
+import { Entity } from '../base/entity';
+import { IUserEntity } from './IUserEntity';
 import { ERole } from '../enums/Roles.enum';
 import { EStatus } from '../enums/Status.enum';
-import { Entity } from '../base/entity';
-import { Document } from 'mongoose';
-
-export interface IUserEntity extends Document {
-  username: string;
-  name: string;
-  email: string;
-  emailConfirmed: boolean;
-  password: string;
-	phone: string;
-  status: EStatus;
-  role: ERole;
-  createdAt: Date;
-  updatedAt?: Date;
-}
 
 export default class UserEntity extends Entity<IUserEntity> {
-
-	get username(): string {
+  get username(): string {
     return this.props.username;
   }
 
-	get name(): string {
+  get name(): string {
     return this.props.name;
   }
 
@@ -46,26 +32,26 @@ export default class UserEntity extends Entity<IUserEntity> {
     return this.props.role;
   }
 
-	private constructor(props: IUserEntity, id?: string) {
-		super(props, id);
+  private constructor(props: IUserEntity, id?: string) {
+    super(props, id);
   }
 
-  public getProps = () : IUserEntity => this.props;
+  public getProps = (): IUserEntity => this.props;
 
-	public isActive = () : boolean => this.props.status === EStatus.Active;
+  public isActive = (): boolean => this.props.status === EStatus.Active;
 
-	public isInactive = () : boolean => this.props.status === EStatus.Inactive;
+  public isInactive = (): boolean => this.props.status === EStatus.Inactive;
 
-	public active(): void {
+  public active(): void {
     this.props.status = EStatus.Active;
-	}
+  }
 
-	public inactive(): void {
+  public inactive(): void {
     this.props.status = EStatus.Inactive;
   }
 
-  public setEncriptedPassword(pwd: string) {
-    this.props.password = pwd;
+  public setEncriptedPassword(password: string): void {
+    this.props.password = password;
   }
 
   public setRole(role: ERole): void {
@@ -76,7 +62,7 @@ export default class UserEntity extends Entity<IUserEntity> {
     this.props.emailConfirmed = true;
   }
 
-	public static create (props: IUserEntity, id?: string) : UserEntity {
+  public static create(props: IUserEntity, id?: string): UserEntity {
     return new UserEntity(props, id);
   }
 }

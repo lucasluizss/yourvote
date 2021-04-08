@@ -1,15 +1,15 @@
-import { IUserEntity } from '../../../domain/user/user.entity';
+import { IUserEntity } from '../../../domain/user/IUserEntity';
 
 export default class UserFactory {
-	static create(user: IUserEntity): any {
-		return {
-			id: user._id,
-			username: user.username,
-			name: user.name,
-			email: user.email,
-			phone: user.phone,
-			status: user.status,
-			role: user.role
-		}
-	}
+  static create(user: IUserEntity): any {
+    return {
+      id: user._id,
+      username: user.username,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      status: user.status,
+      role: user.role,
+    };
+  }
 }

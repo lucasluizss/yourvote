@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-import { IUserEntity } from '../../domain/user/user.entity';
+import { IUserEntity } from "../../domain/user/IUserEntity";
 
 const UserSchema: Schema = new mongoose.Schema({
 	id: String,

@@ -1,4 +1,4 @@
-import { IUserEntity } from '../user/user.entity';
+import { IUserEntity } from "../user/IUserEntity";
 
 export interface IAccountService {
   authenticate(

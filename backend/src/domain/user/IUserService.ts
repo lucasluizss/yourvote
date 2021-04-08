@@ -1,8 +1,6 @@
 import IServiceBase from '../base/IServiceBase';
-import { IUserEntity } from './user.entity';
+import { IUserEntity } from './IUserEntity';
 
-interface IUserService extends IServiceBase<IUserEntity> {
-	getByEmail(email: string): Promise<IUserEntity>;
+export default interface IUserService extends IServiceBase<IUserEntity> {
+  getByEmail(email: string): Promise<IUserEntity>;
 }
-
-export default IUserService;

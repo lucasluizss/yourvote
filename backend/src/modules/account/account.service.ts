@@ -5,7 +5,8 @@ import UserRepository from '../user/user.repository';
 import AccouuntRepository from './account.repository';
 import { ERole } from '../../domain/enums/Roles.enum';
 import { EStatus } from '../../domain/enums/Status.enum';
-import UserEntity, { IUserEntity } from '../../domain/user/user.entity';
+import UserEntity from '../../domain/user/user.entity';
+import { IUserEntity } from '../../domain/user/IUserEntity';
 import { generateJtwToken } from '../../infra/core/security';
 import { verifyJwtToken } from './../../infra/core/security/index';
 import IUserRepository from '../../domain/user/IUserRepository';
@@ -15,15 +16,17 @@ import IEmailService, { EmailService } from './../../infra/shared/EmailService';
 import IAccouuntRepository from '../../domain/account/IAccountRepository';
 import IAuthenticationHistory from '../../domain/account/authentication-history.entity';
 
+const FIFTEEN_MINUTES = '15m';
+
 @injectable()
 export default class AccountService implements IAccountService {
   constructor(
     @inject(UserRepository.name)
-    private readonly _userRepository: IUserRepository,
+    private readonly userRepository: IUserRepository,
     @inject(AccouuntRepository.name)
-    private readonly _accountRepository: IAccouuntRepository,
+    private readonly accountRepository: IAccouuntRepository,
     @inject(EmailService.name)
-    private readonly _emailService: IEmailService,
+    private readonly emailService: IEmailService,
   ) {}
 
   async authenticate(
@@ -32,7 +35,7 @@ export default class AccountService implements IAccountService {
     ipAddress: any,
     device: string,
   ): Promise<string> {
-    const user = await this._userRepository.getByEmail(email);
+    const user = await this.userRepository.getByEmail(email);
 
     if (!user || !bcrypt.compareSync(password, user.password)) {
       throw new Error('Email ou senha incorreto');
@@ -52,35 +55,35 @@ export default class AccountService implements IAccountService {
       token: token,
     } as IAuthenticationHistory;
 
-    await this._accountRepository.addAuthenticationHistory(accountData);
+    await this.accountRepository.addAuthenticationHistory(accountData);
 
     return token;
   }
 
   async getUserByEmail(email: string): Promise<IUserEntity> {
-    return await this._userRepository.getByEmail(email);
+    return await this.userRepository.getByEmail(email);
   }
 
   async logout(token: string): Promise<void> {
-    await this._accountRepository.updateLogout(token);
+    await this.accountRepository.updateLogout(token);
   }
 
   async confirmEmail(token: string): Promise<boolean> {
     const userId = await verifyJwtToken(token);
 
-    const user = await this._userRepository.getById(userId);
+    const user = await this.userRepository.getById(userId);
 
     const userEntity = UserEntity.create(user, user._id);
 
     userEntity.confirmEmail();
 
-    await this._userRepository.update(userEntity.getProps());
+    await this.userRepository.update(userEntity.getProps());
 
     return true;
   }
 
   async activeUser(id: string): Promise<boolean> {
-    const user = await this._userRepository.getById(id);
+    const user = await this.userRepository.getById(id);
 
     const userEntity = UserEntity.create(user, user._id);
 
@@ -89,31 +92,31 @@ export default class AccountService implements IAccountService {
     } else {
       userEntity.active();
     }
-    
-    await this._userRepository.update(userEntity.getProps());
+
+    await this.userRepository.update(userEntity.getProps());
 
     return true;
   }
 
   async makeAdmin(id: string): Promise<boolean> {
-    const user = await this._userRepository.getById(id);
+    const user = await this.userRepository.getById(id);
 
     const userEntity = UserEntity.create(user, id);
 
     userEntity.setRole(ERole.Admin);
 
-    await this._userRepository.update(userEntity.getProps());
+    await this.userRepository.update(userEntity.getProps());
 
     return true;
   }
 
   async forgotPassword(email: string): Promise<void> {
-    const user = await this._userRepository.getByEmail(email);
+    const user = await this.userRepository.getByEmail(email);
 
     if (user) {
-      const tokenEmail = generateJtwToken(user._id, '15m');
+      const tokenEmail = generateJtwToken(user._id, FIFTEEN_MINUTES);
 
-      this._emailService.send(
+      this.emailService.send(
         email,
         'Nova Senha',
         forgot_password(user.name, tokenEmail),
@@ -124,13 +127,13 @@ export default class AccountService implements IAccountService {
   }
 
   async resetPassword(email: string, password: string): Promise<boolean> {
-    const user = await this._userRepository.getByEmail(email);
+    const user = await this.userRepository.getByEmail(email);
 
     const userEntity = UserEntity.create(user, user._id);
 
     userEntity.setEncriptedPassword(bcrypt.hashSync(password, 10));
 
-    await this._userRepository.update(userEntity.getProps());
+    await this.userRepository.update(userEntity.getProps());
 
     return true;
   }

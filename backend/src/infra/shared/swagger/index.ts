@@ -1,9 +1,15 @@
-import express from 'express';
 import swaggerUi from 'swagger-ui-express';
+import express, { Application } from 'express';
+
 import swaggerDocument from './swagger.json';
 
-const router = express();
+class SwaggerRouter {
+  public readonly router: Application;
 
-router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  constructor() {
+    this.router = express();
+    this.router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  }
+}
 
-export default router;
+export default new SwaggerRouter().router;

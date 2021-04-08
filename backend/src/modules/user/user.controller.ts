@@ -3,83 +3,79 @@ import { Request, Response } from 'express';
 
 import UserService from './user.service';
 import Result from '../../infra/core/factories/result.factory';
-import { IUserEntity } from '../../domain/user/user.entity';
+import { IUserEntity } from '../../domain/user/IUserEntity';
 import UserFactory from '../../infra/core/factories/user.factory';
 
 class UserController {
+  async index(request: Request, response: Response) {
+    try {
+      const _userService = container.resolve(UserService);
 
-	async index(request: Request, response: Response) {
-		try {
-			const _userService = container.resolve(UserService);
+      const list = await _userService.list();
 
-			const list = await _userService.list();
+      return response.status(200).json(Result.Success(list.map(UserFactory.create)));
+    } catch (error) {
+      return response.json(Result.Fail(error.message));
+    }
+  }
 
-			return response.json(Result.Success(list.map(UserFactory.create)));
+  async show(request: Request, response: Response) {
+    try {
+      const { id } = request.params;
 
-		} catch(error) {
-			return response.json(Result.Fail(error.message));
-		}
-	}
+      const _userService = container.resolve(UserService);
 
-	async show(request: Request, response: Response) {
-		try {
-			const { id } = request.params;
+      const user = await _userService.getById(id);
 
-			const _userService = container.resolve(UserService);
+      return response.status(200).json(Result.Success(UserFactory.create(user)));
+    } catch (error) {
+      return response.json(Result.Fail(error.message));
+    }
+  }
 
-			const user = await _userService.getById(id);
+  async create(request: Request, response: Response) {
+    try {
+      const userEntity = request.body as IUserEntity;
 
-			return response.json(Result.Success(UserFactory.create(user)));
+      const _userService = container.resolve(UserService);
 
-		} catch(error) {
-			return response.json(Result.Fail(error.message));
-		}
-	}
+      const user = await _userService.save(userEntity);
 
-	async create(request: Request, response: Response) {
-		try {
-			const userEntity = request.body as IUserEntity;
+      return response
+        .status(201)
+        .json(Result.Success(UserFactory.create(user)));
+    } catch (error) {
+      return response.json(Result.Fail(error.message));
+    }
+  }
 
-			const _userService = container.resolve(UserService);
+  async update(request: Request, response: Response) {
+    try {
+      const userEntity = request.body as IUserEntity;
 
-			const user = await _userService.save(userEntity);
+      const _userService = container.resolve(UserService);
 
-			return response.status(201).json(Result.Success(UserFactory.create(user)));
+      await _userService.update(userEntity);
 
-		} catch(error) {
-			return response.json(Result.Fail(error.message));
-		}
-	}
+      return response.status(200).json(Result.Success(UserFactory.create(userEntity)));
+    } catch (error) {
+      return response.json(Result.Fail(error.message));
+    }
+  }
 
-	async update(request: Request, response: Response) {
-		try {
-			const userEntity = request.body as IUserEntity;
+  async delete(request: Request, response: Response) {
+    try {
+      const { id } = request.params;
 
-			const _userService = container.resolve(UserService);
+      const _userService = container.resolve(UserService);
 
-			await _userService.update(userEntity);
+      await _userService.delete(id);
 
-			return response.json(Result.Success(UserFactory.create(userEntity)));
-
-		} catch(error) {
-			return response.json(Result.Fail(error.message));
-		}
-	}
-
-	async delete(request: Request, response: Response) {
-		try {
-			const { id } = request.params;
-
-			const _userService = container.resolve(UserService);
-
-			await _userService.delete(id);
-
-			return response.json(Result.Success());
-
-		} catch(error) {
-			return response.json(Result.Fail(error.message));
-		}
-	}
+      return response.status(200).json(Result.Success());
+    } catch (error) {
+      return response.json(Result.Fail(error.message));
+    }
+  }
 }
 
 export default new UserController();

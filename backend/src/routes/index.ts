@@ -1,14 +1,14 @@
-import express from 'express';
+import express, { Router } from 'express';
 
 import userRoutes from '../modules/user/user.routes';
+import votesRoutes from '../modules/vote/vote.routes';
 import authRoutes from '../modules/account/account.routes';
 import sessionRoutes from '../modules/session/session.routes';
 import candidateRoutes from '../modules/candidate/candidate.routes';
-import votesRoutes from '../modules/vote/vote.routes';
 import guestVotersRoutes from '../modules/guest-voter/guest-voter.routes';
 
 class Routes {
-  public readonly routes: express.Router;
+  public readonly routes: Router;
 
   constructor() {
     this.routes = express.Router();
