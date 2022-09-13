@@ -49,7 +49,7 @@
     "@types/react-native": "~0.63.2",
     "@types/react-native-datepicker": "^1.7.0",
     "@types/styled-components": "^5.1.4",
-    "jest-expo": "~39.0.0",
+    "jest-expo": "~46.0.1",
     "typescript": "~3.9.5"
   },
   "private": true
